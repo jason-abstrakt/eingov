@@ -5,160 +5,183 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col font-sans">
       {/* Official Banner */}
-      <header className="bg-slate-100 border-b border-slate-200 py-2 px-4 text-xs font-medium text-slate-600 flex items-center justify-center sm:justify-start">
-        <div className="flex items-center gap-2 container mx-auto max-w-5xl">
-          <div className="h-3 w-5 bg-slate-200 flex flex-col border border-slate-300 overflow-hidden relative">
-            <div className="h-1.5 w-full bg-blue-900 absolute top-0 left-0"></div>
-             <div className="h-0.5 w-full bg-red-600 absolute bottom-0 left-0"></div>
-          </div>
-          <span>An official website of the United States government</span>
-        </div>
+      <header className="bg-slate-100 border-b border-slate-200 py-1 px-4 text-[11px] font-medium text-slate-700 flex justify-end">
+         <div className="flex gap-6 container mx-auto max-w-7xl justify-end">
+            <Link href="#" className="hover:underline">Help</Link>
+            <Link href="#" className="hover:underline">News</Link>
+            <div className="flex items-center gap-1 cursor-pointer hover:underline">
+               <span>English</span>
+               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+            </div>
+            <Link href="#" className="hover:underline">Tax Pros</Link>
+            <div className="flex items-center gap-1 cursor-pointer hover:underline font-bold">
+               <span>Sign in</span>
+               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+            </div>
+         </div>
       </header>
 
       {/* Main Navigation / Header */}
-      <nav className="bg-white border-b border-slate-200 py-4 shadow-sm sticky top-0 z-50">
-        <div className="container mx-auto max-w-5xl px-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="bg-us-blue text-white p-1.5 rounded-sm font-serif font-bold text-xl select-none">IRS</div>
-            <div className="leading-tight">
-              <h1 className="text-lg font-bold text-us-blue font-serif">Department of the Treasury</h1>
-              <p className="text-xs text-slate-500 font-medium tracking-wide">INTERNAL REVENUE SERVICE</p>
-            </div>
-          </div>
-          <div className="hidden md:flex text-sm font-medium text-slate-600 gap-6">
-            <Link href="#" className="hover:text-us-blue transition-colors">Help & Support</Link>
-            <Link href="#" className="hover:text-us-blue transition-colors">Language</Link>
-          </div>
-        </div>
-      </nav>
-
-      <main className="flex-grow bg-slate-50">
-        {/* Hero Section */}
-        <section className="bg-white border-b border-slate-200 relative overflow-hidden">
-           <div className="absolute top-0 right-0 w-1/3 h-full bg-slate-50 transform skew-x-12 translate-x-12 z-0 hidden md:block"></div>
-          <div className="container mx-auto max-w-5xl px-4 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center relative z-10">
-            <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-medium border border-blue-100">
-                <ShieldCheck size={16} />
-                <span>Secure & Authorized Service</span>
-              </div>
-              <h2 className="text-4xl md:text-5xl font-serif font-bold text-slate-900 leading-tight">
-                Apply for an Employer Identification Number (EIN)
-              </h2>
-              <p className="text-lg text-slate-600 leading-relaxed">
-                Start your business journey today. Our secure online assistant guides you through the process of obtaining your EIN quickly and easily.
-              </p>
-              
-              <div className="pt-4 space-y-3">
-                <Link 
-                  href="/apply" 
-                  className="inline-flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white font-semibold text-lg px-8 py-4 rounded-md shadow-lg shadow-blue-900/10 transition-all hover:-translate-y-0.5 w-full md:w-auto justify-center"
-                >
-                  Apply for EIN Now
-                  <ArrowRight size={20} />
-                </Link>
-                <p className="mt-3 text-sm text-slate-500 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                  System Online • Estimated time: 5-10 minutes
-                </p>
-              </div>
-            </div>
-            
-            <div className="bg-white rounded-xl p-8 border border-slate-200 shadow-xl shadow-slate-200/50 hidden md:block">
-              <h3 className="font-serif font-bold text-xl mb-6 text-slate-800 border-b border-slate-100 pb-4">Required Information</h3>
-              <ul className="space-y-4">
-                {[
-                  "Legal name of the entity or individual",
-                  "Trade name (Doing Business As) if applicable",
-                  "Mailing address",
-                  "SSN or ITIN of the responsible party"
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <div className="bg-blue-50 text-blue-700 p-1.5 rounded-full mt-0.5 flex-shrink-0">
-                      <FileText size={14} />
-                    </div>
-                    <span className="text-slate-700 text-sm font-medium">{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-8 pt-6 border-t border-slate-100">
-                 <div className="flex items-center gap-3 text-slate-500 text-xs bg-slate-50 p-3 rounded-md">
-                    <Lock size={14} className="flex-shrink-0" />
-                    <span>Your information is encrypted via 256-bit SSL technology.</span>
+      <div className="bg-[#234E76] text-white">
+        <div className="container mx-auto max-w-7xl px-4 py-4 flex justify-between items-center">
+            {/* Logo Section */}
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
+                 {/* IRS Eagle SVG Simulation */}
+                 <div className="w-12 h-12 relative flex-shrink-0">
+                    <svg viewBox="0 0 100 100" fill="white" className="w-full h-full">
+                       <path d="M50 2C23.5 2 2 23.5 2 50s21.5 48 48 48 48-21.5 48-48S76.5 2 50 2zm0 88c-22.1 0-40-17.9-40-40S27.9 10 50 10s40 17.9 40 40-17.9 40-40 40z" opacity="0.2"/>
+                       <path d="M65 35c-2-5-8-8-15-8s-13 3-15 8l-5 12h40l-5-12zM50 20c-5 0-9 2-12 5l2 4c2-2 5-3 10-3s8 1 10 3l2-4c-3-3-7-5-12-5z"/>
+                       <path d="M30 55h40v5H30z"/>
+                       <path d="M35 65h30v5H35z"/>
+                    </svg>
+                 </div>
+                 <div className="leading-tight">
+                   <span className="font-serif font-bold text-4xl tracking-tight block">IRS</span>
                  </div>
               </div>
+              <nav className="hidden lg:flex gap-1 ml-8 text-[15px] font-bold">
+                  {["File", "Pay", "Refunds", "Credits & Deductions", "Forms", "Report Fraud"].map((item) => (
+                     <Link key={item} href="#" className="px-3 py-2 hover:underline decoration-2 underline-offset-4 whitespace-nowrap">{item}</Link>
+                  ))}
+              </nav>
+            </div>
+
+            {/* Search Bar */}
+            <div className="hidden md:flex w-64">
+               <div className="relative w-full">
+                  <input type="text" placeholder="Search" className="w-full pl-3 pr-10 py-1.5 rounded-sm text-slate-900 placeholder:text-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400" />
+                  <button className="absolute right-0 top-0 h-full px-3 text-slate-600 hover:text-blue-800 bg-white rounded-r-sm border-l border-slate-300">
+                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                  </button>
+               </div>
+            </div>
+        </div>
+      </div>
+
+
+      <main className="flex-grow bg-white">
+        {/* Breadcrumb */}
+        <div className="bg-[#f0f0f0] border-b border-gray-200">
+           <div className="container mx-auto max-w-7xl px-4 py-2 text-[11px] text-[#005ea2] flex gap-2">
+              <Link href="#" className="hover:underline">Home</Link> /
+              <Link href="#" className="hover:underline">File</Link> /
+              <Link href="#" className="hover:underline">Businesses and self-employed</Link> /
+              <Link href="#" className="hover:underline">Employer ID numbers</Link> /
+              <span className="text-gray-600">Get an employer identification number</span>
+           </div>
+        </div>
+
+        {/* Hero Section */}
+        <section className="bg-white relative">
+          <div className="container mx-auto max-w-7xl px-4 py-8 grid lg:grid-cols-4 gap-12">
+            
+            {/* Left Sidebar (Desktop) - Navigation */}
+            <div className="hidden lg:block col-span-1 space-y-6 text-sm">
+                <div>
+                   <h3 className="font-bold text-gray-900 mb-2 pb-1 border-b-2 border-gray-900">Individuals</h3>
+                </div>
+                <div>
+                   <h3 className="font-bold text-gray-900 mb-2 pb-1 border-b-2 border-gray-900">Businesses and self-employed</h3>
+                   <ul className="space-y-2 pl-2 border-l-2 border-[#005ea2]">
+                      <li className="text-gray-700 hover:underline cursor-pointer py-1">Business tax account</li>
+                      <li className="bg-[#e6f1f9] text-gray-900 font-bold -ml-2.5 pl-2.5 py-1 border-l-4 border-[#005ea2]">Employer ID numbers</li>
+                      <li className="text-gray-700 hover:underline cursor-pointer py-1">Business taxes</li>
+                      <li className="text-gray-700 hover:underline cursor-pointer py-1">Business structures</li>
+                      <li className="text-gray-700 hover:underline cursor-pointer py-1">Operating a business</li>
+                   </ul>
+                </div>
+                <div>
+                   <h3 className="font-bold text-gray-900 mb-2 pb-1 border-b-2 border-gray-900">Charities and nonprofits</h3>
+                </div>
+            </div>
+
+            {/* Main Content */}
+            <div className="col-span-3 lg:col-span-2 space-y-6">
+              <h1 className="text-4xl font-serif font-bold text-gray-900 leading-tight mb-2">
+                Get an employer identification number
+              </h1>
+              
+              <div className="text-[13px] text-gray-600 space-x-2 flex items-center mb-6">
+                  <span>English</span>
+                  <span className="text-gray-300">|</span>
+                  <Link href="#" className="text-[#005ea2] hover:underline">Español</Link>
+                  <span className="text-gray-300">|</span>
+                  <Link href="#" className="text-[#005ea2] hover:underline">中文 (简体)</Link>
+                  <span className="text-gray-300">|</span>
+                  <Link href="#" className="text-[#005ea2] hover:underline">中文 (繁體)</Link>
+                  <span className="text-gray-300">|</span>
+                  <Link href="#" className="text-[#005ea2] hover:underline">한국어</Link>
+                  <span className="text-gray-300">|</span>
+                  <Link href="#" className="text-[#005ea2] hover:underline">Pусский</Link>
+                  <span className="text-gray-300">|</span>
+                  <Link href="#" className="text-[#005ea2] hover:underline">Tiếng Việt</Link>
+                  <span className="text-gray-300">|</span>
+                  <Link href="#" className="text-[#005ea2] hover:underline">Kreyòl ayisyen</Link>
+              </div>
+
+              <p className="text-lg text-gray-800 leading-relaxed">
+                Use this tool to get an EIN directly from the IRS in minutes for free. Answer questions and submit the application. If it's approved, we'll issue your EIN immediately online.
+              </p>
+              
+              <p className="text-base text-gray-800 leading-relaxed font-bold bg-yellow-50 p-4 border-l-4 border-yellow-400">
+                Beware of websites that charge for an EIN. You never have to pay a fee for an EIN from the IRS.
+              </p>
+
+              {/* Main CTA Box */}
+              <div className="my-8 border border-gray-300 shadow-lg rounded bg-white overflow-hidden">
+                 <div className="bg-[#234E76] text-white p-4 text-center font-bold text-xl tracking-wide">
+                    APPLY FOR EIN – TAX-ID
+                 </div>
+                 <div className="p-8 text-center space-y-6">
+                    <p className="text-gray-700 text-lg">Get your Employer Identification Number (EIN) online today with our simple application process.</p>
+                    <Link 
+                       href="/apply" 
+                       className="inline-block bg-[#005ea2] hover:bg-[#1a4480] text-white font-bold text-lg px-12 py-4 rounded shadow-md hover:shadow-lg transform transition-all hover:-translate-y-0.5"
+                    >
+                       APPLY ONLINE NOW
+                    </Link>
+                 </div>
+              </div>
+
+              <h2 className="text-2xl font-serif font-bold text-gray-900 mt-8 mb-4">How it works</h2>
+              <ul className="list-disc pl-5 space-y-3 text-gray-800 marker:text-gray-500">
+                <li>Complete the application in one session. You can't save it for later.</li>
+                <li>It expires after 15 minutes of inactivity, and you'll need to start over.</li>
+                <li>Print your EIN confirmation letter for your records.</li>
+              </ul>
+
+              <h2 className="text-2xl font-serif font-bold text-gray-900 mt-8 mb-4">Who can use this tool</h2>
+              <p className="mb-4 text-gray-800">Use this if:</p>
+              <ul className="list-disc pl-5 space-y-3 text-gray-800 marker:text-gray-500">
+                <li>Your principal business is located in the U.S. or U.S. territories.</li>
+                <li>You have a valid Taxpayer Identification Number (SSN, ITIN, EIN).</li>
+                <li>You are the responsible party for the entity.</li>
+              </ul>
+            </div>
+            
+            {/* Right Sidebar - Related */}
+            <div className="col-span-3 lg:col-span-1 border-l border-gray-200 pl-8 hidden lg:block">
+              <h3 className="font-bold text-xl text-gray-900 mb-4">Related</h3>
+              <ul className="space-y-3 text-[#005ea2]">
+                <li><Link href="#" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>Employer identification number</Link></li>
+                <li><Link href="#" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>Privacy Act Statement and Paperwork Reduction Act Notice</Link></li>
+                <li><Link href="#" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>Businesses with employees</Link></li>
+                <li><Link href="#" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>EIN video <svg className="w-3 h-3 inline ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></Link></li>
+              </ul>
+
+              <div className="mt-12 p-6 bg-gray-50 border border-gray-200 rounded">
+                 <h4 className="font-bold text-gray-900 mb-4 border-b border-gray-200 pb-2">EIN Services</h4>
+                 <ul className="space-y-3 text-sm text-[#005ea2]">
+                    <li className="flex items-center gap-2 hover:underline cursor-pointer"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Deactivate or Cancel</li>
+                    <li className="flex items-center gap-2 hover:underline cursor-pointer"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg> Lost / Misplaced Retrieval</li>
+                    <li className="flex items-center gap-2 hover:underline cursor-pointer"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /></svg> Report Address Change</li>
+                 </ul>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Informational Sections */}
-        <section className="py-16">
-          <div className="container mx-auto max-w-5xl px-4">
-             <div className="grid md:grid-cols-3 gap-8">
-                <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-                  <h3 className="font-serif font-bold text-lg mb-3 text-us-blue">Who needs an EIN?</h3>
-                  <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                    Most businesses need an EIN. If you have employees, operate as a corporation or partnership, or file certain tax returns, you must have an EIN.
-                  </p>
-                  <Link href="#" className="text-blue-700 text-sm font-medium hover:underline inline-flex items-center gap-1">Learn more about eligibility <ArrowRight size={12}/></Link>
-                </div>
-                <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-                  <h3 className="font-serif font-bold text-lg mb-3 text-us-blue">Daily Limitation</h3>
-                  <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                    The issuance of an EIN is limited to one per responsible party per day. This limitation applies to all requests for EINs whether online, by fax, or mail.
-                  </p>
-                  <Link href="#" className="text-blue-700 text-sm font-medium hover:underline inline-flex items-center gap-1">Read limitation details <ArrowRight size={12}/></Link>
-                </div>
-                 <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-                  <h3 className="font-serif font-bold text-lg mb-3 text-us-blue">After Applying</h3>
-                  <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                    You will receive your EIN immediately upon verification. You can download, save, and print your EIN confirmation notice.
-                  </p>
-                  <Link href="#" className="text-blue-700 text-sm font-medium hover:underline inline-flex items-center gap-1">View sample notice <ArrowRight size={12}/></Link>
-                </div>
-             </div>
-          </div>
-        </section>
-
-        {/* Steps */}
-        <section className="bg-white py-16 border-y border-slate-200">
-           <div className="container mx-auto max-w-5xl px-4">
-              <h2 className="text-3xl font-serif font-bold text-center mb-12 text-slate-800">How It Works</h2>
-              <div className="grid md:grid-cols-4 gap-8">
-                 {[
-                    { step: "1", title: "Identify", desc: "Select your legal structure (LLC, Corp, etc.)" },
-                    { step: "2", title: "Authenticate", desc: "Verify your identity securely." },
-                    { step: "3", title: "Details", desc: "Enter your business address and details." },
-                    { step: "4", title: "Review", desc: "Confirm your information and submit." }
-                 ].map((s, i) => (
-                    <div key={i} className="text-center relative">
-                       {i < 3 && <div className="hidden md:block absolute top-6 left-1/2 w-full h-0.5 bg-slate-100 -z-10"></div>}
-                       <div className="w-12 h-12 bg-us-blue text-white rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4 shadow-lg shadow-blue-900/20">
-                          {s.step}
-                       </div>
-                       <h3 className="font-bold text-slate-900 mb-2">{s.title}</h3>
-                       <p className="text-slate-500 text-sm">{s.desc}</p>
-                    </div>
-                 ))}
-              </div>
-           </div>
-        </section>
-
-        {/* Legalese / Warning Section */}
-        <section className="bg-slate-100 py-12">
-           <div className="container mx-auto max-w-5xl px-4 text-slate-500 text-xs space-y-4 max-w-4xl mx-auto border-t border-slate-200 pt-8">
-              <h4 className="font-bold text-slate-700 uppercase tracking-wider text-[10px] mb-2">Important Information & Disclaimers</h4>
-              <p>
-                <strong>Authorized Use Only:</strong> This is a U.S. government computer system, which may be accessed and used only for authorized government business by authorized personnel. Unauthorized access or use of this computer system may subject violators to criminal, civil, and/or administrative action.
-              </p>
-              <p>
-                <strong>Privacy Act Statement:</strong> Under the Privacy Act of 1974, we must tell you that our legal right to ask for information is Internal Revenue Code Sections 6001, 6011, and 6012(a), and their regulations. We ask for the information to identify you and your account and to process your application.
-              </p>
-              <p>
-                <strong>Paperwork Reduction Act Notice:</strong> We ask for the information on this form to carry out the Internal Revenue laws of the United States. You are required to give us the information. We need it to ensure that you are complying with these laws and to allow us to figure and collect the right amount of tax.
-              </p>
-           </div>
-        </section>
       </main>
 
       <footer className="bg-us-dark-blue text-slate-300 py-16 border-t-4 border-us-gold print:hidden">

@@ -41,25 +41,32 @@ export default function SelectInput({
           {required && <span className="text-red-500 ml-0.5">*</span>}
         </label>
       )}
-      <select
-        id={name}
-        name={name}
-        value={value}
-        onChange={onChange}
-        onBlur={onBlur}
-        className={`w-full rounded-md border px-3 py-2.5 text-base transition-colors ${
-          error
-            ? 'border-red-500'
-            : 'border-gray-300 focus:border-us-blue focus:ring-2 focus:ring-us-blue/20'
-        } outline-none bg-white`}
-      >
-        <option value="">{placeholder}</option>
-        {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
+      <div className="relative">
+        <select
+          id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+          className={`w-full rounded-md border px-3 py-2.5 text-base transition-colors appearance-none ${
+            error
+              ? 'border-red-500'
+              : 'border-gray-300 focus:border-us-blue focus:ring-2 focus:ring-us-blue/20'
+          } outline-none bg-white pr-8`}
+        >
+          <option value="">{placeholder}</option>
+          {options.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
       {helpText && !error && (
         <p className="text-xs text-gray-500 mt-1">{helpText}</p>
       )}

@@ -11,6 +11,7 @@ import {
 } from '@/lib/applications';
 import { isAuthenticated, signOut } from '@/lib/auth';
 import { ENTITY_DISPLAY_NAMES } from '@/lib/constants';
+import type { PrimaryEntityType } from '@/lib/types';
 
 function formatDate(iso: string): string {
   const d = new Date(iso);
@@ -45,7 +46,11 @@ export default function AdminDashboardPage() {
   }, [router]);
 
   const entityTypes = useMemo(() => {
-    const set = new Set(applications.map((a) => a.data.entityType).filter(Boolean));
+    const set = new Set(
+      applications
+        .map((a) => a.data.entityType)
+        .filter((t): t is PrimaryEntityType => t != null)
+    );
     return Array.from(set).sort();
   }, [applications]);
 

@@ -43,6 +43,18 @@ export async function saveApplication(
   return res.json();
 }
 
+export async function revealSSN(
+  applicationId: string
+): Promise<{ ssn?: string; decedentSSN?: string } | null> {
+  try {
+    const res = await fetch(`/api/applications/${applicationId}/ssn`);
+    if (!res.ok) return null;
+    return res.json();
+  } catch {
+    return null;
+  }
+}
+
 export async function updateApplicationStatus(id: string, status: ApplicationStatus): Promise<void> {
   await fetch(`/api/applications/${id}`, {
     method: 'PATCH',

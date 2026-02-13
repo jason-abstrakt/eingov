@@ -6,8 +6,10 @@ import Link from 'next/link';
 import {
   getApplicationById,
   updateApplicationStatus,
+  revealSSN,
   type StoredApplication,
 } from '@/lib/applications';
+import { Eye, EyeOff } from 'lucide-react';
 import { isAuthenticated, signOut } from '@/lib/auth';
 import {
   getEntityLabel,
@@ -56,6 +58,10 @@ export default function AdminApplicationDetailPage() {
   const [app, setApp] = useState<StoredApplication | null>(null);
   const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
+  const [ssnRevealed, setSSNRevealed] = useState(false);
+  const [revealedSSN, setRevealedSSN] = useState<string | null>(null);
+  const [revealedDecedentSSN, setRevealedDecedentSSN] = useState<string | null>(null);
+  const [ssnLoading, setSsnLoading] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -81,6 +87,22 @@ export default function AdminApplicationDetailPage() {
     setApp({ ...app, status: 'ein_sent' });
     setSaved(true);
   }, [app]);
+
+  const handleToggleSSN = useCallback(async () => {
+    if (ssnRevealed) {
+      setSSNRevealed(false);
+      return;
+    }
+    if (!app) return;
+    setSsnLoading(true);
+    const result = await revealSSN(app.id);
+    if (result) {
+      if (result.ssn) setRevealedSSN(result.ssn);
+      if (result.decedentSSN) setRevealedDecedentSSN(result.decedentSSN);
+    }
+    setSSNRevealed(true);
+    setSsnLoading(false);
+  }, [app, ssnRevealed]);
 
   const handleSignOut = useCallback(async () => {
     await signOut();
@@ -197,7 +219,28 @@ export default function AdminApplicationDetailPage() {
         </DetailSection>
 
         <DetailSection title="Responsible Party">
-          <DetailRow label="SSN / ITIN" value={maskSSN(d.ssn)} />
+          <div className="py-2 first:pt-0 flex justify-between gap-4">
+            <dt className="text-sm text-gray-500">SSN / ITIN</dt>
+            <dd className="text-sm text-gray-900 text-right flex items-center gap-2">
+              <span className="font-mono">
+                {ssnRevealed && revealedSSN ? revealedSSN : maskSSN(d.ssn)}
+              </span>
+              <button
+                type="button"
+                onClick={handleToggleSSN}
+                disabled={ssnLoading}
+                className="text-[#005ea2] hover:underline text-xs font-medium flex items-center gap-1"
+              >
+                {ssnLoading ? (
+                  'Loading...'
+                ) : ssnRevealed ? (
+                  <><EyeOff className="h-3.5 w-3.5" /> Hide</>
+                ) : (
+                  <><Eye className="h-3.5 w-3.5" /> Show</>
+                )}
+              </button>
+            </dd>
+          </div>
           <DetailRow label="Name" value={fullName} />
           <DetailRow label="Email" value={d.email} />
           <DetailRow label="Role" value={roleText} />
@@ -231,7 +274,28 @@ export default function AdminApplicationDetailPage() {
         <DetailSection title="Business Details">
           {d.entityType === 'estate' ? (
             <>
-              <DetailRow label="Decedent SSN" value={maskSSN(d.decedentSSN)} />
+              <div className="py-2 first:pt-0 flex justify-between gap-4">
+                <dt className="text-sm text-gray-500">Decedent SSN</dt>
+                <dd className="text-sm text-gray-900 text-right flex items-center gap-2">
+                  <span className="font-mono">
+                    {ssnRevealed && revealedDecedentSSN ? revealedDecedentSSN : maskSSN(d.decedentSSN)}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleToggleSSN}
+                    disabled={ssnLoading}
+                    className="text-[#005ea2] hover:underline text-xs font-medium flex items-center gap-1"
+                  >
+                    {ssnLoading ? (
+                      'Loading...'
+                    ) : ssnRevealed ? (
+                      <><EyeOff className="h-3.5 w-3.5" /> Hide</>
+                    ) : (
+                      <><Eye className="h-3.5 w-3.5" /> Show</>
+                    )}
+                  </button>
+                </dd>
+              </div>
               <DetailRow
                 label="Decedent Name"
                 value={`${d.decedentFirstName} ${d.decedentLastName}`}

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getSQL } from '@/lib/db';
 import { verifyAdmin } from '@/lib/auth-server';
 import { maskSSN, generateMockEIN } from '@/lib/utils';
+import { encryptSSN } from '@/lib/crypto';
 
 // POST — Submit a new application (public, no auth required)
 export async function POST(req: NextRequest) {
@@ -21,12 +22,23 @@ export async function POST(req: NextRequest) {
       ...safeData
     } = body;
 
-    // Mask SSN before storing
-    const ssnLast4 = (safeData.ssn || '').replace(/\D/g, '').slice(-4);
+    // Extract raw SSN digits and encrypt before masking
+    const rawSSNDigits = (safeData.ssn || '').replace(/\D/g, '');
+    const ssnLast4 = rawSSNDigits.slice(-4);
+    const ssnEncrypted = rawSSNDigits.length === 9
+      ? encryptSSN(rawSSNDigits)
+      : null;
+
+    // Mask SSN in form_data for normal display
     safeData.ssn = maskSSN(safeData.ssn || '');
 
-    // Also mask decedent SSN if present
+    // Handle decedent SSN (encrypt then mask)
+    let decedentSsnEncrypted: string | null = null;
     if (safeData.decedentSSN) {
+      const rawDecedentDigits = safeData.decedentSSN.replace(/\D/g, '');
+      decedentSsnEncrypted = rawDecedentDigits.length === 9
+        ? encryptSSN(rawDecedentDigits)
+        : null;
       safeData.decedentSSN = maskSSN(safeData.decedentSSN);
     }
 
@@ -46,10 +58,11 @@ export async function POST(req: NextRequest) {
     const result = await sql`
       INSERT INTO applications (
         status, assigned_ein, entity_type, legal_name, applicant_email,
-        form_data, ssn_last4
+        form_data, ssn_last4, ssn_encrypted, decedent_ssn_encrypted
       ) VALUES (
         'new', ${assignedEIN}, ${safeData.entityType || null}, ${legalName},
-        ${safeData.email || null}, ${formDataJson}::jsonb, ${ssnLast4}
+        ${safeData.email || null}, ${formDataJson}::jsonb, ${ssnLast4},
+        ${ssnEncrypted}, ${decedentSsnEncrypted}
       ) RETURNING id, assigned_ein
     `;
 

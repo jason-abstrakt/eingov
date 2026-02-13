@@ -209,12 +209,6 @@ export default function BusinessDetailsStep() {
         )}
       </FormSection>
 
-      <FormSection
-        title="Employee Information"
-        description="If you plan to hire employees, provide estimates below."
-      >
-        <EmployeeFields />
-      </FormSection>
     </div>
   );
 }

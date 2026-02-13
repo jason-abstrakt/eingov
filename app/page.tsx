@@ -131,7 +131,7 @@ export default function Home() {
                     <p className="text-gray-700 text-base sm:text-lg">Get your Employer Identification Number (EIN) online today with our simple application process.</p>
                     <Link 
                        href="/apply" 
-                       className="block w-full sm:w-auto sm:inline-block bg-[#005ea2] hover:bg-[#1a4480] text-white font-bold text-lg px-8 sm:px-12 py-4 rounded shadow-md hover:shadow-lg transform transition-all hover:-translate-y-0.5"
+                       className="block w-full sm:w-auto sm:inline-block bg-[#005ea2] hover:bg-[#1a4480] text-white font-bold text-xl px-12 sm:px-16 py-5 rounded-md shadow-lg"
                     >
                        APPLY ONLINE NOW
                     </Link>

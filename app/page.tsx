@@ -6,7 +6,7 @@ export default function Home() {
     <div className="min-h-screen flex flex-col font-sans">
       {/* Official Banner */}
       <header className="bg-slate-100 border-b border-slate-200 py-1 px-4 text-[11px] font-medium text-slate-700 flex justify-end">
-         <div className="flex gap-6 container mx-auto max-w-7xl justify-end">
+         <div className="flex flex-wrap gap-x-6 gap-y-1 container mx-auto max-w-7xl justify-end">
             <Link href="#" className="hover:underline">Help</Link>
             <Link href="#" className="hover:underline">News</Link>
             <div className="flex items-center gap-1 cursor-pointer hover:underline">
@@ -37,7 +37,7 @@ export default function Home() {
                     </svg>
                  </div>
                  <div className="leading-tight">
-                   <span className="font-serif font-bold text-4xl tracking-tight block">IRS</span>
+                   <span className="font-serif font-bold text-3xl sm:text-4xl tracking-tight block">IRS</span>
                  </div>
               </div>
               <nav className="hidden lg:flex gap-1 ml-8 text-[15px] font-bold">
@@ -130,14 +130,14 @@ export default function Home() {
 
               {/* Main CTA Box */}
               <div className="my-8 border border-gray-300 shadow-lg rounded bg-white overflow-hidden">
-                 <div className="bg-[#234E76] text-white p-4 text-center font-bold text-xl tracking-wide">
+                 <div className="bg-[#234E76] text-white p-4 text-center font-bold text-lg sm:text-xl tracking-wide">
                     APPLY FOR EIN – TAX-ID
                  </div>
-                 <div className="p-8 text-center space-y-6">
-                    <p className="text-gray-700 text-lg">Get your Employer Identification Number (EIN) online today with our simple application process.</p>
+                 <div className="p-6 sm:p-8 text-center space-y-6">
+                    <p className="text-gray-700 text-base sm:text-lg">Get your Employer Identification Number (EIN) online today with our simple application process.</p>
                     <Link 
                        href="/apply" 
-                       className="inline-block bg-[#005ea2] hover:bg-[#1a4480] text-white font-bold text-lg px-12 py-4 rounded shadow-md hover:shadow-lg transform transition-all hover:-translate-y-0.5"
+                       className="block w-full sm:w-auto sm:inline-block bg-[#005ea2] hover:bg-[#1a4480] text-white font-bold text-lg px-8 sm:px-12 py-4 rounded shadow-md hover:shadow-lg transform transition-all hover:-translate-y-0.5"
                     >
                        APPLY ONLINE NOW
                     </Link>

@@ -3,6 +3,7 @@ import { Inter, Merriweather } from "next/font/google";
 
 import "@/app/globals.css";
 
+// App root layout
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const merriweather = Merriweather({
   subsets: ["latin"],

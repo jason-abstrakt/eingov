@@ -10,14 +10,13 @@ import EntityTypeStep from '@/components/apply/steps/EntityTypeStep';
 import ResponsiblePartyStep from '@/components/apply/steps/ResponsiblePartyStep';
 import AddressStep from '@/components/apply/steps/AddressStep';
 import BusinessDetailsStep from '@/components/apply/steps/BusinessDetailsStep';
-import ReviewStep from '@/components/apply/steps/ReviewStep';
-import ConfirmationStep from '@/components/apply/steps/ConfirmationStep';
+import PaymentStep from '@/components/apply/steps/PaymentStep';
 
 export default function ApplyPage() {
   const { state } = useEIN();
   const { handleContinue, handleBack, handleGoToStep, handleSubmit } = useStepValidation();
 
-  const isConfirmation = state.currentStep === 6;
+  const isConfirmation = state.currentStep === 7;
 
   const renderStep = () => {
     switch (state.currentStep) {
@@ -32,6 +31,8 @@ export default function ApplyPage() {
       case 5:
         return <ReviewStep onGoToStep={handleGoToStep} />;
       case 6:
+        return <PaymentStep />;
+      case 7:
         return <ConfirmationStep />;
       default:
         return <EntityTypeStep />;

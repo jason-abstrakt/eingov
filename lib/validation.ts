@@ -70,6 +70,49 @@ export function validateEmail(value: string): string | null {
   return null;
 }
 
+// ===== PAYMENT =====
+
+export function validateCardNumber(value: string): string | null {
+  if (!value) return 'Card number is required';
+  const digits = value.replace(/\D/g, '');
+  if (digits.length < 13 || digits.length > 19) return 'Invalid card number length';
+  // Basic Luhn check
+  let sum = 0;
+  let shouldDouble = false;
+  for (let i = digits.length - 1; i >= 0; i--) {
+    let digit = parseInt(digits.charAt(i));
+    if (shouldDouble) {
+      if ((digit *= 2) > 9) digit -= 9;
+    }
+    sum += digit;
+    shouldDouble = !shouldDouble;
+  }
+  if (sum % 10 !== 0) return 'Invalid card number';
+  return null;
+}
+
+export function validateCVC(value: string): string | null {
+  if (!value) return 'CVC is required';
+  const digits = value.replace(/\D/g, '');
+  if (digits.length < 3 || digits.length > 4) return 'Invalid CVC';
+  return null;
+}
+
+export function validateExpiry(month: string, year: string): string | null {
+  if (!month) return 'Month is required';
+  if (!year) return 'Year is required';
+  
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1;
+  const expYear = parseInt(year, 10);
+  const expMonth = parseInt(month, 10);
+  
+  if (expYear < currentYear) return 'Card has expired';
+  if (expYear === currentYear && expMonth < currentMonth) return 'Card has expired';
+  
+  return null;
+}
+
 // ===== PER-STEP VALIDATION =====
 
 export function validateStep(step: number, state: EINApplicationState): Record<string, string> {
@@ -174,6 +217,22 @@ export function validateStep(step: number, state: EINApplicationState): Record<s
       break;
     }
 
+    case 5:
+      // Review step (no input validation, just viewing)
+      break;
+
+    case 6: {
+      if (!state.processingOption) errors.processingOption = 'Select a processing option';
+      const cardErr = validateCardNumber(state.cardNumber);
+      if (cardErr) errors.cardNumber = cardErr;
+      const cvcErr = validateCVC(state.cardCVC);
+      if (cvcErr) errors.cardCVC = cvcErr;
+      const expErr = validateExpiry(state.cardMonth, state.cardYear);
+      if (expErr) errors.expiry = expErr;
+      if (!state.agreedToTerms) errors.agreedToTerms = 'You must agree to the terms';
+      break;
+    }
+
     default:
       break;
   }
@@ -224,6 +283,12 @@ export function getFieldsForStep(step: number, state: EINApplicationState): stri
       if (state.hasPreviousEIN === true) fields.push('previousEIN');
       return fields;
     }
+    case 5:
+      // Review
+      return [];
+    case 6:
+      // Payment
+      return ['processingOption', 'cardNumber', 'cardMonth', 'cardYear', 'cardCVC', 'agreedToTerms'];
     default:
       return [];
   }

@@ -6,11 +6,12 @@ export const STEP_LABELS = [
   'Entity Type',
   'Responsible Party',
   'Addresses',
-  'Business Details',
-  'Review & Submit',
+  'Details',
+  'Review',
+  'Payment',
 ];
 
-export const TOTAL_STEPS = 5;
+export const TOTAL_STEPS = 6;
 
 // ===== ENTITY TYPES =====
 // primary: true = shown above the fold; false = behind "Show more"

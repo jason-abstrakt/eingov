@@ -50,6 +50,15 @@ const initialState: EINApplicationState = {
   decedentState: '',
   trustName: '',
   dateFunded: '',
+  
+  // Payment
+  processingOption: 'standard',
+  cardNumber: '',
+  cardMonth: '',
+  cardYear: '',
+  cardCVC: '',
+  agreedToTerms: false,
+
   errors: {},
   touchedFields: new Set(),
   assignedEIN: null,
@@ -153,6 +162,9 @@ function einReducer(state: EINApplicationState, action: EINAction): EINApplicati
         },
       };
 
+    case 'SET_PAYMENT_FIELD':
+      return { ...state, [action.field]: action.value };
+
     case 'NEXT_STEP': {
       const next = state.currentStep + 1;
       return {
@@ -187,7 +199,7 @@ function einReducer(state: EINApplicationState, action: EINAction): EINApplicati
       return {
         ...state,
         assignedEIN: generateMockEIN(),
-        currentStep: 6,
+        currentStep: 7,
       };
 
     case 'RESET':

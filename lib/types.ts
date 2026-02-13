@@ -210,6 +210,14 @@ export interface EINApplicationState {
   trustName: string;
   dateFunded: string;
 
+  // Payment
+  processingOption: 'standard' | 'rush';
+  cardNumber: string;
+  cardMonth: string;
+  cardYear: string;
+  cardCVC: string;
+  agreedToTerms: boolean;
+
   // Validation
   errors: Record<string, string>;
   touchedFields: Set<string>;
@@ -230,10 +238,12 @@ export type EINAction =
   | { type: 'SET_TPD_FIELD'; field: string; value: string }
   | { type: 'SET_TPD_ADDRESS_FIELD'; field: keyof Address; value: string }
   | { type: 'SET_EMPLOYEE_FIELD'; field: keyof EmployeeInfo; value: unknown }
+  | { type: 'SET_PAYMENT_FIELD'; field: string; value: unknown }
   | { type: 'NEXT_STEP' }
   | { type: 'PREV_STEP' }
   | { type: 'GO_TO_STEP'; step: number }
   | { type: 'SET_ERRORS'; errors: Record<string, string> }
   | { type: 'TOUCH_FIELD'; field: string }
+  | { type: 'SET_PAYMENT_FIELD'; field: string; value: unknown }
   | { type: 'SUBMIT_APPLICATION' }
   | { type: 'RESET' };

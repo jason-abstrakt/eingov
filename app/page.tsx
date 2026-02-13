@@ -125,7 +125,7 @@ export default function Home() {
               </p>
               
               <p className="text-base text-gray-800 leading-relaxed font-bold bg-yellow-50 p-4 border-l-4 border-yellow-400">
-                Beware of websites that charge for an EIN. You never have to pay a fee for an EIN from the IRS.
+                You never have to pay a fee for an EIN on the IRS website. Here you can pay a service fee for EIN application service.
               </p>
 
               {/* Main CTA Box */}

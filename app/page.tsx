@@ -424,18 +424,18 @@ export default function Home() {
             <div className="col-span-3 lg:col-span-1 border-l border-gray-200 pl-8 hidden lg:block">
               <h3 className="font-bold text-xl text-gray-900 mb-4">{t.related}</h3>
               <ul className="space-y-3 text-[#005ea2]">
-                <li><Link href="#" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>{t.relatedEIN}</Link></li>
-                <li><Link href="#" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>{t.relatedPrivacy}</Link></li>
-                <li><Link href="#" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>{t.relatedEmployees}</Link></li>
-                <li><Link href="#" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>{t.relatedVideo} <svg className="w-3 h-3 inline ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></Link></li>
+                <li><Link href="/employer-identification-number" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>{t.relatedEIN}</Link></li>
+                <li><Link href="/privacy-act-statement" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>{t.relatedPrivacy}</Link></li>
+                <li><Link href="/businesses-with-employees" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>{t.relatedEmployees}</Link></li>
+                <li><Link href="/ein-video" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>{t.relatedVideo} <svg className="w-3 h-3 inline ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></Link></li>
               </ul>
 
               <div className="mt-12 p-6 bg-gray-50 border border-gray-200 rounded">
                  <h4 className="font-bold text-gray-900 mb-4 border-b border-gray-200 pb-2">{t.einServicesHeading}</h4>
                  <ul className="space-y-3 text-sm text-[#005ea2]">
-                    <li className="flex items-center gap-2 hover:underline cursor-pointer"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> {t.einServiceDeactivate}</li>
-                    <li className="flex items-center gap-2 hover:underline cursor-pointer"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg> {t.einServiceLost}</li>
-                    <li className="flex items-center gap-2 hover:underline cursor-pointer"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /></svg> {t.einServiceAddress}</li>
+                    <li><Link href="/deactivate-cancel-ein" className="flex items-center gap-2 hover:underline cursor-pointer"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> {t.einServiceDeactivate}</Link></li>
+                    <li><Link href="/lost-ein-retrieval" className="flex items-center gap-2 hover:underline cursor-pointer"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg> {t.einServiceLost}</Link></li>
+                    <li><Link href="/report-address-change" className="flex items-center gap-2 hover:underline cursor-pointer"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /></svg> {t.einServiceAddress}</Link></li>
                  </ul>
               </div>
             </div>
@@ -453,14 +453,14 @@ export default function Home() {
               <div className="space-y-4">
                  <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">{t.agency}</h5>
                  <ul className="space-y-2">
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.aboutIRS}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.careers}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.operations}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.taxStats}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.whistleblower}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.civilRights}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.foia}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.noFear}</Link></li>
+                    <li><Link href="/about" className="hover:text-white transition-colors">{t.aboutIRS}</Link></li>
+                    <li><Link href="/careers" className="hover:text-white transition-colors">{t.careers}</Link></li>
+                    <li><Link href="/operations-budget" className="hover:text-white transition-colors">{t.operations}</Link></li>
+                    <li><Link href="/tax-statistics" className="hover:text-white transition-colors">{t.taxStats}</Link></li>
+                    <li><Link href="/whistleblower-office" className="hover:text-white transition-colors">{t.whistleblower}</Link></li>
+                    <li><Link href="/civil-rights" className="hover:text-white transition-colors">{t.civilRights}</Link></li>
+                    <li><Link href="/foia-requests" className="hover:text-white transition-colors">{t.foia}</Link></li>
+                    <li><Link href="/no-fear-act" className="hover:text-white transition-colors">{t.noFear}</Link></li>
                  </ul>
               </div>
 
@@ -468,11 +468,11 @@ export default function Home() {
               <div className="space-y-4">
                  <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">{t.rights}</h5>
                  <ul className="space-y-2">
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.billOfRights}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.advocate}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.inspector}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.privacy}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.accessibility}</Link></li>
+                    <li><Link href="/taxpayer-bill-of-rights" className="hover:text-white transition-colors">{t.billOfRights}</Link></li>
+                    <li><Link href="/taxpayer-advocate-service" className="hover:text-white transition-colors">{t.advocate}</Link></li>
+                    <li><Link href="/inspector-general" className="hover:text-white transition-colors">{t.inspector}</Link></li>
+                    <li><Link href="/privacy-policy" className="hover:text-white transition-colors">{t.privacy}</Link></li>
+                    <li><Link href="/accessibility" className="hover:text-white transition-colors">{t.accessibility}</Link></li>
                  </ul>
               </div>
 
@@ -480,12 +480,12 @@ export default function Home() {
               <div className="space-y-4">
                  <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">{t.resolve}</h5>
                  <ul className="space-y-2">
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.respond}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.appeals}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.idTheft}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.phishing}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.fraud}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.victim}</Link></li>
+                    <li><Link href="/respond-to-notice" className="hover:text-white transition-colors">{t.respond}</Link></li>
+                    <li><Link href="/office-of-appeals" className="hover:text-white transition-colors">{t.appeals}</Link></li>
+                    <li><Link href="/identity-theft-protection" className="hover:text-white transition-colors">{t.idTheft}</Link></li>
+                    <li><Link href="/report-phishing" className="hover:text-white transition-colors">{t.phishing}</Link></li>
+                    <li><Link href="/tax-fraud-alert" className="hover:text-white transition-colors">{t.fraud}</Link></li>
+                    <li><Link href="/victim-assistance" className="hover:text-white transition-colors">{t.victim}</Link></li>
                  </ul>
               </div>
 
@@ -493,12 +493,12 @@ export default function Home() {
               <div className="space-y-4">
                  <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">{t.pros}</h5>
                  <ul className="space-y-2">
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.proNews}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.developers}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.audit}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.eservices}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.circular}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.enrolled}</Link></li>
+                    <li><Link href="/tax-pro-news" className="hover:text-white transition-colors">{t.proNews}</Link></li>
+                    <li><Link href="/software-developers" className="hover:text-white transition-colors">{t.developers}</Link></li>
+                    <li><Link href="/audit-techniques" className="hover:text-white transition-colors">{t.audit}</Link></li>
+                    <li><Link href="/eservices" className="hover:text-white transition-colors">{t.eservices}</Link></li>
+                    <li><Link href="/circular-230" className="hover:text-white transition-colors">{t.circular}</Link></li>
+                    <li><Link href="/enrolled-agents" className="hover:text-white transition-colors">{t.enrolled}</Link></li>
                  </ul>
               </div>
 
@@ -506,12 +506,12 @@ export default function Home() {
               <div className="space-y-4">
                  <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">{t.forms}</h5>
                  <ul className="space-y-2">
-                    <li><Link href="#" className="hover:text-white transition-colors">Form 1040</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Form W-4</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Form W-9</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Form 1099-NEC</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Form 941</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.viewAll}</Link></li>
+                    <li><Link href="/forms/form-1040" className="hover:text-white transition-colors">Form 1040</Link></li>
+                    <li><Link href="/forms/form-w4" className="hover:text-white transition-colors">Form W-4</Link></li>
+                    <li><Link href="/forms/form-w9" className="hover:text-white transition-colors">Form W-9</Link></li>
+                    <li><Link href="/forms/form-1099-nec" className="hover:text-white transition-colors">Form 1099-NEC</Link></li>
+                    <li><Link href="/forms/form-941" className="hover:text-white transition-colors">Form 941</Link></li>
+                    <li><Link href="/forms/view-all" className="hover:text-white transition-colors">{t.viewAll}</Link></li>
                  </ul>
               </div>
 
@@ -519,11 +519,11 @@ export default function Home() {
               <div className="space-y-4">
                  <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">{t.sites}</h5>
                  <ul className="space-y-2">
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.treasury}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.usaGov}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.treasuryInspector}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.taxpayerAdvocate}</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">{t.directFile}</Link></li>
+                    <li><Link href="/us-treasury" className="hover:text-white transition-colors">{t.treasury}</Link></li>
+                    <li><Link href="/usagov" className="hover:text-white transition-colors">{t.usaGov}</Link></li>
+                    <li><Link href="/treasury-inspector-general" className="hover:text-white transition-colors">{t.treasuryInspector}</Link></li>
+                    <li><Link href="/taxpayer-advocate" className="hover:text-white transition-colors">{t.taxpayerAdvocate}</Link></li>
+                    <li><Link href="/direct-file" className="hover:text-white transition-colors">{t.directFile}</Link></li>
                  </ul>
               </div>
 
@@ -577,10 +577,10 @@ export default function Home() {
               <div className="flex flex-wrap justify-center gap-x-8 gap-y-2">
                  <Link href="/privacy-policy" className="hover:text-slate-300 transition-colors">{t.privacy}</Link>
                  <Link href="/terms-of-service" className="hover:text-slate-300 transition-colors">{t.terms}</Link>
-                 <Link href="#" className="hover:text-slate-300 transition-colors">{t.accessibility}</Link>
-                 <Link href="#" className="hover:text-slate-300 transition-colors">{t.noFear}</Link>
-                 <Link href="#" className="hover:text-slate-300 transition-colors">{t.usaGov}</Link>
-                 <Link href="#" className="hover:text-slate-300 transition-colors">{t.systemStatus}</Link>
+                 <Link href="/accessibility" className="hover:text-slate-300 transition-colors">{t.accessibility}</Link>
+                 <Link href="/no-fear-act" className="hover:text-slate-300 transition-colors">{t.noFear}</Link>
+                 <Link href="/usagov" className="hover:text-slate-300 transition-colors">{t.usaGov}</Link>
+                 <Link href="/system-status" className="hover:text-slate-300 transition-colors">{t.systemStatus}</Link>
               </div>
 
               <div className="flex items-center gap-4 text-slate-600">

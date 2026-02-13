@@ -1,5 +1,12 @@
+import { Metadata } from 'next';
 import ApplicationHeader from '@/components/layout/ApplicationHeader';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy | EIN Gov',
+  description:
+    'Read the Privacy Policy for EIN Gov. Learn how Abstrakt Advisors, LLC collects, uses, and protects your personal information during the EIN application process.',
+};
 
 export default function PrivacyPolicy() {
   const currentDate = 'February 13, 2026';

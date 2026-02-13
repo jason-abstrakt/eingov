@@ -1,5 +1,12 @@
+import { Metadata } from 'next';
 import ApplicationHeader from '@/components/layout/ApplicationHeader';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Terms of Service | EIN Gov',
+  description:
+    'Read the Terms of Service for EIN Gov. Understand the terms and conditions governing the use of our EIN application service operated by Abstrakt Advisors, LLC.',
+};
 
 export default function TermsOfService() {
   const currentDate = 'February 13, 2026';

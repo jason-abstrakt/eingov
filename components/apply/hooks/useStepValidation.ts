@@ -3,7 +3,6 @@
 import { useCallback } from 'react';
 import { useEIN } from '@/context/EINContext';
 import { validateStep, getFieldsForStep } from '@/lib/validation';
-import { generateMockEIN } from '@/lib/utils';
 import { saveApplication } from '@/lib/applications';
 
 export function useStepValidation() {
@@ -46,12 +45,15 @@ export function useStepValidation() {
     [dispatch]
   );
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = useCallback(async () => {
     const { errors, touchedFields, currentStep, furthestStep, ...data } = state;
-    const assignedEIN = generateMockEIN();
-    saveApplication(data, assignedEIN);
-    dispatch({ type: 'SUBMIT_APPLICATION', assignedEIN });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      const result = await saveApplication(data);
+      dispatch({ type: 'SUBMIT_APPLICATION', assignedEIN: result.assignedEIN });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      console.error('Failed to submit application:', err);
+    }
   }, [state, dispatch]);
 
   return {

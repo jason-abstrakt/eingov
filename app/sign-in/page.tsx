@@ -10,15 +10,24 @@ export default function SignInPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    if (authSignIn(email, password)) {
-      router.push('/admin');
-      router.refresh();
-    } else {
-      setError('Invalid email or password.');
+    setLoading(true);
+    try {
+      const success = await authSignIn(email, password);
+      if (success) {
+        router.push('/admin');
+        router.refresh();
+      } else {
+        setError('Invalid email or password.');
+      }
+    } catch {
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -74,9 +83,10 @@ export default function SignInPage() {
             <div>
               <button
                 type="submit"
-                className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#005ea2] hover:bg-[#1a4480] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#005ea2]"
+                disabled={loading}
+                className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#005ea2] hover:bg-[#1a4480] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#005ea2] disabled:opacity-50"
               >
-                Sign in
+                {loading ? 'Signing in…' : 'Sign in'}
               </button>
             </div>
           </form>

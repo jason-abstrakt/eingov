@@ -1,7 +1,5 @@
 import type { EINApplicationState } from './types';
 
-const STORAGE_KEY = 'ein_applications';
-
 export type ApplicationStatus = 'new' | 'ein_sent';
 
 export interface StoredApplication {
@@ -13,45 +11,42 @@ export interface StoredApplication {
   data: Omit<EINApplicationState, 'errors' | 'touchedFields' | 'currentStep' | 'furthestStep'>;
 }
 
-function safeParse<T>(json: string, fallback: T): T {
+export async function getApplications(): Promise<StoredApplication[]> {
   try {
-    return JSON.parse(json) as T;
+    const res = await fetch('/api/applications');
+    if (!res.ok) return [];
+    return res.json();
   } catch {
-    return fallback;
+    return [];
   }
 }
 
-export function getApplications(): StoredApplication[] {
-  if (typeof window === 'undefined') return [];
-  const raw = localStorage.getItem(STORAGE_KEY);
-  return raw ? safeParse(raw, []) : [];
+export async function getApplicationById(id: string): Promise<StoredApplication | null> {
+  try {
+    const res = await fetch(`/api/applications/${id}`);
+    if (!res.ok) return null;
+    return res.json();
+  } catch {
+    return null;
+  }
 }
 
-export function getApplicationById(id: string): StoredApplication | null {
-  return getApplications().find((a) => a.id === id) ?? null;
+export async function saveApplication(
+  data: Omit<EINApplicationState, 'errors' | 'touchedFields' | 'currentStep' | 'furthestStep'>
+): Promise<{ id: string; assignedEIN: string }> {
+  const res = await fetch('/api/applications', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error('Failed to save application');
+  return res.json();
 }
 
-export function saveApplication(
-  data: Omit<EINApplicationState, 'errors' | 'touchedFields' | 'currentStep' | 'furthestStep'>,
-  assignedEIN: string
-): StoredApplication {
-  const list = getApplications();
-  const app: StoredApplication = {
-    id: crypto.randomUUID(),
-    createdAt: new Date().toISOString(),
-    status: 'new',
-    assignedEIN,
-    data: { ...data, assignedEIN },
-  };
-  list.unshift(app);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-  return app;
-}
-
-export function updateApplicationStatus(id: string, status: ApplicationStatus): void {
-  const list = getApplications();
-  const idx = list.findIndex((a) => a.id === id);
-  if (idx === -1) return;
-  list[idx] = { ...list[idx], status };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+export async function updateApplicationStatus(id: string, status: ApplicationStatus): Promise<void> {
+  await fetch(`/api/applications/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status }),
+  });
 }

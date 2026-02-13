@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -54,25 +54,48 @@ export default function AdminApplicationDetailPage() {
   const params = useParams();
   const id = params.id as string;
   const [app, setApp] = useState<StoredApplication | null>(null);
+  const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    if (!isAuthenticated()) {
-      router.replace('/sign-in');
-      return;
+    let cancelled = false;
+    async function init() {
+      const authed = await isAuthenticated();
+      if (!authed) {
+        router.replace('/sign-in');
+        return;
+      }
+      const a = await getApplicationById(id);
+      if (!cancelled) {
+        setApp(a ?? null);
+        setLoading(false);
+      }
     }
-    const a = getApplicationById(id);
-    setApp(a ?? null);
+    init();
+    return () => { cancelled = true; };
   }, [id, router]);
 
-  const handleMarkEINSent = () => {
+  const handleMarkEINSent = useCallback(async () => {
     if (!app) return;
-    updateApplicationStatus(app.id, 'ein_sent');
+    await updateApplicationStatus(app.id, 'ein_sent');
     setApp({ ...app, status: 'ein_sent' });
     setSaved(true);
-  };
+  }, [app]);
 
-  if (app === undefined) return null;
+  const handleSignOut = useCallback(async () => {
+    await signOut();
+    router.push('/sign-in');
+    router.refresh();
+  }, [router]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <p className="text-gray-500">Loading…</p>
+      </div>
+    );
+  }
+
   if (app === null) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -111,11 +134,7 @@ export default function AdminApplicationDetailPage() {
           </div>
           <button
             type="button"
-            onClick={() => {
-              signOut();
-              router.push('/sign-in');
-              router.refresh();
-            }}
+            onClick={handleSignOut}
             className="text-sm text-slate-200 hover:text-white"
           >
             Sign out

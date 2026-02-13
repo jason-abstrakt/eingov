@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -32,17 +32,28 @@ function getEntityDisplayName(type: string | null): string {
 export default function AdminDashboardPage() {
   const router = useRouter();
   const [applications, setApplications] = useState<StoredApplication[]>([]);
+  const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState<ApplicationStatus | 'all'>('all');
   const [entityFilter, setEntityFilter] = useState<string>('all');
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
 
   useEffect(() => {
-    if (!isAuthenticated()) {
-      router.replace('/sign-in');
-      return;
+    let cancelled = false;
+    async function init() {
+      const authed = await isAuthenticated();
+      if (!authed) {
+        router.replace('/sign-in');
+        return;
+      }
+      const apps = await getApplications();
+      if (!cancelled) {
+        setApplications(apps);
+        setLoading(false);
+      }
     }
-    setApplications(getApplications());
+    init();
+    return () => { cancelled = true; };
   }, [router]);
 
   const entityTypes = useMemo(() => {
@@ -69,13 +80,19 @@ export default function AdminDashboardPage() {
     });
   }, [applications, statusFilter, entityFilter, dateFrom, dateTo]);
 
-  const handleSignOut = () => {
-    signOut();
+  const handleSignOut = useCallback(async () => {
+    await signOut();
     router.push('/sign-in');
     router.refresh();
-  };
+  }, [router]);
 
-  if (applications.length === 0 && !isAuthenticated()) return null;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <p className="text-gray-500">Loading…</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

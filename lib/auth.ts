@@ -1,26 +1,28 @@
-const ADMIN_SESSION_KEY = 'ein_admin_session';
-
-// Fixed admin credentials (change in production / use env)
-export const ADMIN_EMAIL = 'admin@eingov.com';
-export const ADMIN_PASSWORD = '.sP^hZP3jXqc3b?M{23';
-
-export function signIn(email: string, password: string): boolean {
-  if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem(ADMIN_SESSION_KEY, '1');
-    }
-    return true;
-  }
-  return false;
-}
-
-export function signOut(): void {
-  if (typeof window !== 'undefined') {
-    sessionStorage.removeItem(ADMIN_SESSION_KEY);
+export async function signIn(
+  email: string,
+  password: string
+): Promise<boolean> {
+  try {
+    const res = await fetch('/api/auth/sign-in', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    return res.ok;
+  } catch {
+    return false;
   }
 }
 
-export function isAuthenticated(): boolean {
-  if (typeof window === 'undefined') return false;
-  return sessionStorage.getItem(ADMIN_SESSION_KEY) === '1';
+export async function signOut(): Promise<void> {
+  await fetch('/api/auth/sign-out', { method: 'POST' });
+}
+
+export async function isAuthenticated(): Promise<boolean> {
+  try {
+    const res = await fetch('/api/auth/me');
+    return res.ok;
+  } catch {
+    return false;
+  }
 }

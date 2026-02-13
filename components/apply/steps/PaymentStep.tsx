@@ -6,6 +6,7 @@ import SelectInput from '@/components/ui/SelectInput';
 import Checkbox from '@/components/ui/Checkbox';
 import { MONTHS } from '@/lib/constants';
 import { CheckCircle2, ShieldCheck, Lock } from 'lucide-react';
+import Link from 'next/link';
 
 const YEARS = Array.from({ length: 15 }, (_, i) => {
   const year = new Date().getFullYear() + i;
@@ -179,7 +180,7 @@ export default function PaymentStep() {
                  onChange={(e) => handleChange('agreedToTerms', e.target.checked)}
                  label={
                    <span className="text-xs text-gray-600 leading-relaxed block">
-                     By submitting this application, I confirm that I have read and agree to the <span className="text-blue-600 underline cursor-pointer">Terms of Service</span> and <span className="text-blue-600 underline cursor-pointer">Privacy Policy</span>. I understand that the application fee is non-refundable once processing begins.
+                     By submitting this application, I confirm that I have read and agree to the <Link href="/terms-of-service" className="text-blue-600 underline cursor-pointer hover:text-blue-800" target="_blank">Terms of Service</Link> and <Link href="/privacy-policy" className="text-blue-600 underline cursor-pointer hover:text-blue-800" target="_blank">Privacy Policy</Link>. I understand that the application fee is non-refundable once processing begins.
                    </span>
                  }
                  error={errors.agreedToTerms}

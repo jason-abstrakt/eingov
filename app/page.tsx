@@ -315,7 +315,8 @@ export default function Home() {
               <p>&copy; {new Date().getFullYear()} Internal Revenue Service. All rights reserved.</p>
               
               <div className="flex flex-wrap justify-center gap-x-8 gap-y-2">
-                 <Link href="#" className="hover:text-slate-300 transition-colors">Privacy Policy</Link>
+                 <Link href="/privacy-policy" className="hover:text-slate-300 transition-colors">Privacy Policy</Link>
+                 <Link href="/terms-of-service" className="hover:text-slate-300 transition-colors">Terms of Service</Link>
                  <Link href="#" className="hover:text-slate-300 transition-colors">Accessibility</Link>
                  <Link href="#" className="hover:text-slate-300 transition-colors">No FEAR Act</Link>
                  <Link href="#" className="hover:text-slate-300 transition-colors">USA.gov</Link>

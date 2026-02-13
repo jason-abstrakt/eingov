@@ -75,7 +75,9 @@ export default function PaymentStep() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="block text-lg font-bold text-gray-900">$279.00</span>
+                  {state.processingOption === 'standard' && (
+                    <span className="block text-lg font-bold text-gray-900">$279.00</span>
+                  )}
                 </div>
               </div>
 
@@ -103,7 +105,9 @@ export default function PaymentStep() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="block text-lg font-bold text-gray-900">$319.00</span>
+                  {state.processingOption === 'rush' && (
+                    <span className="block text-lg font-bold text-gray-900">$319.00</span>
+                  )}
                 </div>
               </div>
             </div>

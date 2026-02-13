@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect, useCallback } from 'react';
 import { useEIN } from '@/context/EINContext';
 import { useStepValidation } from '@/components/apply/hooks/useStepValidation';
 import { TOTAL_STEPS } from '@/lib/constants';
@@ -13,12 +14,40 @@ import BusinessDetailsStep from '@/components/apply/steps/BusinessDetailsStep';
 import ReviewStep from '@/components/apply/steps/ReviewStep';
 import ConfirmationStep from '@/components/apply/steps/ConfirmationStep';
 import PaymentStep from '@/components/apply/steps/PaymentStep';
+import StripeProvider from '@/components/apply/StripeProvider';
+import StripeBridge from '@/components/apply/StripeBridge';
 
 export default function ApplyPage() {
   const { state } = useEIN();
-  const { handleContinue, handleBack, handleGoToStep, handleSubmit } = useStepValidation();
+  const { handleContinue, handleBack, handleGoToStep, handleSubmit, setStripe } = useStepValidation();
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
 
+  const isPaymentStep = state.currentStep === TOTAL_STEPS;
   const isConfirmation = state.currentStep === 7;
+
+  // Create a PaymentIntent when user arrives at the payment step
+  const createPaymentIntent = useCallback(async (option: string) => {
+    try {
+      const res = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ processingOption: option }),
+      });
+      if (res.ok) {
+        const { clientSecret: cs } = await res.json();
+        setClientSecret(cs);
+      }
+    } catch (err) {
+      console.error('Failed to create payment intent:', err);
+    }
+  }, []);
+
+  // Initialize PaymentIntent when arriving at payment step
+  useEffect(() => {
+    if (isPaymentStep && !clientSecret && state.processingOption) {
+      createPaymentIntent(state.processingOption);
+    }
+  }, [isPaymentStep, clientSecret, state.processingOption, createPaymentIntent]);
 
   const renderStep = () => {
     switch (state.currentStep) {
@@ -33,7 +62,12 @@ export default function ApplyPage() {
       case 5:
         return <ReviewStep onGoToStep={handleGoToStep} />;
       case 6:
-        return <PaymentStep />;
+        return (
+          <StripeProvider clientSecret={clientSecret}>
+            <StripeBridge setStripe={setStripe} />
+            <PaymentStep />
+          </StripeProvider>
+        );
       case 7:
         return <ConfirmationStep />;
       default:
@@ -56,6 +90,12 @@ export default function ApplyPage() {
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
         {renderStep()}
 
+        {state.errors.payment && (
+          <div className="mt-4 rounded-md bg-red-50 p-3 text-sm text-red-700">
+            {state.errors.payment}
+          </div>
+        )}
+
         {!isConfirmation && (
           <StepNavigation
             currentStep={state.currentStep}
@@ -63,7 +103,7 @@ export default function ApplyPage() {
             onBack={handleBack}
             onContinue={handleContinue}
             onSubmit={handleSubmit}
-            isSubmitStep={state.currentStep === TOTAL_STEPS}
+            isSubmitStep={isPaymentStep}
           />
         )}
       </main>

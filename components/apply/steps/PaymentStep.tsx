@@ -1,17 +1,10 @@
 'use client';
 
 import { useEIN } from '@/context/EINContext';
-import TextInput from '@/components/ui/TextInput';
-import SelectInput from '@/components/ui/SelectInput';
 import Checkbox from '@/components/ui/Checkbox';
-import { MONTHS } from '@/lib/constants';
 import { CheckCircle2, ShieldCheck, Lock } from 'lucide-react';
 import Link from 'next/link';
-
-const YEARS = Array.from({ length: 15 }, (_, i) => {
-  const year = new Date().getFullYear() + i;
-  return { value: year.toString(), label: year.toString() };
-});
+import { PaymentElement } from '@stripe/react-stripe-js';
 
 export default function PaymentStep() {
   const { state, dispatch } = useEIN();
@@ -27,10 +20,10 @@ export default function PaymentStep() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      
+
       {/* Main Payment Container */}
       <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
-        
+
         {/* Header */}
         <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -46,17 +39,17 @@ export default function PaymentStep() {
         </div>
 
         <div className="p-6 space-y-6">
-          
+
           {/* Section 1: Processing Options */}
           <div>
             <h3 className="text-sm font-semibold text-gray-900 mb-3 uppercase tracking-wide text-xs">Select Processing Speed</h3>
             <div className="grid gap-3">
               {/* Standard Option */}
-              <div 
+              <div
                 className={`
                   relative flex items-center justify-between p-4 rounded-lg border-2 cursor-pointer transition-all
-                  ${state.processingOption === 'standard' 
-                    ? 'border-blue-600 bg-blue-50/50' 
+                  ${state.processingOption === 'standard'
+                    ? 'border-blue-600 bg-blue-50/50'
                     : 'border-gray-200 hover:border-gray-300'
                   }
                 `}
@@ -82,11 +75,11 @@ export default function PaymentStep() {
               </div>
 
               {/* Rush Option */}
-              <div 
+              <div
                 className={`
                   relative flex items-center justify-between p-4 rounded-lg border-2 cursor-pointer transition-all
-                  ${state.processingOption === 'rush' 
-                    ? 'border-blue-600 bg-blue-50/50' 
+                  ${state.processingOption === 'rush'
+                    ? 'border-blue-600 bg-blue-50/50'
                     : 'border-gray-200 hover:border-gray-300'
                   }
                 `}
@@ -122,62 +115,13 @@ export default function PaymentStep() {
 
           <hr className="border-gray-100" />
 
-          {/* Section 2: Card Details */}
+          {/* Section 2: Stripe Payment Element */}
           <div>
             <h3 className="text-sm font-semibold text-gray-900 mb-4 uppercase tracking-wide text-xs">Payment Method</h3>
-            <div className="space-y-4">
-              <div className="col-span-full">
-                <TextInput
-                  name="cardNumber"
-                  label="Card Number"
-                  value={state.cardNumber}
-                  onChange={(e) => handleChange('cardNumber', e.target.value)}
-                  placeholder="0000 0000 0000 0000"
-                  error={errors.cardNumber}
-                  maxLength={19}
-                  className="bg-white"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="col-span-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Expiration Date</label>
-                  <div className="flex gap-2">
-                    <SelectInput
-                      name="cardMonth"
-                      value={state.cardMonth}
-                      onChange={(e) => handleChange('cardMonth', e.target.value)}
-                      options={MONTHS.map(m => ({ ...m, label: m.value.substring(0,3) }))} // Shorten months
-                      error={errors.expiry} 
-                      placeholder="MM"
-                    />
-                    <SelectInput
-                      name="cardYear"
-                      value={state.cardYear}
-                      onChange={(e) => handleChange('cardYear', e.target.value)}
-                      options={YEARS}
-                      error={errors.expiry ? ' ' : undefined}
-                      placeholder="YY"
-                    />
-                  </div>
-                </div>
-                <div className="col-span-1">
-                  <TextInput
-                    name="cardCVC"
-                    label="Security Code (CVC)"
-                    value={state.cardCVC}
-                    onChange={(e) => handleChange('cardCVC', e.target.value)}
-                    placeholder="123"
-                    error={errors.cardCVC}
-                    maxLength={4}
-                    className="bg-white"
-                  />
-                </div>
-              </div>
-            </div>
+            <PaymentElement />
           </div>
         </div>
-        
+
         <div className="bg-gray-50 p-4 border-t border-gray-200">
           <div className="flex items-start gap-3">
             <Checkbox

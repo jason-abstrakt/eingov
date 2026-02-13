@@ -3,6 +3,7 @@ import { getSQL } from '@/lib/db';
 import { verifyAdmin } from '@/lib/auth-server';
 import { maskSSN, generateMockEIN } from '@/lib/utils';
 import { encryptSSN } from '@/lib/crypto';
+import { getStripe } from '@/lib/stripe';
 
 // POST — Submit a new application (public, no auth required)
 export async function POST(req: NextRequest) {
@@ -10,15 +11,28 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const sql = getSQL();
 
+    // Verify Stripe payment
+    const { paymentIntentId } = body;
+    if (!paymentIntentId) {
+      return NextResponse.json({ error: 'Payment is required' }, { status: 400 });
+    }
+
+    const stripe = getStripe();
+    const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+    if (paymentIntent.status !== 'succeeded') {
+      return NextResponse.json({ error: 'Payment has not been completed' }, { status: 400 });
+    }
+
     // Generate EIN server-side
     const assignedEIN = generateMockEIN();
 
-    // Strip sensitive payment data before storing
+    // Strip payment-related fields before storing
     const {
       cardNumber: _cn,
       cardCVC: _cc,
       cardMonth: _cm,
       cardYear: _cy,
+      paymentIntentId: _pi,
       ...safeData
     } = body;
 

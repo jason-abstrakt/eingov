@@ -223,12 +223,6 @@ export function validateStep(step: number, state: EINApplicationState): Record<s
 
     case 6: {
       if (!state.processingOption) errors.processingOption = 'Select a processing option';
-      const cardErr = validateCardNumber(state.cardNumber);
-      if (cardErr) errors.cardNumber = cardErr;
-      const cvcErr = validateCVC(state.cardCVC);
-      if (cvcErr) errors.cardCVC = cvcErr;
-      const expErr = validateExpiry(state.cardMonth, state.cardYear);
-      if (expErr) errors.expiry = expErr;
       if (!state.agreedToTerms) errors.agreedToTerms = 'You must agree to the terms';
       break;
     }
@@ -288,7 +282,7 @@ export function getFieldsForStep(step: number, state: EINApplicationState): stri
       return [];
     case 6:
       // Payment
-      return ['processingOption', 'cardNumber', 'cardMonth', 'cardYear', 'cardCVC', 'agreedToTerms'];
+      return ['processingOption', 'agreedToTerms'];
     default:
       return [];
   }

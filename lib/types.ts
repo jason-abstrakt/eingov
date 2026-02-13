@@ -224,6 +224,13 @@ export interface EINApplicationState {
 
   // Result
   assignedEIN: string | null;
+
+  // General Questions (Step 4)
+  ownsHighwayVehicle: boolean;
+  involvesGambling: boolean;
+  paysExciseTax: boolean;
+  sellsAlcoholTobaccoFirearms: boolean;
+  hasEmployees: boolean;
 }
 
 // ===== REDUCER ACTIONS =====

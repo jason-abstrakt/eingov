@@ -14,6 +14,8 @@ import TrustFields from '@/components/apply/sections/TrustFields';
 import { US_STATES, MONTHS } from '@/lib/constants';
 import { formatEIN } from '@/lib/utils';
 
+import GeneralQuestions from '@/components/apply/sections/GeneralQuestions';
+
 export default function BusinessDetailsStep() {
   const { state, dispatch } = useEIN();
 
@@ -24,30 +26,48 @@ export default function BusinessDetailsStep() {
   // Estate path — only decedent info
   if (state.entityType === 'estate') {
     return (
-      <FormSection
-        title="Estate Details"
-        description="Provide information about the decedent whose estate you are administering."
-      >
-        <EstateFields />
-      </FormSection>
+      <div className="space-y-8">
+        <FormSection
+          title="Estate Details"
+          description="Provide information about the decedent whose estate you are administering."
+        >
+          <EstateFields />
+        </FormSection>
+        
+        <FormSection
+          title="General Questions"
+          description="Please answer the following questions about the estate."
+        >
+          <GeneralQuestions />
+        </FormSection>
+      </div>
     );
   }
 
   // Trust path — only trust info
   if (state.entityType === 'trust') {
     return (
-      <FormSection
-        title="Trust Details"
-        description="Provide the name and funding details of the trust."
-      >
-        <TrustFields />
-      </FormSection>
+      <div className="space-y-8">
+        <FormSection
+          title="Trust Details"
+          description="Provide the name and funding details of the trust."
+        >
+          <TrustFields />
+        </FormSection>
+
+        <FormSection
+          title="General Questions"
+          description="Please answer the following questions about the trust."
+        >
+          <GeneralQuestions />
+        </FormSection>
+      </div>
     );
   }
 
   // All other entities: full business details
   return (
-    <div>
+    <div className="space-y-8">
       <FormSection
         title="Business Information"
         description="Provide the legal details of your business."
@@ -130,6 +150,13 @@ export default function BusinessDetailsStep() {
             />
           </div>
         </div>
+      </FormSection>
+
+      <FormSection
+        title="General Questions"
+        description="Please answer the following additional questions."
+      >
+        <GeneralQuestions />
       </FormSection>
 
       <FormSection

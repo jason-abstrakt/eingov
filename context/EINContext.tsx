@@ -51,6 +51,13 @@ const initialState: EINApplicationState = {
   trustName: '',
   dateFunded: '',
   
+  // General Questions (Step 4)
+  ownsHighwayVehicle: false,
+  involvesGambling: false,
+  paysExciseTax: false,
+  sellsAlcoholTobaccoFirearms: false,
+  hasEmployees: false,
+  
   // Payment
   processingOption: 'standard',
   cardNumber: '',

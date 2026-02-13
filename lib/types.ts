@@ -173,6 +173,7 @@ export interface EINApplicationState {
   middleName: string;
   lastName: string;
   suffix: NameSuffix;
+  email: string;
   applicantRole: ApplicantRole | null;
   thirdPartyDesignee: ThirdPartyDesignee;
 

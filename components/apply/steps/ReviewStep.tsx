@@ -62,6 +62,7 @@ export default function ReviewStep({ onGoToStep }: ReviewStepProps) {
       <ReviewSection title="Responsible Party" onEdit={() => onGoToStep(2)}>
         <ReviewRow label="SSN / ITIN" value={maskSSN(state.ssn)} />
         <ReviewRow label="Name" value={fullName} />
+        <ReviewRow label="Email" value={state.email} />
         <ReviewRow label="Role" value={roleText} />
         {state.applicantRole === 'third_party' && (
           <>

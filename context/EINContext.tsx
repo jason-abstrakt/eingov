@@ -20,6 +20,7 @@ const initialState: EINApplicationState = {
   middleName: '',
   lastName: '',
   suffix: '' as NameSuffix,
+  email: '',
   applicantRole: null,
   thirdPartyDesignee: { name: '', phone: '', address: { ...emptyAddress }, fax: '' },
   mailingAddress: { ...emptyAddress },

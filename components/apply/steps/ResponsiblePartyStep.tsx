@@ -82,6 +82,20 @@ export default function ResponsiblePartyStep() {
             placeholder="None"
           />
         </div>
+
+        <div className="mt-6">
+          <TextInput
+            label="Email Address"
+            name="email"
+            type="email"
+            value={state.email}
+            onChange={(e) => dispatch({ type: 'SET_FIELD', field: 'email', value: e.target.value })}
+            onBlur={() => handleBlur('email')}
+            required
+            error={state.errors.email}
+            description="We will email your official EIN confirmation letter to this address immediately upon approval."
+          />
+        </div>
       </FormSection>
 
       <FormSection

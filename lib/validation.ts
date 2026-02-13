@@ -64,6 +64,12 @@ export function validatePhone(value: string): string | null {
   return null;
 }
 
+export function validateEmail(value: string): string | null {
+  if (!value) return 'Email is required';
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Enter a valid email address';
+  return null;
+}
+
 // ===== PER-STEP VALIDATION =====
 
 export function validateStep(step: number, state: EINApplicationState): Record<string, string> {
@@ -97,6 +103,8 @@ export function validateStep(step: number, state: EINApplicationState): Record<s
       if (fnErr) errors.firstName = fnErr;
       const lnErr = validateName(state.lastName, 'Last name');
       if (lnErr) errors.lastName = lnErr;
+      const emailErr = validateEmail(state.email);
+      if (emailErr) errors.email = emailErr;
       if (!state.applicantRole) errors.applicantRole = 'Select your role';
       if (state.applicantRole === 'third_party') {
         if (!state.thirdPartyDesignee.name.trim()) errors['tpd.name'] = 'Designee name is required';
@@ -190,7 +198,7 @@ export function getFieldsForStep(step: number, state: EINApplicationState): stri
       return fields;
     }
     case 2: {
-      const fields = ['ssn', 'firstName', 'lastName', 'applicantRole'];
+      const fields = ['ssn', 'firstName', 'lastName', 'email', 'applicantRole'];
       if (state.applicantRole === 'third_party') {
         fields.push('tpd.name', 'tpd.phone', 'tpd.street1', 'tpd.city', 'tpd.state', 'tpd.zip');
       }

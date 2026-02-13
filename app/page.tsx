@@ -320,18 +320,18 @@ export default function Home() {
       <main className="flex-grow bg-white">
         {/* Breadcrumb */}
         <div className="bg-[#f0f0f0] border-b border-gray-200">
-           <div className="container mx-auto max-w-7xl px-4 py-2 text-[11px] text-[#005ea2] flex gap-2">
-              <Link href="#" className="hover:underline">{t.breadcrumbHome}</Link> /
-              <Link href="#" className="hover:underline">{t.breadcrumbFile}</Link> /
-              <Link href="#" className="hover:underline">{t.breadcrumbBusiness}</Link> /
-              <Link href="#" className="hover:underline">{t.breadcrumbEIN}</Link> /
-              <span className="text-gray-600">{t.breadcrumbGet}</span>
+           <div className="container mx-auto max-w-7xl px-4 py-2 text-[11px] text-[#005ea2] flex gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
+              <Link href="#" className="hover:underline flex-shrink-0">{t.breadcrumbHome}</Link> /
+              <Link href="#" className="hover:underline flex-shrink-0">{t.breadcrumbFile}</Link> /
+              <Link href="#" className="hover:underline flex-shrink-0">{t.breadcrumbBusiness}</Link> /
+              <Link href="#" className="hover:underline flex-shrink-0">{t.breadcrumbEIN}</Link> /
+              <span className="text-gray-600 flex-shrink-0">{t.breadcrumbGet}</span>
            </div>
         </div>
 
         {/* Hero Section */}
         <section className="bg-white relative">
-          <div className="container mx-auto max-w-7xl px-4 py-8 grid lg:grid-cols-4 gap-12">
+          <div className="container mx-auto max-w-7xl px-4 py-6 sm:py-8 grid lg:grid-cols-4 gap-8 lg:gap-12">
             
             {/* Left Sidebar (Desktop) - Navigation */}
             <div className="hidden lg:block col-span-1 space-y-6 text-sm">
@@ -397,7 +397,7 @@ export default function Home() {
                     <p className="text-gray-700 text-base sm:text-lg">{t.ctaText}</p>
                     <Link 
                        href="/apply" 
-                       className="block w-full sm:w-auto sm:inline-block bg-[#005ea2] hover:bg-[#1a4480] text-white font-bold text-xl px-12 sm:px-16 py-5 rounded-md shadow-lg"
+                       className="block w-full sm:w-auto sm:inline-block bg-[#005ea2] hover:bg-[#1a4480] text-white font-bold text-lg sm:text-xl px-8 sm:px-16 py-4 sm:py-5 rounded-md shadow-lg"
                     >
                        {t.ctaButton}
                     </Link>

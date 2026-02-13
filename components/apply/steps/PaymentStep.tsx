@@ -6,7 +6,11 @@ import { CheckCircle2, ShieldCheck, Lock } from 'lucide-react';
 import Link from 'next/link';
 import { PaymentElement } from '@stripe/react-stripe-js';
 
-export default function PaymentStep() {
+interface PaymentStepProps {
+  clientSecret?: string | null;
+}
+
+export default function PaymentStep({ clientSecret }: PaymentStepProps) {
   const { state, dispatch } = useEIN();
   const { errors } = state;
 
@@ -118,7 +122,15 @@ export default function PaymentStep() {
           {/* Section 2: Stripe Payment Element */}
           <div>
             <h3 className="text-sm font-semibold text-gray-900 mb-4 uppercase tracking-wide text-xs">Payment Method</h3>
-            <PaymentElement />
+            {clientSecret ? (
+              <PaymentElement />
+            ) : (
+              <div className="text-center py-6 text-sm text-gray-500">
+                {state.processingOption
+                  ? 'Loading payment form...'
+                  : 'Select a processing speed above to continue'}
+              </div>
+            )}
           </div>
         </div>
 

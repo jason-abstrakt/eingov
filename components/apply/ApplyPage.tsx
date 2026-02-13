@@ -42,12 +42,17 @@ export default function ApplyPage() {
     }
   }, []);
 
-  // Initialize PaymentIntent when arriving at payment step
+  // Track which processing option the current PaymentIntent was created for
+  const [intentOption, setIntentOption] = useState<string | null>(null);
+
+  // Create/recreate PaymentIntent when arriving at payment step or changing option
   useEffect(() => {
-    if (isPaymentStep && !clientSecret && state.processingOption) {
+    if (isPaymentStep && state.processingOption && state.processingOption !== intentOption) {
+      setClientSecret(null);
+      setIntentOption(state.processingOption);
       createPaymentIntent(state.processingOption);
     }
-  }, [isPaymentStep, clientSecret, state.processingOption, createPaymentIntent]);
+  }, [isPaymentStep, state.processingOption, intentOption, createPaymentIntent]);
 
   const renderStep = () => {
     switch (state.currentStep) {
@@ -62,12 +67,15 @@ export default function ApplyPage() {
       case 5:
         return <ReviewStep onGoToStep={handleGoToStep} />;
       case 6:
-        return (
-          <StripeProvider clientSecret={clientSecret}>
-            <StripeBridge setStripe={setStripe} />
-            <PaymentStep />
-          </StripeProvider>
-        );
+        if (clientSecret) {
+          return (
+            <StripeProvider clientSecret={clientSecret}>
+              <StripeBridge setStripe={setStripe} />
+              <PaymentStep clientSecret={clientSecret} />
+            </StripeProvider>
+          );
+        }
+        return <PaymentStep clientSecret={null} />;
       case 7:
         return <ConfirmationStep />;
       default:

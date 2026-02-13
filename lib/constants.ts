@@ -8,7 +8,7 @@ export const STEP_LABELS = [
   'Addresses',
   'Details',
   'Review',
-  'Payment',
+  'Get EIN',
 ];
 
 export const TOTAL_STEPS = 6;

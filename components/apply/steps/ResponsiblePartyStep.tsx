@@ -93,7 +93,7 @@ export default function ResponsiblePartyStep() {
             onBlur={() => handleBlur('email')}
             required
             error={state.errors.email}
-            description="We will email your official EIN confirmation letter to this address immediately upon approval."
+            helpText="We will email your official EIN confirmation letter to this address immediately upon approval."
           />
         </div>
       </FormSection>

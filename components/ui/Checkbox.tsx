@@ -1,14 +1,15 @@
 'use client';
 
-import { ChangeEvent } from 'react';
+import { ReactNode, ChangeEvent } from 'react';
 import { Check } from 'lucide-react';
 
 interface CheckboxProps {
-  label: string;
-  name: string;
+  label: ReactNode;
+  name?: string;
   checked: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   description?: string;
+  error?: string;
 }
 
 export default function Checkbox({
@@ -17,6 +18,7 @@ export default function Checkbox({
   checked,
   onChange,
   description,
+  error,
 }: CheckboxProps) {
   return (
     <label className="flex items-start gap-3 cursor-pointer">
@@ -39,10 +41,11 @@ export default function Checkbox({
         </div>
       </div>
       <div>
-        <span className="text-sm font-medium text-gray-900">{label}</span>
+        <div className="text-sm font-medium text-gray-900">{label}</div>
         {description && (
           <p className="text-sm text-gray-500 mt-0.5">{description}</p>
         )}
+        {error && <p className="text-sm text-red-600 mt-1">{error}</p>}
       </div>
     </label>
   );

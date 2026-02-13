@@ -9,7 +9,7 @@ interface SelectOption {
 }
 
 interface SelectInputProps {
-  label: string;
+  label?: string;
   name: string;
   value: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
@@ -35,10 +35,12 @@ export default function SelectInput({
 }: SelectInputProps) {
   return (
     <div>
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
-        {label}
-        {required && <span className="text-red-500 ml-0.5">*</span>}
-      </label>
+      {label && (
+        <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
+          {label}
+          {required && <span className="text-red-500 ml-0.5">*</span>}
+        </label>
+      )}
       <select
         id={name}
         name={name}

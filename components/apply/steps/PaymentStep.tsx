@@ -145,7 +145,7 @@ export default function PaymentStep() {
             <TextInput
               name="cardNumber"
               value={state.cardNumber}
-              onChange={(value) => handleChange('cardNumber', value)}
+              onChange={(e) => handleChange('cardNumber', e.target.value)}
               placeholder="Enter card number"
               error={errors.cardNumber}
               maxLength={19}
@@ -157,7 +157,7 @@ export default function PaymentStep() {
               name="cardMonth"
               label="Month"
               value={state.cardMonth}
-              onChange={(value) => handleChange('cardMonth', value)}
+              onChange={(e) => handleChange('cardMonth', e.target.value)}
               options={MONTHS}
               error={errors.expiry} // expiry error usually covers both
             />
@@ -165,7 +165,7 @@ export default function PaymentStep() {
               name="cardYear"
               label="Year"
               value={state.cardYear}
-              onChange={(value) => handleChange('cardYear', value)}
+              onChange={(e) => handleChange('cardYear', e.target.value)}
               options={YEARS}
               error={errors.expiry ? ' ' : undefined} // Avoid double error message
             />
@@ -173,7 +173,7 @@ export default function PaymentStep() {
               name="cardCVC"
               label="CVC"
               value={state.cardCVC}
-              onChange={(value) => handleChange('cardCVC', value)}
+              onChange={(e) => handleChange('cardCVC', e.target.value)}
               placeholder="CVC"
               error={errors.cardCVC}
               maxLength={4}
@@ -186,7 +186,7 @@ export default function PaymentStep() {
       <div className="pt-4">
         <Checkbox
           checked={state.agreedToTerms}
-          onChange={(checked) => handleChange('agreedToTerms', checked)}
+          onChange={(e) => handleChange('agreedToTerms', e.target.checked)}
           label={
             <span className="text-sm text-gray-600">
               By checking this box, I represent and warrant that all of the information provided above is accurate and complete. I agree that I have already read and accept the Terms & Privacy Policy

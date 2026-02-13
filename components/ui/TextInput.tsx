@@ -4,8 +4,9 @@ import { ChangeEvent, FocusEvent } from 'react';
 import FieldError from './FieldError';
 
 interface TextInputProps {
-  label: string;
+  label?: string;
   name: string;
+  type?: string;
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
@@ -21,6 +22,7 @@ interface TextInputProps {
 export default function TextInput({
   label,
   name,
+  type = 'text',
   value,
   onChange,
   onBlur,
@@ -34,12 +36,14 @@ export default function TextInput({
 }: TextInputProps) {
   return (
     <div className={className}>
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
-        {label}
-        {required && <span className="text-red-500 ml-0.5">*</span>}
-      </label>
+      {label && (
+        <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
+          {label}
+          {required && <span className="text-red-500 ml-0.5">*</span>}
+        </label>
+      )}
       <input
-        type="text"
+        type={type}
         id={name}
         name={name}
         value={value}

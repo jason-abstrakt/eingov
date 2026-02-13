@@ -10,6 +10,8 @@ import EntityTypeStep from '@/components/apply/steps/EntityTypeStep';
 import ResponsiblePartyStep from '@/components/apply/steps/ResponsiblePartyStep';
 import AddressStep from '@/components/apply/steps/AddressStep';
 import BusinessDetailsStep from '@/components/apply/steps/BusinessDetailsStep';
+import ReviewStep from '@/components/apply/steps/ReviewStep';
+import ConfirmationStep from '@/components/apply/steps/ConfirmationStep';
 import PaymentStep from '@/components/apply/steps/PaymentStep';
 
 export default function ApplyPage() {

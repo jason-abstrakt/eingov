@@ -45,7 +45,7 @@ export default function PaymentStep() {
           </div>
         </div>
 
-        <div className="p-6 space-y-8">
+        <div className="p-6 space-y-6">
           
           {/* Section 1: Processing Options */}
           <div>
@@ -173,7 +173,7 @@ export default function PaymentStep() {
             </div>
           </div>
 
-          <div className="bg-gray-50 -mx-6 -mb-6 p-6 border-t border-gray-200">
+          <div className="bg-gray-50 -mx-6 -mb-6 p-4 border-t border-gray-200">
              <div className="flex items-start gap-3">
                <Checkbox
                  checked={state.agreedToTerms}
@@ -188,7 +188,7 @@ export default function PaymentStep() {
              </div>
              <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400">
                <ShieldCheck className="w-3 h-3" />
-               <span>256-bit SSL Secure Encryption</span>
+               <span>SSL Secure Encryption</span>
              </div>
           </div>
         </div>

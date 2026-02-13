@@ -6,6 +6,7 @@ import RadioCard from '@/components/ui/RadioCard';
 import ShowMoreToggle from '@/components/ui/ShowMoreToggle';
 import FieldError from '@/components/ui/FieldError';
 import type { PrimaryEntityType } from '@/lib/types';
+import { Edit2 } from 'lucide-react';
 
 export default function EntitySelector() {
   const { state, dispatch } = useEIN();
@@ -16,6 +17,29 @@ export default function EntitySelector() {
   const handleSelect = (value: string) => {
     dispatch({ type: 'SET_ENTITY_TYPE', entityType: value as PrimaryEntityType });
   };
+
+  const handleClear = () => {
+    dispatch({ type: 'SET_ENTITY_TYPE', entityType: null as any });
+  };
+
+  if (state.entityType) {
+    const selectedType = ENTITY_TYPES.find((t) => t.value === state.entityType);
+    return (
+      <div className="bg-white border border-gray-200 rounded-lg p-4 flex items-center justify-between">
+        <div>
+          <p className="text-sm text-gray-500 mb-1">Entity Type</p>
+          <p className="font-semibold text-gray-900">{selectedType?.label}</p>
+        </div>
+        <button
+          onClick={handleClear}
+          className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-1"
+        >
+          <Edit2 className="w-3 h-3" />
+          Change
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -40,10 +64,7 @@ export default function EntitySelector() {
         <ShowMoreToggle
           label="Show more entity types"
           expandedLabel="Show fewer entity types"
-          defaultExpanded={
-            state.entityType !== null &&
-            secondaryTypes.some((t) => t.value === state.entityType)
-          }
+          defaultExpanded={false}
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
             {secondaryTypes.map((t) => (

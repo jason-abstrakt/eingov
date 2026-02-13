@@ -11,18 +11,36 @@ import { useEIN } from '@/context/EINContext';
 export default function EntityTypeStep() {
   const { state } = useEIN();
 
+  // Determine if the Reason Selector should be visible
+  const showReason = (() => {
+    if (!state.entityType) return false;
+
+    if (state.entityType === 'llc') {
+      return !!(state.llcMemberCount && state.llcState);
+    }
+
+    if (state.entityType === 'estate') {
+      return true; // Estates don't have subtypes
+    }
+
+    // For others, require sub-type
+    return !!state.entitySubType;
+  })();
+
   return (
-    <div>
+    <div className="space-y-8">
       <FormSection
         title="Select Your Entity Type"
         description="Choose the legal structure that best describes your organization. This determines which IRS forms you'll file."
       >
         <EntitySelector />
+        
+        {/* These components handle their own internal null checks based on entityType */}
         <SubTypeSelector />
         <LLCFields />
       </FormSection>
 
-      {state.entityType && (
+      {showReason && (
         <FormSection
           title="Reason for Applying"
           description="Tell us why you need an Employer Identification Number."

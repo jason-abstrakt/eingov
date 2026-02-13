@@ -1,21 +1,277 @@
+'use client';
+
 import { ShieldCheck, ArrowRight, FileText, Lock } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+
+type Language = 'en' | 'es';
+
+const content = {
+  en: {
+    // Header
+    help: "Help",
+    news: "News",
+    english: "English",
+    taxPros: "Tax Pros",
+    signIn: "Sign in",
+    searchPlaceholder: "Search",
+
+    // Nav
+    navFile: "File",
+    navPay: "Pay",
+    navRefunds: "Refunds",
+    navCredits: "Credits & Deductions",
+    navForms: "Forms",
+    navFraud: "Report Fraud",
+
+    // Breadcrumb
+    breadcrumbHome: "Home",
+    breadcrumbFile: "File",
+    breadcrumbBusiness: "Businesses and self-employed",
+    breadcrumbEIN: "Employer ID numbers",
+    breadcrumbGet: "Get an employer identification number",
+
+    // Sidebar
+    individuals: "Individuals",
+    businesses: "Businesses and self-employed",
+    charities: "Charities and nonprofits",
+
+    // Main
+    mainHeading: "Get an employer identification number (EIN)",
+    introText: "Use this tool to get an EIN from the IRS. Answer questions and submit the application. If it's approved, the IRS issue your EIN and we will send via email.",
+    feeDisclaimer: "You never have to pay a fee for an EIN on the IRS website. Here you can pay a service fee for EIN application service.",
+    
+    // CTA Box
+    ctaHeading: "APPLY FOR EIN – TAX-ID",
+    ctaText: "Get your Employer Identification Number (EIN) online today with our simple application process.",
+    ctaButton: "APPLY ONLINE NOW",
+
+    // How it works
+    howItWorksHeading: "How it works",
+    howItWorks1: "Complete the application in one session. You can't save it for later.",
+    howItWorks2: "It expires after 15 minutes of inactivity, and you'll need to start over.",
+    howItWorks3: "Print your EIN confirmation letter for your records.",
+
+    // Who can use
+    whoCanUseHeading: "Who can use this tool",
+    whoCanUseIntro: "Use this if:",
+    whoCanUse1: "Your principal business is located in the U.S. or U.S. territories.",
+    whoCanUse2: "You have a valid Taxpayer Identification Number (SSN, ITIN, EIN).",
+    whoCanUse3: "You are the responsible party for the entity.",
+
+    // Right Sidebar
+    related: "Related",
+    relatedEIN: "Employer identification number",
+    relatedPrivacy: "Privacy Act Statement and Paperwork Reduction Act Notice",
+    relatedEmployees: "Businesses with employees",
+    relatedVideo: "EIN video",
+    einServicesHeading: "EIN Services",
+    einServiceDeactivate: "Deactivate or Cancel",
+    einServiceLost: "Lost / Misplaced Retrieval",
+    einServiceAddress: "Report Address Change",
+
+    // Footer - Columns
+    agency: "Our Agency",
+    aboutIRS: "About IRS",
+    careers: "Careers",
+    operations: "Operations & Budget",
+    taxStats: "Tax Statistics",
+    whistleblower: "Whistleblower Office",
+    civilRights: "Civil Rights",
+    foia: "FOIA Requests",
+    noFear: "No FEAR Act",
+
+    rights: "Know Your Rights",
+    billOfRights: "Taxpayer Bill of Rights",
+    advocate: "Taxpayer Advocate Service",
+    inspector: "Inspector General for Tax Admin",
+    privacy: "Privacy Policy",
+    accessibility: "Accessibility",
+
+    resolve: "Resolve an Issue",
+    respond: "Respond to a Notice",
+    appeals: "Independent Office of Appeals",
+    idTheft: "Identity Theft Protection",
+    phishing: "Report Phishing",
+    fraud: "Tax Fraud Alert",
+    victim: "Victim Assistance",
+
+    pros: "Tax Pros",
+    proNews: "Tax Pro News",
+    developers: "Software Developers",
+    audit: "Audit Techniques",
+    eservices: "E-Services",
+    circular: "Circular 230",
+    enrolled: "Enrolled Agents",
+
+    forms: "Forms & Instructions",
+    viewAll: "View All Forms",
+
+    sites: "Related Sites",
+    treasury: "U.S. Treasury",
+    usaGov: "USA.gov",
+    treasuryInspector: "Treasury Inspector General",
+    taxpayerAdvocate: "Taxpayer Advocate",
+    directFile: "Direct File",
+
+    // Footer - Mission & Disclaimer
+    deptTreasury: "EIN Gov Department of Services",
+    irsService: "IRS Advisory Services",
+    mission: "Our mission is to provide America's taxpayers top-quality service by helping them understand and meet their tax responsibilities and enforce the law with integrity and fairness to all.",
+    authorizedProvider: "Authorized e-File Provider Service",
+    disclaimerMain: "We will generate a government-issued EIN for you. We are not officially affiliated with the Internal Revenue Service (IRS) or any government agency, but by going through this flow, we will get you your EIN emailed to you promptly.",
+    disclaimerSub: "This service is provided to assist in the efficient processing of your application. All data is transmitted securely.",
+    
+    // Footer - Bottom
+    copyright: "© 2026 EIN Gov. All rights reserved.",
+    terms: "Terms of Service",
+    systemStatus: "System Status",
+    languageLabel: "Language:",
+  },
+  es: {
+    // Header
+    help: "Ayuda",
+    news: "Noticias",
+    english: "English",
+    taxPros: "Profesionales de Impuestos",
+    signIn: "Iniciar sesión",
+    searchPlaceholder: "Buscar",
+
+    // Nav
+    navFile: "Presentar",
+    navPay: "Pagar",
+    navRefunds: "Reembolsos",
+    navCredits: "Créditos y Deducciones",
+    navForms: "Formularios",
+    navFraud: "Reportar Fraude",
+
+    // Breadcrumb
+    breadcrumbHome: "Inicio",
+    breadcrumbFile: "Presentar",
+    breadcrumbBusiness: "Negocios y autónomos",
+    breadcrumbEIN: "Números de identificación del empleador",
+    breadcrumbGet: "Obtener un número de identificación del empleador",
+
+    // Sidebar
+    individuals: "Individuos",
+    businesses: "Negocios y autónomos",
+    charities: "Organizaciones benéficas y sin fines de lucro",
+
+    // Main
+    mainHeading: "Obtener un número de identificación del empleador (EIN)",
+    introText: "Utilice esta herramienta para obtener un EIN del IRS. Responda las preguntas y envíe la solicitud. Si se aprueba, el IRS emitirá su EIN y se lo enviaremos por correo electrónico.",
+    feeDisclaimer: "Nunca tiene que pagar una tarifa por un EIN en el sitio web del IRS. Aquí puede pagar una tarifa de servicio por el servicio de solicitud de EIN.",
+    
+    // CTA Box
+    ctaHeading: "SOLICITAR EIN – TAX-ID",
+    ctaText: "Obtenga su Número de Identificación del Empleador (EIN) en línea hoy con nuestro proceso de solicitud simple.",
+    ctaButton: "SOLICITAR EN LÍNEA AHORA",
+
+    // How it works
+    howItWorksHeading: "Cómo funciona",
+    howItWorks1: "Complete la solicitud en una sola sesión. No puede guardarla para más tarde.",
+    howItWorks2: "Caduca después de 15 minutos de inactividad y deberá comenzar de nuevo.",
+    howItWorks3: "Imprima su carta de confirmación de EIN para sus registros.",
+
+    // Who can use
+    whoCanUseHeading: "Quién puede usar esta herramienta",
+    whoCanUseIntro: "Use esto si:",
+    whoCanUse1: "Su negocio principal está ubicado en los EE. UU. o en territorios de los EE. UU.",
+    whoCanUse2: "Tiene un Número de Identificación del Contribuyente válido (SSN, ITIN, EIN).",
+    whoCanUse3: "Usted es la parte responsable de la entidad.",
+
+    // Right Sidebar
+    related: "Relacionado",
+    relatedEIN: "Número de identificación del empleador",
+    relatedPrivacy: "Declaración de la Ley de Privacidad y Aviso de la Ley de Reducción de Trámites",
+    relatedEmployees: "Negocios con empleados",
+    relatedVideo: "Video sobre EIN",
+    einServicesHeading: "Servicios de EIN",
+    einServiceDeactivate: "Desactivar o Cancelar",
+    einServiceLost: "Recuperación de EIN perdido",
+    einServiceAddress: "Informar cambio de dirección",
+
+    // Footer - Columns
+    agency: "Nuestra Agencia",
+    aboutIRS: "Sobre el IRS",
+    careers: "Carreras",
+    operations: "Operaciones y Presupuesto",
+    taxStats: "Estadísticas Tributarias",
+    whistleblower: "Oficina del Denunciante",
+    civilRights: "Derechos Civiles",
+    foia: "Solicitudes FOIA",
+    noFear: "Ley No FEAR",
+
+    rights: "Conozca sus Derechos",
+    billOfRights: "Carta de Derechos del Contribuyente",
+    advocate: "Servicio del Defensor del Contribuyente",
+    inspector: "Inspector General para la Admin. Tributaria",
+    privacy: "Política de Privacidad",
+    accessibility: "Accesibilidad",
+
+    resolve: "Resolver un Problema",
+    respond: "Responder a un Aviso",
+    appeals: "Oficina Independiente de Apelaciones",
+    idTheft: "Protección contra el Robo de Identidad",
+    phishing: "Reportar Phishing",
+    fraud: "Alerta de Fraude Fiscal",
+    victim: "Asistencia a Víctimas",
+
+    pros: "Profesionales de Impuestos",
+    proNews: "Noticias para Profesionales",
+    developers: "Desarrolladores de Software",
+    audit: "Técnicas de Auditoría",
+    eservices: "Servicios Electrónicos",
+    circular: "Circular 230",
+    enrolled: "Agentes Inscritos",
+
+    forms: "Formularios e Instrucciones",
+    viewAll: "Ver Todos los Formularios",
+
+    sites: "Sitios Relacionados",
+    treasury: "Tesoro de los EE. UU.",
+    usaGov: "USA.gov",
+    treasuryInspector: "Inspector General del Tesoro",
+    taxpayerAdvocate: "Defensor del Contribuyente",
+    directFile: "Direct File",
+
+    // Footer - Mission & Disclaimer
+    deptTreasury: "Departamento de Servicios EIN Gov",
+    irsService: "Servicios de Asesoría del IRS",
+    mission: "Nuestra misión es brindar a los contribuyentes de Estados Unidos un servicio de alta calidad ayudándoles a comprender y cumplir con sus responsabilidades tributarias y hacer cumplir la ley con integridad y justicia para todos.",
+    authorizedProvider: "Servicio de Proveedor Autorizado de e-File",
+    disclaimerMain: "Generaremos un EIN emitido por el gobierno para usted. No estamos oficialmente afiliados con el Servicio de Impuestos Internos (IRS) ni con ninguna agencia gubernamental, pero al realizar este proceso, le enviaremos su EIN por correo electrónico de inmediato.",
+    disclaimerSub: "Este servicio se proporciona para ayudar en el procesamiento eficiente de su solicitud. Todos los datos se transmiten de forma segura.",
+    
+    // Footer - Bottom
+    copyright: "© 2026 EIN Gov. Todos los derechos reservados.",
+    terms: "Términos de Servicio",
+    systemStatus: "Estado del Sistema",
+    languageLabel: "Idioma:",
+  }
+};
 
 export default function Home() {
+  const [lang, setLang] = useState<Language>('en');
+  const t = content[lang];
+
   return (
     <div className="min-h-screen flex flex-col font-sans">
       {/* Official Banner */}
       <header className="bg-slate-100 border-b border-slate-200 py-1 px-4 text-[11px] font-medium text-slate-700 flex justify-end">
          <div className="flex flex-wrap gap-x-6 gap-y-1 container mx-auto max-w-7xl justify-end">
-            <Link href="#" className="hover:underline">Help</Link>
-            <Link href="#" className="hover:underline">News</Link>
-            <div className="flex items-center gap-1 cursor-pointer hover:underline">
-               <span>English</span>
+            <Link href="#" className="hover:underline">{t.help}</Link>
+            <Link href="#" className="hover:underline">{t.news}</Link>
+            <div 
+              className="flex items-center gap-1 cursor-pointer hover:underline"
+              onClick={() => setLang(lang === 'en' ? 'es' : 'en')}
+            >
+               <span>{lang === 'en' ? 'Español' : 'English'}</span>
                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
             </div>
-            <Link href="#" className="hover:underline">Tax Pros</Link>
+            <Link href="#" className="hover:underline">{t.taxPros}</Link>
             <div className="flex items-center gap-1 cursor-pointer hover:underline font-bold">
-               <span>Sign in</span>
+               <span>{t.signIn}</span>
                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
             </div>
          </div>
@@ -42,7 +298,7 @@ export default function Home() {
                  </div>
               </div>
               <nav className="hidden lg:flex gap-1 ml-8 text-[15px] font-bold">
-                  {["File", "Pay", "Refunds", "Credits & Deductions", "Forms", "Report Fraud"].map((item) => (
+                  {[t.navFile, t.navPay, t.navRefunds, t.navCredits, t.navForms, t.navFraud].map((item) => (
                      <Link key={item} href="#" className="px-3 py-2 hover:underline decoration-2 underline-offset-4 whitespace-nowrap">{item}</Link>
                   ))}
               </nav>
@@ -51,7 +307,7 @@ export default function Home() {
             {/* Search Bar */}
             <div className="hidden md:flex w-64">
                <div className="relative w-full">
-                  <input type="text" placeholder="Search" className="w-full pl-3 pr-10 py-1.5 rounded-sm text-slate-900 placeholder:text-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400" />
+                  <input type="text" placeholder={t.searchPlaceholder} className="w-full pl-3 pr-10 py-1.5 rounded-sm text-slate-900 placeholder:text-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400" />
                   <button className="absolute right-0 top-0 h-full px-3 text-slate-600 hover:text-blue-800 bg-white rounded-r-sm border-l border-slate-300">
                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                   </button>
@@ -65,11 +321,11 @@ export default function Home() {
         {/* Breadcrumb */}
         <div className="bg-[#f0f0f0] border-b border-gray-200">
            <div className="container mx-auto max-w-7xl px-4 py-2 text-[11px] text-[#005ea2] flex gap-2">
-              <Link href="#" className="hover:underline">Home</Link> /
-              <Link href="#" className="hover:underline">File</Link> /
-              <Link href="#" className="hover:underline">Businesses and self-employed</Link> /
-              <Link href="#" className="hover:underline">Employer ID numbers</Link> /
-              <span className="text-gray-600">Get an employer identification number</span>
+              <Link href="#" className="hover:underline">{t.breadcrumbHome}</Link> /
+              <Link href="#" className="hover:underline">{t.breadcrumbFile}</Link> /
+              <Link href="#" className="hover:underline">{t.breadcrumbBusiness}</Link> /
+              <Link href="#" className="hover:underline">{t.breadcrumbEIN}</Link> /
+              <span className="text-gray-600">{t.breadcrumbGet}</span>
            </div>
         </div>
 
@@ -80,26 +336,36 @@ export default function Home() {
             {/* Left Sidebar (Desktop) - Navigation */}
             <div className="hidden lg:block col-span-1 space-y-6 text-sm">
                 <div>
-                   <h3 className="font-bold text-gray-900 mb-2 pb-1 border-b-2 border-gray-900">Individuals</h3>
+                   <h3 className="font-bold text-gray-900 mb-2 pb-1 border-b-2 border-gray-900">{t.individuals}</h3>
                 </div>
                 <div>
-                   <h3 className="font-bold text-gray-900 mb-2 pb-1 border-b-2 border-gray-900">Businesses and self-employed</h3>
+                   <h3 className="font-bold text-gray-900 mb-2 pb-1 border-b-2 border-gray-900">{t.businesses}</h3>
                 </div>
                 <div>
-                   <h3 className="font-bold text-gray-900 mb-2 pb-1 border-b-2 border-gray-900">Charities and nonprofits</h3>
+                   <h3 className="font-bold text-gray-900 mb-2 pb-1 border-b-2 border-gray-900">{t.charities}</h3>
                 </div>
             </div>
 
             {/* Main Content */}
             <div className="col-span-3 lg:col-span-2 space-y-6">
               <h1 className="text-4xl font-serif font-bold text-gray-900 leading-tight mb-2">
-                Get an employer identification number (EIN)
+                {t.mainHeading}
               </h1>
               
               <div className="text-[13px] text-gray-600 space-x-2 flex items-center mb-6">
-                  <span>English</span>
+                  <span 
+                    className={`cursor-pointer ${lang === 'en' ? 'font-bold text-black' : 'text-[#005ea2] hover:underline'}`}
+                    onClick={() => setLang('en')}
+                  >
+                    English
+                  </span>
                   <span className="text-gray-300">|</span>
-                  <Link href="#" className="text-[#005ea2] hover:underline">Español</Link>
+                  <span 
+                    className={`cursor-pointer ${lang === 'es' ? 'font-bold text-black' : 'text-[#005ea2] hover:underline'}`}
+                    onClick={() => setLang('es')}
+                  >
+                    Español
+                  </span>
                   <span className="text-gray-300">|</span>
                   <Link href="#" className="text-[#005ea2] hover:underline">中文 (简体)</Link>
                   <span className="text-gray-300">|</span>
@@ -115,61 +381,61 @@ export default function Home() {
               </div>
 
               <p className="text-lg text-gray-800 leading-relaxed">
-                Use this tool to get an EIN from the IRS. Answer questions and submit the application. If it's approved, the IRS issue your EIN and we will send via email.
+                {t.introText}
               </p>
               
               <p className="text-base text-gray-800 leading-relaxed font-bold bg-yellow-50 p-4 border-l-4 border-yellow-400">
-                You never have to pay a fee for an EIN on the IRS website. Here you can pay a service fee for EIN application service.
+                {t.feeDisclaimer}
               </p>
 
               {/* Main CTA Box */}
               <div className="my-8 border border-gray-300 shadow-lg rounded bg-white overflow-hidden">
                  <div className="bg-[#234E76] text-white p-4 text-center font-bold text-lg sm:text-xl tracking-wide">
-                    APPLY FOR EIN – TAX-ID
+                    {t.ctaHeading}
                  </div>
                  <div className="p-6 sm:p-8 text-center space-y-6">
-                    <p className="text-gray-700 text-base sm:text-lg">Get your Employer Identification Number (EIN) online today with our simple application process.</p>
+                    <p className="text-gray-700 text-base sm:text-lg">{t.ctaText}</p>
                     <Link 
                        href="/apply" 
                        className="block w-full sm:w-auto sm:inline-block bg-[#005ea2] hover:bg-[#1a4480] text-white font-bold text-xl px-12 sm:px-16 py-5 rounded-md shadow-lg"
                     >
-                       APPLY ONLINE NOW
+                       {t.ctaButton}
                     </Link>
                  </div>
               </div>
 
-              <h2 className="text-2xl font-serif font-bold text-gray-900 mt-8 mb-4">How it works</h2>
+              <h2 className="text-2xl font-serif font-bold text-gray-900 mt-8 mb-4">{t.howItWorksHeading}</h2>
               <ul className="list-disc pl-5 space-y-3 text-gray-800 marker:text-gray-500">
-                <li>Complete the application in one session. You can't save it for later.</li>
-                <li>It expires after 15 minutes of inactivity, and you'll need to start over.</li>
-                <li>Print your EIN confirmation letter for your records.</li>
+                <li>{t.howItWorks1}</li>
+                <li>{t.howItWorks2}</li>
+                <li>{t.howItWorks3}</li>
               </ul>
 
-              <h2 className="text-2xl font-serif font-bold text-gray-900 mt-8 mb-4">Who can use this tool</h2>
-              <p className="mb-4 text-gray-800">Use this if:</p>
+              <h2 className="text-2xl font-serif font-bold text-gray-900 mt-8 mb-4">{t.whoCanUseHeading}</h2>
+              <p className="mb-4 text-gray-800">{t.whoCanUseIntro}</p>
               <ul className="list-disc pl-5 space-y-3 text-gray-800 marker:text-gray-500">
-                <li>Your principal business is located in the U.S. or U.S. territories.</li>
-                <li>You have a valid Taxpayer Identification Number (SSN, ITIN, EIN).</li>
-                <li>You are the responsible party for the entity.</li>
+                <li>{t.whoCanUse1}</li>
+                <li>{t.whoCanUse2}</li>
+                <li>{t.whoCanUse3}</li>
               </ul>
             </div>
             
             {/* Right Sidebar - Related */}
             <div className="col-span-3 lg:col-span-1 border-l border-gray-200 pl-8 hidden lg:block">
-              <h3 className="font-bold text-xl text-gray-900 mb-4">Related</h3>
+              <h3 className="font-bold text-xl text-gray-900 mb-4">{t.related}</h3>
               <ul className="space-y-3 text-[#005ea2]">
-                <li><Link href="#" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>Employer identification number</Link></li>
-                <li><Link href="#" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>Privacy Act Statement and Paperwork Reduction Act Notice</Link></li>
-                <li><Link href="#" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>Businesses with employees</Link></li>
-                <li><Link href="#" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>EIN video <svg className="w-3 h-3 inline ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></Link></li>
+                <li><Link href="#" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>{t.relatedEIN}</Link></li>
+                <li><Link href="#" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>{t.relatedPrivacy}</Link></li>
+                <li><Link href="#" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>{t.relatedEmployees}</Link></li>
+                <li><Link href="#" className="hover:underline flex items-start gap-2"><span className="mt-1.5 w-1.5 h-1.5 bg-[#005ea2] rounded-full flex-shrink-0"></span>{t.relatedVideo} <svg className="w-3 h-3 inline ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></Link></li>
               </ul>
 
               <div className="mt-12 p-6 bg-gray-50 border border-gray-200 rounded">
-                 <h4 className="font-bold text-gray-900 mb-4 border-b border-gray-200 pb-2">EIN Services</h4>
+                 <h4 className="font-bold text-gray-900 mb-4 border-b border-gray-200 pb-2">{t.einServicesHeading}</h4>
                  <ul className="space-y-3 text-sm text-[#005ea2]">
-                    <li className="flex items-center gap-2 hover:underline cursor-pointer"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Deactivate or Cancel</li>
-                    <li className="flex items-center gap-2 hover:underline cursor-pointer"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg> Lost / Misplaced Retrieval</li>
-                    <li className="flex items-center gap-2 hover:underline cursor-pointer"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /></svg> Report Address Change</li>
+                    <li className="flex items-center gap-2 hover:underline cursor-pointer"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> {t.einServiceDeactivate}</li>
+                    <li className="flex items-center gap-2 hover:underline cursor-pointer"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg> {t.einServiceLost}</li>
+                    <li className="flex items-center gap-2 hover:underline cursor-pointer"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /></svg> {t.einServiceAddress}</li>
                  </ul>
               </div>
             </div>
@@ -185,79 +451,79 @@ export default function Home() {
               
               {/* Column 1: Our Agency */}
               <div className="space-y-4">
-                 <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">Our Agency</h5>
+                 <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">{t.agency}</h5>
                  <ul className="space-y-2">
-                    <li><Link href="#" className="hover:text-white transition-colors">About IRS</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Careers</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Operations & Budget</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Tax Statistics</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Whistleblower Office</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Civil Rights</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">FOIA Requests</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">No FEAR Act</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.aboutIRS}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.careers}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.operations}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.taxStats}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.whistleblower}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.civilRights}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.foia}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.noFear}</Link></li>
                  </ul>
               </div>
 
               {/* Column 2: Know Your Rights */}
               <div className="space-y-4">
-                 <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">Know Your Rights</h5>
+                 <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">{t.rights}</h5>
                  <ul className="space-y-2">
-                    <li><Link href="#" className="hover:text-white transition-colors">Taxpayer Bill of Rights</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Taxpayer Advocate Service</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Inspector General for Tax Admin</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Accessibility</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.billOfRights}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.advocate}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.inspector}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.privacy}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.accessibility}</Link></li>
                  </ul>
               </div>
 
               {/* Column 3: Resolve an Issue */}
               <div className="space-y-4">
-                 <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">Resolve an Issue</h5>
+                 <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">{t.resolve}</h5>
                  <ul className="space-y-2">
-                    <li><Link href="#" className="hover:text-white transition-colors">Respond to a Notice</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Independent Office of Appeals</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Identity Theft Protection</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Report Phishing</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Tax Fraud Alert</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Victim Assistance</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.respond}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.appeals}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.idTheft}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.phishing}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.fraud}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.victim}</Link></li>
                  </ul>
               </div>
 
               {/* Column 4: Tax Pros */}
               <div className="space-y-4">
-                 <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">Tax Pros</h5>
+                 <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">{t.pros}</h5>
                  <ul className="space-y-2">
-                    <li><Link href="#" className="hover:text-white transition-colors">Tax Pro News</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Software Developers</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Audit Techniques</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">E-Services</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Circular 230</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Enrolled Agents</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.proNews}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.developers}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.audit}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.eservices}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.circular}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.enrolled}</Link></li>
                  </ul>
               </div>
 
               {/* Column 5: Forms & Instructions */}
               <div className="space-y-4">
-                 <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">Forms & Instructions</h5>
+                 <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">{t.forms}</h5>
                  <ul className="space-y-2">
                     <li><Link href="#" className="hover:text-white transition-colors">Form 1040</Link></li>
                     <li><Link href="#" className="hover:text-white transition-colors">Form W-4</Link></li>
                     <li><Link href="#" className="hover:text-white transition-colors">Form W-9</Link></li>
                     <li><Link href="#" className="hover:text-white transition-colors">Form 1099-NEC</Link></li>
                     <li><Link href="#" className="hover:text-white transition-colors">Form 941</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">View All Forms</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.viewAll}</Link></li>
                  </ul>
               </div>
 
               {/* Column 6: Related Sites */}
               <div className="space-y-4">
-                 <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">Related Sites</h5>
+                 <h5 className="font-bold text-white uppercase tracking-wider border-b border-slate-700 pb-2 inline-block">{t.sites}</h5>
                  <ul className="space-y-2">
-                    <li><Link href="#" className="hover:text-white transition-colors">U.S. Treasury</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">USA.gov</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Treasury Inspector General</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Taxpayer Advocate</Link></li>
-                    <li><Link href="#" className="hover:text-white transition-colors">Direct File</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.treasury}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.usaGov}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.treasuryInspector}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.taxpayerAdvocate}</Link></li>
+                    <li><Link href="#" className="hover:text-white transition-colors">{t.directFile}</Link></li>
                  </ul>
               </div>
 
@@ -267,15 +533,15 @@ export default function Home() {
            <div className="grid md:grid-cols-2 gap-12 py-12 border-t border-slate-800">
               <div>
                  <div className="flex items-center gap-3 mb-6 text-white">
-                    <span className="font-serif font-bold text-3xl tracking-tight">IRS</span>
+                    <span className="font-serif font-bold text-3xl tracking-tight">EIN</span>
                     <span className="h-8 w-px bg-slate-600"></span>
                     <div className="flex flex-col leading-none">
-                       <span className="font-medium text-slate-200 text-base">Department of the Treasury</span>
-                       <span className="text-slate-400 text-xs tracking-wider uppercase mt-1">Internal Revenue Service</span>
+                       <span className="font-medium text-slate-200 text-base">{t.deptTreasury}</span>
+                       <span className="text-slate-400 text-xs tracking-wider uppercase mt-1">{t.irsService}</span>
                     </div>
                  </div>
                  <p className="max-w-md text-slate-400 text-sm leading-relaxed mb-8">
-                    Our mission is to provide America's taxpayers top-quality service by helping them understand and meet their tax responsibilities and enforce the law with integrity and fairness to all.
+                    {t.mission}
                  </p>
                  <div className="flex gap-4">
                      {/* Social Media Icons (SVGs inline for better control) */}
@@ -292,12 +558,12 @@ export default function Home() {
                  <div className="flex items-start gap-4">
                     <ShieldCheck className="text-us-gold flex-shrink-0 mt-1" size={24} />
                     <div>
-                       <h6 className="font-bold text-white text-sm mb-2 uppercase tracking-wide">Authorized e-File Provider Service</h6>
+                       <h6 className="font-bold text-white text-sm mb-2 uppercase tracking-wide">{t.authorizedProvider}</h6>
                        <p className="leading-relaxed text-slate-400 text-xs mb-4">
-                          We will generate a government-issued EIN for you. We are not officially affiliated with the Internal Revenue Service (IRS) or any government agency, but by going through this flow, we will get you your EIN emailed to you promptly.
+                          {t.disclaimerMain}
                        </p>
                        <p className="text-slate-500 text-[10px]">
-                          This service is provided to assist in the efficient processing of your application. All data is transmitted securely.
+                          {t.disclaimerSub}
                        </p>
                     </div>
                  </div>
@@ -306,20 +572,24 @@ export default function Home() {
 
            {/* Bottom Bar: Copyright & Utility Links */}
            <div className="mt-8 pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-6">
-              <p>&copy; 2026 EIN Gov. All rights reserved.</p>
+              <p>{t.copyright}</p>
               
               <div className="flex flex-wrap justify-center gap-x-8 gap-y-2">
-                 <Link href="/privacy-policy" className="hover:text-slate-300 transition-colors">Privacy Policy</Link>
-                 <Link href="/terms-of-service" className="hover:text-slate-300 transition-colors">Terms of Service</Link>
-                 <Link href="#" className="hover:text-slate-300 transition-colors">Accessibility</Link>
-                 <Link href="#" className="hover:text-slate-300 transition-colors">No FEAR Act</Link>
-                 <Link href="#" className="hover:text-slate-300 transition-colors">USA.gov</Link>
-                 <Link href="#" className="hover:text-slate-300 transition-colors">System Status</Link>
+                 <Link href="/privacy-policy" className="hover:text-slate-300 transition-colors">{t.privacy}</Link>
+                 <Link href="/terms-of-service" className="hover:text-slate-300 transition-colors">{t.terms}</Link>
+                 <Link href="#" className="hover:text-slate-300 transition-colors">{t.accessibility}</Link>
+                 <Link href="#" className="hover:text-slate-300 transition-colors">{t.noFear}</Link>
+                 <Link href="#" className="hover:text-slate-300 transition-colors">{t.usaGov}</Link>
+                 <Link href="#" className="hover:text-slate-300 transition-colors">{t.systemStatus}</Link>
               </div>
 
               <div className="flex items-center gap-4 text-slate-600">
-                 <span>Language:</span>
-                 <select className="bg-slate-800 border-none text-slate-300 text-xs rounded py-1 px-2 focus:ring-1 focus:ring-slate-500 cursor-pointer">
+                 <span>{t.languageLabel}</span>
+                 <select 
+                   className="bg-slate-800 border-none text-slate-300 text-xs rounded py-1 px-2 focus:ring-1 focus:ring-slate-500 cursor-pointer"
+                   value={lang === 'es' ? 'Español' : 'English'}
+                   onChange={(e) => setLang(e.target.value === 'Español' ? 'es' : 'en')}
+                 >
                     <option>English</option>
                     <option>Español</option>
                     <option>中文 (Chinese)</option>

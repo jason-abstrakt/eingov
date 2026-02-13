@@ -37,7 +37,8 @@ export default function Home() {
                     </svg>
                  </div>
                  <div className="leading-tight">
-                   <span className="font-serif font-bold text-3xl sm:text-4xl tracking-tight block">IRS</span>
+                   <span className="font-serif font-bold text-3xl sm:text-4xl tracking-tight block">EIN</span>
+                   <span className="text-[10px] uppercase tracking-widest block font-sans font-medium mt-1">EIN Gov</span>
                  </div>
               </div>
               <nav className="hidden lg:flex gap-1 ml-8 text-[15px] font-bold">
@@ -83,13 +84,6 @@ export default function Home() {
                 </div>
                 <div>
                    <h3 className="font-bold text-gray-900 mb-2 pb-1 border-b-2 border-gray-900">Businesses and self-employed</h3>
-                   <ul className="space-y-2 pl-2 border-l-2 border-[#005ea2]">
-                      <li className="text-gray-700 hover:underline cursor-pointer py-1">Business tax account</li>
-                      <li className="bg-[#e6f1f9] text-gray-900 font-bold -ml-2.5 pl-2.5 py-1 border-l-4 border-[#005ea2]">Employer ID numbers</li>
-                      <li className="text-gray-700 hover:underline cursor-pointer py-1">Business taxes</li>
-                      <li className="text-gray-700 hover:underline cursor-pointer py-1">Business structures</li>
-                      <li className="text-gray-700 hover:underline cursor-pointer py-1">Operating a business</li>
-                   </ul>
                 </div>
                 <div>
                    <h3 className="font-bold text-gray-900 mb-2 pb-1 border-b-2 border-gray-900">Charities and nonprofits</h3>
@@ -312,7 +306,7 @@ export default function Home() {
 
            {/* Bottom Bar: Copyright & Utility Links */}
            <div className="mt-8 pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-6">
-              <p>&copy; {new Date().getFullYear()} Internal Revenue Service. All rights reserved.</p>
+              <p>&copy; 2026 EIN Gov. All rights reserved.</p>
               
               <div className="flex flex-wrap justify-center gap-x-8 gap-y-2">
                  <Link href="/privacy-policy" className="hover:text-slate-300 transition-colors">Privacy Policy</Link>

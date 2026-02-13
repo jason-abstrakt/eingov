@@ -1,13 +1,10 @@
 'use client';
 
 import { useEIN } from '@/context/EINContext';
-import FormSection from '@/components/ui/FormSection';
 import TextInput from '@/components/ui/TextInput';
 import SelectInput from '@/components/ui/SelectInput';
 import Checkbox from '@/components/ui/Checkbox';
 import { MONTHS } from '@/lib/constants';
-import { CreditCard, ShieldCheck } from 'lucide-react';
-import Image from 'next/image';
 
 const YEARS = Array.from({ length: 15 }, (_, i) => {
   const year = new Date().getFullYear() + i;
@@ -30,84 +27,54 @@ export default function PaymentStep() {
     <div className="space-y-8">
       <div className="space-y-2">
         <h2 className="text-2xl font-bold text-gray-900">Processing Option</h2>
-        <div className="h-1 w-20 bg-blue-600 rounded"></div>
+        <div className="h-1 w-full bg-gray-200 rounded">
+           <div className="h-1 w-32 bg-blue-600 rounded"></div>
+        </div>
       </div>
 
-      {/* Processing Options */}
-      <div className="space-y-4">
-        {/* Standard Processing */}
-        <label
-          className={`relative flex cursor-pointer rounded-lg border p-6 shadow-sm focus:outline-none ${
-            state.processingOption === 'standard'
-              ? 'border-blue-600 ring-2 ring-blue-600'
-              : 'border-gray-300'
-          }`}
-        >
-          <input
-            type="radio"
-            name="processing-option"
-            className="sr-only"
-            checked={state.processingOption === 'standard'}
-            onChange={() => handleProcessingChange('standard')}
-          />
-          <span className="flex flex-1">
-            <span className="flex flex-col">
-              <span className="block text-lg font-bold text-gray-900">
-                Standard Processing
-              </span>
-              <span className="mt-1 flex items-center text-sm text-gray-500">
-                Your Tax ID/EIN will be delivered in 1-2 business days
-              </span>
-            </span>
-          </span>
-          <span className="mt-0.5 flex flex-col text-right">
-            <span className="text-xl font-bold text-gray-900">$279.00</span>
-          </span>
-          <span
-            className={`absolute -inset-px rounded-lg border-2 pointer-events-none ${
-              state.processingOption === 'standard' ? 'border-blue-600' : 'border-transparent'
-            }`}
-            aria-hidden="true"
-          />
-        </label>
+      {/* Processing Options - Condensed Layout */}
+      <div className="space-y-1">
+        <div className="space-y-4 border-b border-gray-200 pb-6">
+          {/* Standard Processing */}
+          <div className="flex items-start justify-between cursor-pointer" onClick={() => handleProcessingChange('standard')}>
+            <div className="flex items-start">
+              <input
+                id="standard"
+                type="radio"
+                name="processing-option"
+                checked={state.processingOption === 'standard'}
+                onChange={() => handleProcessingChange('standard')}
+                className="mt-1 h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500 cursor-pointer"
+              />
+              <label htmlFor="standard" className="ml-3 block cursor-pointer">
+                <span className="block text-base font-bold text-gray-900">Standard Processing</span>
+                <span className="block text-sm text-gray-600">Your Tax ID/EIN will be delivered in 1-2 business days</span>
+              </label>
+            </div>
+            <span className="text-xl font-bold text-gray-700">$279.00</span>
+          </div>
 
-        {/* Rush Processing */}
-        <label
-          className={`relative flex cursor-pointer rounded-lg border p-6 shadow-sm focus:outline-none ${
-            state.processingOption === 'rush'
-              ? 'border-blue-600 ring-2 ring-blue-600'
-              : 'border-gray-300'
-          }`}
-        >
-          <input
-            type="radio"
-            name="processing-option"
-            className="sr-only"
-            checked={state.processingOption === 'rush'}
-            onChange={() => handleProcessingChange('rush')}
-          />
-          <span className="flex flex-1">
-            <span className="flex flex-col">
-              <span className="block text-lg font-bold text-gray-900">
-                Rush Processing
-              </span>
-              <span className="mt-1 flex items-center text-sm text-gray-500">
-                Your Tax ID/EIN will be delivered by the end of the business day
-              </span>
-            </span>
-          </span>
-          <span className="mt-0.5 flex flex-col text-right">
-            <span className="text-xl font-bold text-gray-900">$319.00</span>
-          </span>
-          <span
-            className={`absolute -inset-px rounded-lg border-2 pointer-events-none ${
-              state.processingOption === 'rush' ? 'border-blue-600' : 'border-transparent'
-            }`}
-            aria-hidden="true"
-          />
-        </label>
+          {/* Rush Processing */}
+          <div className="flex items-start justify-between cursor-pointer" onClick={() => handleProcessingChange('rush')}>
+            <div className="flex items-start">
+              <input
+                id="rush"
+                type="radio"
+                name="processing-option"
+                checked={state.processingOption === 'rush'}
+                onChange={() => handleProcessingChange('rush')}
+                className="mt-1 h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500 cursor-pointer"
+              />
+              <label htmlFor="rush" className="ml-3 block cursor-pointer">
+                <span className="block text-base font-bold text-gray-900">Rush Processing</span>
+                <span className="block text-sm text-gray-600">Your Tax ID/EIN will be delivered by the end of the business day</span>
+              </label>
+            </div>
+            <span className="text-xl font-bold text-gray-700">$319.00</span>
+          </div>
+        </div>
 
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-500 pt-2">
           Reminder, EIN Application Fees are 100% Tax Deductible
         </p>
         {errors.processingOption && (
@@ -115,12 +82,14 @@ export default function PaymentStep() {
         )}
       </div>
 
-      <div className="space-y-2 pt-8">
+      <div className="space-y-2 pt-4">
         <h2 className="text-2xl font-bold text-gray-900">Card Information</h2>
-        <div className="h-1 w-20 bg-blue-600 rounded"></div>
+        <div className="h-1 w-full bg-gray-200 rounded">
+           <div className="h-1 w-32 bg-blue-600 rounded"></div>
+        </div>
       </div>
 
-      <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+      <div className="bg-gray-50 p-6 rounded-md border border-gray-200">
         <div className="grid gap-6">
           {/* Card Number */}
           <div className="space-y-2">
@@ -129,17 +98,10 @@ export default function PaymentStep() {
                 Payment <span className="text-red-500">*</span>
               </label>
               <div className="flex gap-1">
-                 {/* Icons could be images or SVGs. For now using text/placeholder or lucide icons if appropriate, but standard card icons are specific.
-                     The screenshot shows Visa, Mastercard, Discover, Amex.
-                     I'll just put a placeholder or small text if I don't have the assets handy, or use a generic credit card icon.
-                     Actually, I can try to use a generic row of icons or just leave it clean.
-                  */}
-                 <div className="flex gap-1">
-                    <div className="w-8 h-5 bg-blue-900 text-white text-[8px] flex items-center justify-center rounded">VISA</div>
-                    <div className="w-8 h-5 bg-red-600 text-white text-[8px] flex items-center justify-center rounded">MC</div>
-                    <div className="w-8 h-5 bg-orange-500 text-white text-[8px] flex items-center justify-center rounded">DISC</div>
-                    <div className="w-8 h-5 bg-blue-500 text-white text-[8px] flex items-center justify-center rounded">AMEX</div>
-                 </div>
+                 <div className="w-8 h-5 bg-[#1a1f71] text-white text-[8px] flex items-center justify-center rounded font-bold italic border border-gray-200">VISA</div>
+                 <div className="w-8 h-5 bg-[#eb001b] text-white text-[8px] flex items-center justify-center rounded font-bold border border-gray-200">MC</div>
+                 <div className="w-8 h-5 bg-[#ff6000] text-white text-[8px] flex items-center justify-center rounded font-bold border border-gray-200">DISC</div>
+                 <div className="w-8 h-5 bg-[#2e77bc] text-white text-[8px] flex items-center justify-center rounded font-bold border border-gray-200">AMEX</div>
               </div>
             </div>
             <TextInput
@@ -149,17 +111,19 @@ export default function PaymentStep() {
               placeholder="Enter card number"
               error={errors.cardNumber}
               maxLength={19}
+              className="bg-white"
             />
           </div>
 
           <div className="grid grid-cols-3 gap-4">
             <SelectInput
               name="cardMonth"
-              label="Month"
+              label="Month" // Keep label but it might be hidden in some designs, assuming standard label here
               value={state.cardMonth}
               onChange={(e) => handleChange('cardMonth', e.target.value)}
               options={MONTHS}
-              error={errors.expiry} // expiry error usually covers both
+              error={errors.expiry} 
+              placeholder="Month"
             />
             <SelectInput
               name="cardYear"
@@ -167,7 +131,8 @@ export default function PaymentStep() {
               value={state.cardYear}
               onChange={(e) => handleChange('cardYear', e.target.value)}
               options={YEARS}
-              error={errors.expiry ? ' ' : undefined} // Avoid double error message
+              error={errors.expiry ? ' ' : undefined}
+              placeholder="Year"
             />
             <TextInput
               name="cardCVC"
@@ -177,18 +142,19 @@ export default function PaymentStep() {
               placeholder="CVC"
               error={errors.cardCVC}
               maxLength={4}
+              className="bg-white"
             />
           </div>
         </div>
       </div>
 
       {/* Terms */}
-      <div className="pt-4">
+      <div className="pt-2">
         <Checkbox
           checked={state.agreedToTerms}
           onChange={(e) => handleChange('agreedToTerms', e.target.checked)}
           label={
-            <span className="text-sm text-gray-600">
+            <span className="text-xs text-gray-600 leading-tight block">
               By checking this box, I represent and warrant that all of the information provided above is accurate and complete. I agree that I have already read and accept the Terms & Privacy Policy
             </span>
           }

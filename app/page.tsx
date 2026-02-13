@@ -93,7 +93,7 @@ export default function Home() {
             {/* Main Content */}
             <div className="col-span-3 lg:col-span-2 space-y-6">
               <h1 className="text-4xl font-serif font-bold text-gray-900 leading-tight mb-2">
-                Get an employer identification number
+                Get an employer identification number (EIN)
               </h1>
               
               <div className="text-[13px] text-gray-600 space-x-2 flex items-center mb-6">

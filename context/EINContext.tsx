@@ -15,7 +15,7 @@ const initialState: EINApplicationState = {
   llcState: '',
   reasonForApplying: null,
   ssn: '',
-  ssnVisible: false,
+  ssnVisible: true,
   firstName: '',
   middleName: '',
   lastName: '',

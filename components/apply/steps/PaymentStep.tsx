@@ -5,6 +5,7 @@ import TextInput from '@/components/ui/TextInput';
 import SelectInput from '@/components/ui/SelectInput';
 import Checkbox from '@/components/ui/Checkbox';
 import { MONTHS } from '@/lib/constants';
+import { CheckCircle2, ShieldCheck, Lock } from 'lucide-react';
 
 const YEARS = Array.from({ length: 15 }, (_, i) => {
   const year = new Date().getFullYear() + i;
@@ -24,142 +25,175 @@ export default function PaymentStep() {
   };
 
   return (
-    <div className="space-y-8">
-      <div className="space-y-2">
-        <h2 className="text-2xl font-bold text-gray-900">Processing Option</h2>
-        <div className="h-1 w-full bg-gray-200 rounded">
-           <div className="h-1 w-32 bg-blue-600 rounded"></div>
-        </div>
-      </div>
-
-      {/* Processing Options - Condensed Layout */}
-      <div className="space-y-1">
-        <div className="space-y-4 border-b border-gray-200 pb-6">
-          {/* Standard Processing */}
-          <div className="flex items-start justify-between cursor-pointer" onClick={() => handleProcessingChange('standard')}>
-            <div className="flex items-start">
-              <input
-                id="standard"
-                type="radio"
-                name="processing-option"
-                checked={state.processingOption === 'standard'}
-                onChange={() => handleProcessingChange('standard')}
-                className="mt-1 h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500 cursor-pointer"
-              />
-              <label htmlFor="standard" className="ml-3 block cursor-pointer">
-                <span className="block text-base font-bold text-gray-900">Standard Processing</span>
-                <span className="block text-sm text-gray-600">Your Tax ID/EIN will be delivered in 1-2 business days</span>
-              </label>
-            </div>
-            <span className="text-xl font-bold text-gray-700">$279.00</span>
+    <div className="max-w-2xl mx-auto space-y-6">
+      
+      {/* Main Payment Container */}
+      <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+        
+        {/* Header */}
+        <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Lock className="w-5 h-5 text-gray-500" />
+            <h2 className="text-lg font-bold text-gray-900">Secure Payment</h2>
           </div>
-
-          {/* Rush Processing */}
-          <div className="flex items-start justify-between cursor-pointer" onClick={() => handleProcessingChange('rush')}>
-            <div className="flex items-start">
-              <input
-                id="rush"
-                type="radio"
-                name="processing-option"
-                checked={state.processingOption === 'rush'}
-                onChange={() => handleProcessingChange('rush')}
-                className="mt-1 h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500 cursor-pointer"
-              />
-              <label htmlFor="rush" className="ml-3 block cursor-pointer">
-                <span className="block text-base font-bold text-gray-900">Rush Processing</span>
-                <span className="block text-sm text-gray-600">Your Tax ID/EIN will be delivered by the end of the business day</span>
-              </label>
-            </div>
-            <span className="text-xl font-bold text-gray-700">$319.00</span>
+          <div className="flex gap-1.5 opacity-80">
+             <div className="w-8 h-5 bg-[#1a1f71] text-white text-[8px] flex items-center justify-center rounded font-bold italic border border-gray-200">VISA</div>
+             <div className="w-8 h-5 bg-[#eb001b] text-white text-[8px] flex items-center justify-center rounded font-bold border border-gray-200">MC</div>
+             <div className="w-8 h-5 bg-[#ff6000] text-white text-[8px] flex items-center justify-center rounded font-bold border border-gray-200">DISC</div>
+             <div className="w-8 h-5 bg-[#2e77bc] text-white text-[8px] flex items-center justify-center rounded font-bold border border-gray-200">AMEX</div>
           </div>
         </div>
 
-        <p className="text-sm text-gray-500 pt-2">
-          Reminder, EIN Application Fees are 100% Tax Deductible
-        </p>
-        {errors.processingOption && (
-          <p className="text-sm text-red-600 mt-1">{errors.processingOption}</p>
-        )}
-      </div>
+        <div className="p-6 space-y-8">
+          
+          {/* Section 1: Processing Options */}
+          <div>
+            <h3 className="text-sm font-semibold text-gray-900 mb-3 uppercase tracking-wide text-xs">Select Processing Speed</h3>
+            <div className="grid gap-3">
+              {/* Standard Option */}
+              <div 
+                className={`
+                  relative flex items-center justify-between p-4 rounded-lg border-2 cursor-pointer transition-all
+                  ${state.processingOption === 'standard' 
+                    ? 'border-blue-600 bg-blue-50/50' 
+                    : 'border-gray-200 hover:border-gray-300'
+                  }
+                `}
+                onClick={() => handleProcessingChange('standard')}
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`
+                    mt-1 w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0
+                    ${state.processingOption === 'standard' ? 'border-blue-600' : 'border-gray-300'}
+                  `}>
+                    {state.processingOption === 'standard' && <div className="w-2.5 h-2.5 rounded-full bg-blue-600" />}
+                  </div>
+                  <div>
+                    <span className="block font-bold text-gray-900">Standard Processing</span>
+                    <span className="block text-sm text-gray-600 mt-0.5">Delivered in 1-2 business days</span>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <span className="block text-lg font-bold text-gray-900">$279.00</span>
+                </div>
+              </div>
 
-      <div className="space-y-2 pt-4">
-        <h2 className="text-2xl font-bold text-gray-900">Card Information</h2>
-        <div className="h-1 w-full bg-gray-200 rounded">
-           <div className="h-1 w-32 bg-blue-600 rounded"></div>
-        </div>
-      </div>
-
-      <div className="bg-gray-50 p-6 rounded-md border border-gray-200">
-        <div className="grid gap-6">
-          {/* Card Number */}
-          <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <label className="block text-sm font-medium text-gray-700">
-                Payment <span className="text-red-500">*</span>
-              </label>
-              <div className="flex gap-1">
-                 <div className="w-8 h-5 bg-[#1a1f71] text-white text-[8px] flex items-center justify-center rounded font-bold italic border border-gray-200">VISA</div>
-                 <div className="w-8 h-5 bg-[#eb001b] text-white text-[8px] flex items-center justify-center rounded font-bold border border-gray-200">MC</div>
-                 <div className="w-8 h-5 bg-[#ff6000] text-white text-[8px] flex items-center justify-center rounded font-bold border border-gray-200">DISC</div>
-                 <div className="w-8 h-5 bg-[#2e77bc] text-white text-[8px] flex items-center justify-center rounded font-bold border border-gray-200">AMEX</div>
+              {/* Rush Option */}
+              <div 
+                className={`
+                  relative flex items-center justify-between p-4 rounded-lg border-2 cursor-pointer transition-all
+                  ${state.processingOption === 'rush' 
+                    ? 'border-blue-600 bg-blue-50/50' 
+                    : 'border-gray-200 hover:border-gray-300'
+                  }
+                `}
+                onClick={() => handleProcessingChange('rush')}
+              >
+                <div className="absolute top-0 right-0 bg-yellow-400 text-yellow-900 text-[10px] font-bold px-2 py-0.5 rounded-bl-lg rounded-tr-sm uppercase tracking-wider">
+                  Recommended
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className={`
+                    mt-1 w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0
+                    ${state.processingOption === 'rush' ? 'border-blue-600' : 'border-gray-300'}
+                  `}>
+                    {state.processingOption === 'rush' && <div className="w-2.5 h-2.5 rounded-full bg-blue-600" />}
+                  </div>
+                  <div>
+                    <span className="block font-bold text-gray-900">Rush Processing</span>
+                    <span className="block text-sm text-gray-600 mt-0.5">Delivered by end of business day</span>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <span className="block text-lg font-bold text-gray-900">$319.00</span>
+                </div>
               </div>
             </div>
-            <TextInput
-              name="cardNumber"
-              value={state.cardNumber}
-              onChange={(e) => handleChange('cardNumber', e.target.value)}
-              placeholder="Enter card number"
-              error={errors.cardNumber}
-              maxLength={19}
-              className="bg-white"
-            />
+            {errors.processingOption && (
+              <p className="text-sm text-red-600 mt-2">{errors.processingOption}</p>
+            )}
+            <p className="text-xs text-center text-gray-500 mt-3 flex items-center justify-center gap-1">
+              <CheckCircle2 className="w-3 h-3 text-green-600" />
+              EIN Application Fees are 100% Tax Deductible
+            </p>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
-            <SelectInput
-              name="cardMonth"
-              label="Month" // Keep label but it might be hidden in some designs, assuming standard label here
-              value={state.cardMonth}
-              onChange={(e) => handleChange('cardMonth', e.target.value)}
-              options={MONTHS}
-              error={errors.expiry} 
-              placeholder="Month"
-            />
-            <SelectInput
-              name="cardYear"
-              label="Year"
-              value={state.cardYear}
-              onChange={(e) => handleChange('cardYear', e.target.value)}
-              options={YEARS}
-              error={errors.expiry ? ' ' : undefined}
-              placeholder="Year"
-            />
-            <TextInput
-              name="cardCVC"
-              label="CVC"
-              value={state.cardCVC}
-              onChange={(e) => handleChange('cardCVC', e.target.value)}
-              placeholder="CVC"
-              error={errors.cardCVC}
-              maxLength={4}
-              className="bg-white"
-            />
+          <hr className="border-gray-100" />
+
+          {/* Section 2: Card Details */}
+          <div>
+            <h3 className="text-sm font-semibold text-gray-900 mb-4 uppercase tracking-wide text-xs">Payment Method</h3>
+            <div className="space-y-4">
+              <div className="col-span-full">
+                <TextInput
+                  name="cardNumber"
+                  label="Card Number"
+                  value={state.cardNumber}
+                  onChange={(e) => handleChange('cardNumber', e.target.value)}
+                  placeholder="0000 0000 0000 0000"
+                  error={errors.cardNumber}
+                  maxLength={19}
+                  className="bg-white"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="col-span-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Expiration Date</label>
+                  <div className="flex gap-2">
+                    <SelectInput
+                      name="cardMonth"
+                      value={state.cardMonth}
+                      onChange={(e) => handleChange('cardMonth', e.target.value)}
+                      options={MONTHS.map(m => ({ ...m, label: m.value.substring(0,3) }))} // Shorten months
+                      error={errors.expiry} 
+                      placeholder="MM"
+                    />
+                    <SelectInput
+                      name="cardYear"
+                      value={state.cardYear}
+                      onChange={(e) => handleChange('cardYear', e.target.value)}
+                      options={YEARS}
+                      error={errors.expiry ? ' ' : undefined}
+                      placeholder="YY"
+                    />
+                  </div>
+                </div>
+                <div className="col-span-1">
+                  <TextInput
+                    name="cardCVC"
+                    label="Security Code (CVC)"
+                    value={state.cardCVC}
+                    onChange={(e) => handleChange('cardCVC', e.target.value)}
+                    placeholder="123"
+                    error={errors.cardCVC}
+                    maxLength={4}
+                    className="bg-white"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gray-50 -mx-6 -mb-6 p-6 border-t border-gray-200">
+             <div className="flex items-start gap-3">
+               <Checkbox
+                 checked={state.agreedToTerms}
+                 onChange={(e) => handleChange('agreedToTerms', e.target.checked)}
+                 label={
+                   <span className="text-xs text-gray-600 leading-relaxed block">
+                     By submitting this application, I confirm that I have read and agree to the <span className="text-blue-600 underline cursor-pointer">Terms of Service</span> and <span className="text-blue-600 underline cursor-pointer">Privacy Policy</span>. I understand that the application fee is non-refundable once processing begins.
+                   </span>
+                 }
+                 error={errors.agreedToTerms}
+               />
+             </div>
+             <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400">
+               <ShieldCheck className="w-3 h-3" />
+               <span>256-bit SSL Secure Encryption</span>
+             </div>
           </div>
         </div>
-      </div>
-
-      {/* Terms */}
-      <div className="pt-2">
-        <Checkbox
-          checked={state.agreedToTerms}
-          onChange={(e) => handleChange('agreedToTerms', e.target.checked)}
-          label={
-            <span className="text-xs text-gray-600 leading-tight block">
-              By checking this box, I represent and warrant that all of the information provided above is accurate and complete. I agree that I have already read and accept the Terms & Privacy Policy
-            </span>
-          }
-          error={errors.agreedToTerms}
-        />
       </div>
     </div>
   );

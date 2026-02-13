@@ -270,10 +270,10 @@ export default function Home() {
                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
             </div>
             <Link href="#" className="hover:underline">{t.taxPros}</Link>
-            <div className="flex items-center gap-1 cursor-pointer hover:underline font-bold">
+            <Link href="/sign-in" className="flex items-center gap-1 hover:underline font-bold">
                <span>{t.signIn}</span>
                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-            </div>
+            </Link>
          </div>
       </header>
 

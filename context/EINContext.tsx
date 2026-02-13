@@ -202,12 +202,14 @@ function einReducer(state: EINApplicationState, action: EINAction): EINApplicati
         touchedFields: new Set(Array.from(state.touchedFields).concat(action.field)),
       };
 
-    case 'SUBMIT_APPLICATION':
+    case 'SUBMIT_APPLICATION': {
+      const assignedEIN = action.assignedEIN ?? generateMockEIN();
       return {
         ...state,
-        assignedEIN: generateMockEIN(),
+        assignedEIN,
         currentStep: 7,
       };
+    }
 
     case 'RESET':
       return { ...initialState, touchedFields: new Set<string>() };

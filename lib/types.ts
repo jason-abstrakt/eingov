@@ -252,5 +252,5 @@ export type EINAction =
   | { type: 'SET_ERRORS'; errors: Record<string, string> }
   | { type: 'TOUCH_FIELD'; field: string }
   | { type: 'SET_PAYMENT_FIELD'; field: string; value: unknown }
-  | { type: 'SUBMIT_APPLICATION' }
+  | { type: 'SUBMIT_APPLICATION'; assignedEIN?: string }
   | { type: 'RESET' };

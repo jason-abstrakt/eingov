@@ -124,9 +124,6 @@ export default function Home() {
                 Use this tool to get an EIN directly from the IRS in minutes for free. Answer questions and submit the application. If it's approved, we'll issue your EIN immediately online.
               </p>
               
-              <p className="text-base text-gray-800 leading-relaxed font-bold bg-yellow-50 p-4 border-l-4 border-yellow-400">
-                Beware of websites that charge for an EIN. You never have to pay a fee for an EIN from the IRS.
-              </p>
 
               {/* Main CTA Box */}
               <div className="my-8 border border-gray-300 shadow-lg rounded bg-white overflow-hidden">

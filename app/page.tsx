@@ -121,7 +121,7 @@ export default function Home() {
               </div>
 
               <p className="text-lg text-gray-800 leading-relaxed">
-                Use this tool to get an EIN directly from the IRS in minutes for free. Answer questions and submit the application. If it's approved, we'll issue your EIN immediately online.
+                Use this tool to get an EIN from the IRS. Answer questions and submit the application. If it's approved, the IRS issue your EIN and we will send via email.
               </p>
               
               <p className="text-base text-gray-800 leading-relaxed font-bold bg-yellow-50 p-4 border-l-4 border-yellow-400">

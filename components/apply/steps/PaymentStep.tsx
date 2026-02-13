@@ -89,9 +89,6 @@ export default function PaymentStep() {
                 `}
                 onClick={() => handleProcessingChange('rush')}
               >
-                <div className="absolute top-0 right-0 bg-yellow-400 text-yellow-900 text-[10px] font-bold px-2 py-0.5 rounded-bl-lg rounded-tr-sm uppercase tracking-wider">
-                  Recommended
-                </div>
                 <div className="flex items-start gap-3">
                   <div className={`
                     mt-1 w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0

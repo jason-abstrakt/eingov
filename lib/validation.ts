@@ -148,17 +148,6 @@ export function validateStep(step: number, state: EINApplicationState): Record<s
       if (lnErr) errors.lastName = lnErr;
       const emailErr = validateEmail(state.email);
       if (emailErr) errors.email = emailErr;
-      if (!state.applicantRole) errors.applicantRole = 'Select your role';
-      if (state.applicantRole === 'third_party') {
-        if (!state.thirdPartyDesignee.name.trim()) errors['tpd.name'] = 'Designee name is required';
-        const phoneErr = validatePhone(state.thirdPartyDesignee.phone);
-        if (phoneErr) errors['tpd.phone'] = phoneErr;
-        if (!state.thirdPartyDesignee.address.street1.trim()) errors['tpd.street1'] = 'Street address is required';
-        if (!state.thirdPartyDesignee.address.city.trim()) errors['tpd.city'] = 'City is required';
-        if (!state.thirdPartyDesignee.address.state) errors['tpd.state'] = 'State is required';
-        const tpdZipErr = validateZip(state.thirdPartyDesignee.address.zip);
-        if (tpdZipErr) errors['tpd.zip'] = tpdZipErr;
-      }
       break;
     }
 
@@ -250,13 +239,8 @@ export function getFieldsForStep(step: number, state: EINApplicationState): stri
       }
       return fields;
     }
-    case 2: {
-      const fields = ['ssn', 'firstName', 'lastName', 'email', 'applicantRole'];
-      if (state.applicantRole === 'third_party') {
-        fields.push('tpd.name', 'tpd.phone', 'tpd.street1', 'tpd.city', 'tpd.state', 'tpd.zip');
-      }
-      return fields;
-    }
+    case 2:
+      return ['ssn', 'firstName', 'lastName', 'email'];
     case 3: {
       const fields = ['mailing.street1', 'mailing.city', 'mailing.state', 'mailing.zip', 'physicalSameAsMailing'];
       if (state.physicalSameAsMailing === false) {

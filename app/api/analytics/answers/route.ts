@@ -60,14 +60,6 @@ export async function GET(req: NextRequest) {
       GROUP BY form_data->>'hasEmployees'
     `;
 
-    const applicantRoles = await sql`
-      SELECT form_data->>'applicantRole' as value, COUNT(*)::int as count
-      FROM applications
-      WHERE form_data->>'applicantRole' IS NOT NULL
-      GROUP BY form_data->>'applicantRole'
-      ORDER BY count DESC
-    `;
-
     return NextResponse.json({
       entityTypes,
       reasons,
@@ -75,7 +67,6 @@ export async function GET(req: NextRequest) {
       states,
       businessActivities,
       hasEmployees,
-      applicantRoles,
     });
   } catch (err) {
     console.error('Answer analytics error:', err);

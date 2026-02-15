@@ -18,7 +18,6 @@ interface AnswerData {
   states: DataPoint[];
   businessActivities: DataPoint[];
   hasEmployees: DataPoint[];
-  applicantRoles: DataPoint[];
 }
 
 const PIE_COLORS = [
@@ -39,9 +38,6 @@ const LABEL_MAP: Record<string, Record<string, string>> = {
   },
   processingOptions: {
     standard: 'Standard ($279)', rush: 'Rush ($319)',
-  },
-  applicantRoles: {
-    self: 'Self', third_party: 'Third Party',
   },
 };
 
@@ -176,7 +172,6 @@ export default function AnswerAnalyticsTab() {
         <PieChartCard title="Entity Type" data={data.entityTypes} category="entityTypes" />
         <PieChartCard title="Reason for Applying" data={data.reasons} category="reasons" />
         <PieChartCard title="Processing Option" data={data.processingOptions} category="processingOptions" />
-        <PieChartCard title="Applicant Role" data={data.applicantRoles} category="applicantRoles" />
         <PieChartCard title="Has Employees" data={data.hasEmployees} category="hasEmployees" />
       </div>
 

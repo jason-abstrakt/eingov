@@ -14,7 +14,6 @@ import {
   maskSSN,
   formatAddress,
 } from '@/lib/utils';
-import { ROLE_OPTIONS } from '@/lib/constants';
 
 interface ReviewStepProps {
   onGoToStep: (step: number) => void;
@@ -22,14 +21,6 @@ interface ReviewStepProps {
 
 export default function ReviewStep({ onGoToStep }: ReviewStepProps) {
   const { state } = useEIN();
-
-  const roleLabels = state.entityType ? ROLE_OPTIONS[state.entityType] : null;
-  const roleText =
-    state.applicantRole === 'self'
-      ? roleLabels?.self ?? 'Self'
-      : state.applicantRole === 'third_party'
-      ? roleLabels?.thirdParty ?? 'Third Party'
-      : '—';
 
   const fullName = [state.firstName, state.middleName, state.lastName]
     .filter(Boolean)
@@ -63,20 +54,6 @@ export default function ReviewStep({ onGoToStep }: ReviewStepProps) {
         <ReviewRow label="SSN / ITIN" value={maskSSN(state.ssn)} />
         <ReviewRow label="Name" value={fullName} />
         <ReviewRow label="Email" value={state.email} />
-        <ReviewRow label="Role" value={roleText} />
-        {state.applicantRole === 'third_party' && (
-          <>
-            <ReviewRow label="Designee Name" value={state.thirdPartyDesignee.name} />
-            <ReviewRow label="Designee Phone" value={state.thirdPartyDesignee.phone} />
-            {state.thirdPartyDesignee.fax && (
-              <ReviewRow label="Designee Fax" value={state.thirdPartyDesignee.fax} />
-            )}
-            <ReviewRow
-              label="Designee Address"
-              value={formatAddress(state.thirdPartyDesignee.address)}
-            />
-          </>
-        )}
       </ReviewSection>
 
       {/* Step 3: Addresses */}

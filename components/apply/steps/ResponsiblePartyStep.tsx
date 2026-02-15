@@ -5,13 +5,10 @@ import FormSection from '@/components/ui/FormSection';
 import SSNInput from '@/components/ui/SSNInput';
 import TextInput from '@/components/ui/TextInput';
 import SelectInput from '@/components/ui/SelectInput';
-import RadioCard from '@/components/ui/RadioCard';
 import FieldError from '@/components/ui/FieldError';
 import InfoBox from '@/components/ui/InfoBox';
-import ThirdPartyFields from '@/components/apply/sections/ThirdPartyFields';
-import { SUFFIX_OPTIONS, ROLE_OPTIONS } from '@/lib/constants';
+import { SUFFIX_OPTIONS } from '@/lib/constants';
 import { formatSSN } from '@/lib/utils';
-import type { ApplicantRole } from '@/lib/types';
 
 export default function ResponsiblePartyStep() {
   const { state, dispatch } = useEIN();
@@ -19,8 +16,6 @@ export default function ResponsiblePartyStep() {
   const handleBlur = (field: string) => {
     dispatch({ type: 'TOUCH_FIELD', field });
   };
-
-  const roleLabels = state.entityType ? ROLE_OPTIONS[state.entityType] : null;
 
   return (
     <div>
@@ -96,36 +91,6 @@ export default function ResponsiblePartyStep() {
             helpText="We will email your official EIN confirmation letter to this address immediately upon approval."
           />
         </div>
-      </FormSection>
-
-      <FormSection
-        title="Your Role"
-        description="Are you applying on your own behalf or as a third party?"
-      >
-        {roleLabels ? (
-          <div className="space-y-3">
-            <RadioCard
-              name="applicantRole"
-              value="self"
-              checked={state.applicantRole === 'self'}
-              onChange={() => dispatch({ type: 'SET_ROLE', role: 'self' as ApplicantRole })}
-              label={roleLabels.self}
-            />
-            <RadioCard
-              name="applicantRole"
-              value="third_party"
-              checked={state.applicantRole === 'third_party'}
-              onChange={() => dispatch({ type: 'SET_ROLE', role: 'third_party' as ApplicantRole })}
-              label={roleLabels.thirdParty}
-              description="If a third party prepared or will receive the EIN"
-            />
-          </div>
-        ) : (
-          <p className="text-sm text-gray-500">Please select an entity type first.</p>
-        )}
-        <FieldError message={state.errors.applicantRole} />
-
-        <ThirdPartyFields />
       </FormSection>
     </div>
   );

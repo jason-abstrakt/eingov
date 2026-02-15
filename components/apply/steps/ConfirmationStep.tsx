@@ -1,17 +1,36 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useEIN } from '@/context/EINContext';
 import Button from '@/components/ui/Button';
 import { CheckCircle2, Mail, Clock, Printer, RotateCcw, CreditCard } from 'lucide-react';
+
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
 
 export default function ConfirmationStep() {
   const { state, dispatch } = useEIN();
 
   const isRush = state.processingOption === 'rush';
+  const amountValue = isRush ? 319.0 : 279.0;
   const amount = isRush ? '$319.00' : '$279.00';
   const deliveryTime = isRush
     ? 'by end of business day today'
     : 'within 1\u20132 business days';
+
+  // Fire Google Ads conversion event on successful purchase
+  useEffect(() => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'conversion', {
+        send_to: 'AW-11484768851',
+        value: amountValue,
+        currency: 'USD',
+      });
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="max-w-2xl mx-auto">

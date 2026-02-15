@@ -153,22 +153,6 @@ export default function PaymentStep({ clientSecret }: PaymentStepProps) {
           </div>
         </div>
       </div>
-      {/* Debug: simulate successful purchase (temporary) */}
-      {(
-        <div className="border-2 border-dashed border-orange-300 rounded-lg p-4 bg-orange-50">
-          <p className="text-xs font-semibold text-orange-700 mb-2">Debug Tools</p>
-          <button
-            type="button"
-            onClick={() => {
-              dispatch({ type: 'SUBMIT_APPLICATION', assignedEIN: `00-DEBUG${Date.now().toString().slice(-5)}` });
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            className="px-4 py-2 bg-orange-500 text-white text-sm font-medium rounded-md hover:bg-orange-600 transition-colors"
-          >
-            Simulate Successful Purchase
-          </button>
-        </div>
-      )}
     </div>
   );
 }

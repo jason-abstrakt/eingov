@@ -23,28 +23,41 @@ export async function GET(req: NextRequest) {
   try {
     const sql = getSQL();
 
-    // Revenue summary
+    // Revenue summary — only count rows with a valid processingOption AND an assigned EIN
+    // (assigned_ein is only set after successful Stripe payment verification)
     const revenueRows = threshold
       ? await sql`
           SELECT
             COUNT(*)::int as total_orders,
-            COALESCE(SUM(CASE WHEN form_data->>'processingOption' = 'rush' THEN 319 ELSE 279 END), 0)::int as total_revenue,
+            COALESCE(SUM(CASE
+              WHEN form_data->>'processingOption' = 'rush' THEN 319
+              WHEN form_data->>'processingOption' = 'standard' THEN 279
+              ELSE 0
+            END), 0)::int as total_revenue,
             COALESCE(SUM(CASE WHEN form_data->>'processingOption' = 'rush' THEN 1 ELSE 0 END), 0)::int as rush_count,
             COALESCE(SUM(CASE WHEN form_data->>'processingOption' = 'standard' THEN 1 ELSE 0 END), 0)::int as standard_count,
             COALESCE(SUM(CASE WHEN form_data->>'processingOption' = 'rush' THEN 319 ELSE 0 END), 0)::int as rush_revenue,
             COALESCE(SUM(CASE WHEN form_data->>'processingOption' = 'standard' THEN 279 ELSE 0 END), 0)::int as standard_revenue
           FROM applications
-          WHERE created_at >= ${threshold.toISOString()}
+          WHERE assigned_ein IS NOT NULL
+            AND form_data->>'processingOption' IN ('standard', 'rush')
+            AND created_at >= ${threshold.toISOString()}
         `
       : await sql`
           SELECT
             COUNT(*)::int as total_orders,
-            COALESCE(SUM(CASE WHEN form_data->>'processingOption' = 'rush' THEN 319 ELSE 279 END), 0)::int as total_revenue,
+            COALESCE(SUM(CASE
+              WHEN form_data->>'processingOption' = 'rush' THEN 319
+              WHEN form_data->>'processingOption' = 'standard' THEN 279
+              ELSE 0
+            END), 0)::int as total_revenue,
             COALESCE(SUM(CASE WHEN form_data->>'processingOption' = 'rush' THEN 1 ELSE 0 END), 0)::int as rush_count,
             COALESCE(SUM(CASE WHEN form_data->>'processingOption' = 'standard' THEN 1 ELSE 0 END), 0)::int as standard_count,
             COALESCE(SUM(CASE WHEN form_data->>'processingOption' = 'rush' THEN 319 ELSE 0 END), 0)::int as rush_revenue,
             COALESCE(SUM(CASE WHEN form_data->>'processingOption' = 'standard' THEN 279 ELSE 0 END), 0)::int as standard_revenue
           FROM applications
+          WHERE assigned_ein IS NOT NULL
+            AND form_data->>'processingOption' IN ('standard', 'rush')
         `;
 
     // Funnel starts for conversion rate
@@ -61,15 +74,21 @@ export async function GET(req: NextRequest) {
           WHERE event_type = 'funnel_start'
         `;
 
-    // Revenue over time (daily)
+    // Revenue over time (daily) — only successful payments
     const timeSeriesRows = threshold
       ? await sql`
           SELECT
             DATE(created_at) as date,
             COUNT(*)::int as orders,
-            COALESCE(SUM(CASE WHEN form_data->>'processingOption' = 'rush' THEN 319 ELSE 279 END), 0)::int as revenue
+            COALESCE(SUM(CASE
+              WHEN form_data->>'processingOption' = 'rush' THEN 319
+              WHEN form_data->>'processingOption' = 'standard' THEN 279
+              ELSE 0
+            END), 0)::int as revenue
           FROM applications
-          WHERE created_at >= ${threshold.toISOString()}
+          WHERE assigned_ein IS NOT NULL
+            AND form_data->>'processingOption' IN ('standard', 'rush')
+            AND created_at >= ${threshold.toISOString()}
           GROUP BY DATE(created_at)
           ORDER BY date
         `
@@ -77,8 +96,14 @@ export async function GET(req: NextRequest) {
           SELECT
             DATE(created_at) as date,
             COUNT(*)::int as orders,
-            COALESCE(SUM(CASE WHEN form_data->>'processingOption' = 'rush' THEN 319 ELSE 279 END), 0)::int as revenue
+            COALESCE(SUM(CASE
+              WHEN form_data->>'processingOption' = 'rush' THEN 319
+              WHEN form_data->>'processingOption' = 'standard' THEN 279
+              ELSE 0
+            END), 0)::int as revenue
           FROM applications
+          WHERE assigned_ein IS NOT NULL
+            AND form_data->>'processingOption' IN ('standard', 'rush')
           GROUP BY DATE(created_at)
           ORDER BY date
         `;

@@ -15,6 +15,9 @@ const merriweather = Merriweather({
 export const metadata: Metadata = {
   title: "Apply for an Employer Identification Number (EIN) Online",
   description: "Official online application for Employer Identification Number (EIN). Fast, secure, and easy.",
+  icons: {
+    icon: "https://abstrakt.b-cdn.net/EIN_Logo.png",
+  },
 };
 
 export default function RootLayout({

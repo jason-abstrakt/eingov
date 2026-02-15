@@ -153,10 +153,10 @@ export default function PaymentStep({ clientSecret }: PaymentStepProps) {
           </div>
         </div>
       </div>
-      {/* Debug: simulate successful purchase (dev only) */}
-      {process.env.NODE_ENV === 'development' && (
+      {/* Debug: simulate successful purchase (temporary) */}
+      {(
         <div className="border-2 border-dashed border-orange-300 rounded-lg p-4 bg-orange-50">
-          <p className="text-xs font-semibold text-orange-700 mb-2">Debug Tools (dev only)</p>
+          <p className="text-xs font-semibold text-orange-700 mb-2">Debug Tools</p>
           <button
             type="button"
             onClick={() => {

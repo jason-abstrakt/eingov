@@ -54,7 +54,7 @@ function DetailRow({ label, value }: { label: string; value: string | null | und
 export default function AdminApplicationDetailPage() {
   const router = useRouter();
   const params = useParams();
-  const id = params.id as string;
+  const id = (params?.id ?? '') as string;
   const [app, setApp] = useState<StoredApplication | null>(null);
   const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
@@ -64,6 +64,10 @@ export default function AdminApplicationDetailPage() {
   const [ssnLoading, setSsnLoading] = useState(false);
 
   useEffect(() => {
+    if (!id) {
+      setLoading(false);
+      return;
+    }
     let cancelled = false;
     async function init() {
       const authed = await isAuthenticated();

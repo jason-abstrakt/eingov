@@ -10,6 +10,7 @@ interface StepNavigationProps {
   onContinue: () => void;
   onSubmit?: () => void;
   isSubmitStep?: boolean;
+  submitting?: boolean;
 }
 
 export default function StepNavigation({
@@ -19,11 +20,12 @@ export default function StepNavigation({
   onContinue,
   onSubmit,
   isSubmitStep,
+  submitting,
 }: StepNavigationProps) {
   return (
     <div className="flex justify-between items-center mt-8 pt-6 border-t border-gray-200">
       {currentStep > 1 ? (
-        <Button variant="secondary" onClick={onBack}>
+        <Button variant="secondary" onClick={onBack} disabled={submitting}>
           <span className="flex items-center gap-2">
             <ArrowLeft className="h-4 w-4" />
             Back
@@ -34,10 +36,22 @@ export default function StepNavigation({
       )}
 
       {isSubmitStep ? (
-        <Button variant="primary" onClick={onSubmit}>
+        <Button variant="primary" onClick={onSubmit} disabled={submitting}>
           <span className="flex items-center gap-2">
-            Submit Application
-            <ArrowRight className="h-4 w-4" />
+            {submitting ? (
+              <>
+                <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                Processing Payment...
+              </>
+            ) : (
+              <>
+                Submit Application
+                <ArrowRight className="h-4 w-4" />
+              </>
+            )}
           </span>
         </Button>
       ) : (

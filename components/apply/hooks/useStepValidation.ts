@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useEIN } from '@/context/EINContext';
 import { validateStep, getFieldsForStep } from '@/lib/validation';
 import { saveApplication } from '@/lib/applications';
@@ -10,6 +10,7 @@ export function useStepValidation() {
   const { state, dispatch } = useEIN();
   const stripeRef = useRef<Stripe | null>(null);
   const elementsRef = useRef<StripeElements | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const setStripe = useCallback((stripe: Stripe | null, elements: StripeElements | null) => {
     stripeRef.current = stripe;
@@ -62,11 +63,14 @@ export function useStepValidation() {
       return;
     }
 
+    setSubmitting(true);
+
     try {
       // 2. Validate card details with Stripe
       const { error: submitError } = await elements.submit();
       if (submitError) {
         dispatch({ type: 'SET_ERRORS', errors: { payment: submitError.message || 'Payment validation failed.' } });
+        setSubmitting(false);
         return;
       }
 
@@ -78,11 +82,13 @@ export function useStepValidation() {
 
       if (confirmError) {
         dispatch({ type: 'SET_ERRORS', errors: { payment: confirmError.message || 'Payment failed. Please try again.' } });
+        setSubmitting(false);
         return;
       }
 
       if (!paymentIntent || paymentIntent.status !== 'succeeded') {
         dispatch({ type: 'SET_ERRORS', errors: { payment: 'Payment was not completed. Please try again.' } });
+        setSubmitting(false);
         return;
       }
 
@@ -98,6 +104,7 @@ export function useStepValidation() {
     } catch (err) {
       console.error('Failed to submit application:', err);
       dispatch({ type: 'SET_ERRORS', errors: { payment: 'Something went wrong. Please try again.' } });
+      setSubmitting(false);
     }
   }, [state, dispatch, validate]);
 
@@ -108,6 +115,7 @@ export function useStepValidation() {
     handleGoToStep,
     handleSubmit,
     setStripe,
+    submitting,
     errors: state.errors,
   };
 }

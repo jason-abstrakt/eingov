@@ -100,6 +100,7 @@ export function useStepValidation() {
       } as typeof data);
 
       dispatch({ type: 'SUBMIT_APPLICATION', assignedEIN: result.assignedEIN });
+      setSubmitting(false);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
       console.error('Failed to submit application:', err);

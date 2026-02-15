@@ -21,13 +21,14 @@ export default function ConfirmationStep() {
     ? 'by end of business day today'
     : 'within 1\u20132 business days';
 
-  // Fire Google Ads conversion event on successful purchase
+  // Fire Google Ads purchase conversion event on page load
   useEffect(() => {
     if (typeof window.gtag === 'function') {
       window.gtag('event', 'conversion', {
-        send_to: 'AW-11484768851',
+        send_to: 'AW-11484768851/8TsCCKe7l_kbENPUruQq',
         value: amountValue,
         currency: 'USD',
+        transaction_id: state.assignedEIN || '',
       });
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps

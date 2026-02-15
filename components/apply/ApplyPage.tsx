@@ -16,10 +16,12 @@ import ConfirmationStep from '@/components/apply/steps/ConfirmationStep';
 import PaymentStep from '@/components/apply/steps/PaymentStep';
 import StripeProvider from '@/components/apply/StripeProvider';
 import StripeBridge from '@/components/apply/StripeBridge';
+import { useAnalytics } from '@/components/apply/hooks/useAnalytics';
 
 export default function ApplyPage() {
   const { state } = useEIN();
   const { handleContinue, handleBack, handleGoToStep, handleSubmit, setStripe } = useStepValidation();
+  useAnalytics();
   const [clientSecret, setClientSecret] = useState<string | null>(null);
 
   const isPaymentStep = state.currentStep === TOTAL_STEPS;

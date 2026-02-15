@@ -103,6 +103,7 @@ export default function AdminDashboardPage() {
             <span className="text-slate-300 text-sm">Admin</span>
           </div>
           <div className="flex items-center gap-4">
+            <Link href="/admin/analytics" className="text-sm text-slate-200 hover:text-white">Analytics</Link>
             <Link href="/" className="text-sm text-slate-200 hover:text-white">Home</Link>
             <button
               type="button"

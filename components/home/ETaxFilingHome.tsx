@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import LexoraLogo from '@/components/ui/LexoraLogo';
 import {
-  Search,
   ClipboardCheck,
   BadgeCheck,
   FileEdit,
@@ -138,74 +137,75 @@ function HeroIllustration() {
 
 export default function ETaxFilingHome() {
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-[#fafafa]">
+    <div className="min-h-screen flex flex-col font-sans bg-white">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+      <header className="bg-white border-b border-gray-100 sticky top-0 z-10 shadow-sm">
+        <div className="max-w-5xl mx-auto px-5 py-4 flex justify-between items-center">
           <LexoraLogo href="/" />
-          <nav className="hidden md:flex items-center gap-6 text-sm text-gray-600">
-            <Link href="/" className="hover:text-gray-900">E-Filing</Link>
-            <Link href="/apply" className="hover:text-gray-900">EIN</Link>
-            <Link href="#" className="hover:text-gray-900">Forms</Link>
-            <Link href="#" className="hover:text-gray-900">Support</Link>
-          </nav>
-          <div className="flex items-center gap-2">
-            <button type="button" className="p-2 text-gray-500 hover:text-gray-900" aria-label="Search">
-              <Search className="w-5 h-5" />
-            </button>
-            <Link href="/sign-in" className="bg-[#1e40af] text-white text-sm font-medium px-4 py-2 rounded-md hover:bg-[#1e3a8a] transition-colors">
-              Sign in
-            </Link>
-          </div>
+          <Link
+            href="/sign-in"
+            className="text-sm font-semibold text-slate-700 hover:text-slate-900 px-4 py-2 rounded-lg hover:bg-slate-50 transition-colors"
+          >
+            Sign in
+          </Link>
         </div>
       </header>
 
       <main className="flex-grow">
         {/* Hero */}
-        <section className="bg-white border-b border-gray-100">
-          <div className="max-w-6xl mx-auto px-4 py-12 lg:py-16">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10">
-              <div className="flex-1">
-                <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight mb-4">
+        <section className="bg-gradient-to-b from-slate-50 to-white">
+          <div className="max-w-5xl mx-auto px-5 pt-14 pb-16 lg:pt-20 lg:pb-24">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-12 lg:gap-16">
+              <div className="flex-1 max-w-xl">
+                <h1 className="text-4xl sm:text-[2.75rem] font-bold text-slate-900 tracking-tight leading-[1.15] mb-5">
                   Online Tax E-Filing
                 </h1>
-                <p className="text-lg text-gray-600 mb-2">
-                  Tax-ID Filing, Tax Preparation, Tax Return e-Filing.
+                <p className="text-lg text-slate-600 leading-relaxed mb-1">
+                  Tax-ID filing, tax preparation, and tax return e-filing.
                 </p>
-                <p className="text-lg text-gray-600">
-                  Tax filing services for small businesses.
+                <p className="text-lg text-slate-600 leading-relaxed">
+                  Professional tax filing services for small businesses.
                 </p>
+                <div className="mt-8">
+                  <Link
+                    href="/apply"
+                    className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm tracking-wide py-3.5 px-6 rounded-lg transition-colors shadow-sm"
+                  >
+                    Get started
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
               </div>
               <HeroIllustration />
             </div>
 
-            {/* CTA box */}
-            <div className="mt-10 lg:mt-12 bg-gray-50 border border-gray-200 rounded-xl p-6 sm:p-8 max-w-xl">
-              <p className="text-xl font-semibold text-gray-900 mb-4">Ready to file your taxes?</p>
+            {/* CTA card */}
+            <div className="mt-14 p-6 sm:p-8 bg-white rounded-2xl border border-slate-200/80 shadow-sm max-w-md">
+              <p className="text-slate-900 font-semibold text-lg mb-4">Ready to file your taxes?</p>
               <Link
                 href="/apply"
-                className="inline-flex items-center gap-2 bg-[#1e40af] hover:bg-[#1e3a8a] text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-3 px-5 rounded-lg transition-colors"
               >
-                GET STARTED
-                <ArrowRight className="w-5 h-5" />
+                Get started
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
         </section>
 
         {/* Feature strip */}
-        <section className="bg-white border-b border-gray-100 py-12">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="grid sm:grid-cols-3 gap-8 sm:gap-12">
+        <section className="py-14 sm:py-16 border-t border-slate-100 bg-white">
+          <div className="max-w-5xl mx-auto px-5">
+            <div className="grid sm:grid-cols-3 gap-10 sm:gap-14">
               {features.map((f) => {
                 const Icon = f.icon;
                 return (
                   <div key={f.title} className="text-center">
-                    <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-blue-100 text-[#1e40af] mb-4">
-                      <Icon className="w-7 h-7" />
+                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-slate-100 text-slate-700 mb-4">
+                      <Icon className="w-6 h-6" strokeWidth={2} />
                     </div>
-                    <h2 className="font-bold text-gray-900 mb-2">{f.title}</h2>
-                    <p className="text-sm text-gray-600">{f.description}</p>
+                    <h2 className="font-semibold text-slate-900 text-base mb-2">{f.title}</h2>
+                    <p className="text-sm text-slate-600 leading-relaxed max-w-xs mx-auto">{f.description}</p>
                   </div>
                 );
               })}
@@ -214,23 +214,23 @@ export default function ETaxFilingHome() {
         </section>
 
         {/* Services we offer */}
-        <section className="py-16 bg-[#f5f5f5]">
-          <div className="max-w-6xl mx-auto px-4">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Services we offer</h2>
-            <p className="text-gray-600 mb-10 max-w-2xl">
-              From EIN applications to e-filing returns and amendments, we help you handle your federal tax obligations online.
+        <section className="py-14 sm:py-16 bg-slate-50/80">
+          <div className="max-w-5xl mx-auto px-5">
+            <h2 className="text-2xl font-semibold text-slate-900 mb-2">Services we offer</h2>
+            <p className="text-slate-600 mb-10 max-w-xl">
+              From tax-ID applications to e-filing returns and amendments—we help you meet federal tax obligations online.
             </p>
-            <div className="grid sm:grid-cols-2 gap-6">
+            <div className="grid sm:grid-cols-2 gap-5">
               {services.map((s) => {
                 const Icon = s.icon;
                 return (
-                  <div key={s.title} className="bg-white rounded-xl border border-gray-200 p-6 flex gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center text-[#1e40af]">
-                      <Icon className="w-6 h-6" />
+                  <div key={s.title} className="bg-white rounded-xl border border-slate-200/80 p-6 flex gap-4 shadow-sm">
+                    <div className="flex-shrink-0 w-11 h-11 rounded-lg bg-slate-100 flex items-center justify-center text-slate-700">
+                      <Icon className="w-5 h-5" strokeWidth={2} />
                     </div>
-                    <div>
-                      <h3 className="font-bold text-gray-900 mb-2">{s.title}</h3>
-                      <p className="text-sm text-gray-600">{s.description}</p>
+                    <div className="min-w-0">
+                      <h3 className="font-semibold text-slate-900 mb-1.5">{s.title}</h3>
+                      <p className="text-sm text-slate-600 leading-relaxed">{s.description}</p>
                     </div>
                   </div>
                 );
@@ -240,17 +240,17 @@ export default function ETaxFilingHome() {
         </section>
 
         {/* Who it's for */}
-        <section className="py-16 bg-white">
-          <div className="max-w-6xl mx-auto px-4">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Who it's for</h2>
-            <p className="text-gray-600 mb-8 max-w-2xl">
-              Our e-filing services are designed for individuals and businesses who want a straightforward way to meet their tax obligations online.
+        <section className="py-14 sm:py-16 bg-white">
+          <div className="max-w-5xl mx-auto px-5">
+            <h2 className="text-2xl font-semibold text-slate-900 mb-2">Who it's for</h2>
+            <p className="text-slate-600 mb-8 max-w-xl">
+              E-filing for individuals and businesses who want a straightforward way to meet their tax obligations online.
             </p>
-            <ul className="space-y-3 max-w-2xl">
+            <ul className="space-y-3 max-w-xl">
               {whoItsFor.map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">{item}</span>
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-700 text-sm">{item}</span>
                 </li>
               ))}
             </ul>
@@ -258,20 +258,20 @@ export default function ETaxFilingHome() {
         </section>
 
         {/* How it works */}
-        <section className="py-16 bg-[#f5f5f5]">
-          <div className="max-w-6xl mx-auto px-4">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">How it works</h2>
-            <p className="text-gray-600 mb-10 max-w-2xl">
+        <section className="py-14 sm:py-16 bg-slate-50/80">
+          <div className="max-w-5xl mx-auto px-5">
+            <h2 className="text-2xl font-semibold text-slate-900 mb-2">How it works</h2>
+            <p className="text-slate-600 mb-10 max-w-xl">
               A simple, guided process from start to finish.
             </p>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {howItWorks.map((h) => (
-                <div key={h.step} className="bg-white rounded-xl border border-gray-200 p-6">
-                  <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#1e40af] text-white font-bold text-lg mb-4">
+                <div key={h.step} className="bg-white rounded-xl border border-slate-200/80 p-6 shadow-sm">
+                  <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-slate-900 text-white font-semibold text-sm mb-4">
                     {h.step}
                   </span>
-                  <h3 className="font-bold text-gray-900 mb-2">{h.title}</h3>
-                  <p className="text-sm text-gray-600">{h.detail}</p>
+                  <h3 className="font-semibold text-slate-900 text-sm mb-1.5">{h.title}</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed">{h.detail}</p>
                 </div>
               ))}
             </div>
@@ -279,19 +279,19 @@ export default function ETaxFilingHome() {
         </section>
 
         {/* Security & accuracy */}
-        <section className="py-16 bg-white">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="flex flex-col md:flex-row md:items-center gap-8">
-              <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center text-[#1e40af]">
-                <Shield className="w-8 h-8" />
+        <section className="py-14 sm:py-16 bg-white border-t border-slate-100">
+          <div className="max-w-5xl mx-auto px-5">
+            <div className="flex flex-col sm:flex-row sm:items-start gap-6">
+              <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-slate-700">
+                <Shield className="w-6 h-6" strokeWidth={2} />
               </div>
               <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">Security & accuracy</h2>
-                <p className="text-gray-600 mb-4 max-w-2xl">
+                <h2 className="text-2xl font-semibold text-slate-900 mb-3">Security & accuracy</h2>
+                <p className="text-slate-600 text-sm leading-relaxed max-w-2xl mb-3">
                   We use encryption and secure connections for all submissions. Your information is used only to complete the services you request and is never sold. We validate data before sending to the IRS to reduce errors and rejections.
                 </p>
-                <p className="text-gray-600 max-w-2xl">
-                  Our Accurate Filing Guarantee means we’ll correct any filing that’s rejected or incorrect due to our error—at no extra cost to you.
+                <p className="text-slate-600 text-sm leading-relaxed max-w-2xl">
+                  Our Accurate Filing Guarantee: we’ll correct any filing that’s rejected or incorrect due to our error at no extra cost to you.
                 </p>
               </div>
             </div>
@@ -299,18 +299,18 @@ export default function ETaxFilingHome() {
         </section>
 
         {/* Support */}
-        <section className="py-16 bg-[#f5f5f5]">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="flex flex-col md:flex-row md:items-center gap-8">
-              <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center text-[#1e40af]">
-                <Headphones className="w-8 h-8" />
+        <section className="py-14 sm:py-16 bg-slate-50/80 border-t border-slate-100">
+          <div className="max-w-5xl mx-auto px-5">
+            <div className="flex flex-col sm:flex-row sm:items-start gap-6">
+              <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-slate-700">
+                <Headphones className="w-6 h-6" strokeWidth={2} />
               </div>
               <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">Support when you need it</h2>
-                <p className="text-gray-600 max-w-2xl mb-4">
-                  Have questions about e-filing or your EIN? Our support team is here to help. Check our FAQ, help center, or contact us for assistance with your application or return.
+                <h2 className="text-2xl font-semibold text-slate-900 mb-3">Support when you need it</h2>
+                <p className="text-slate-600 text-sm leading-relaxed max-w-xl mb-4">
+                  Questions about e-filing? Our support team can help. Use the FAQ, help center, or contact us for your application or return.
                 </p>
-                <Link href="#" className="text-[#1e40af] font-medium hover:underline inline-flex items-center gap-1">
+                <Link href="#" className="text-slate-900 font-medium text-sm hover:underline inline-flex items-center gap-1">
                   Contact support
                   <ArrowRight className="w-4 h-4" />
                 </Link>
@@ -320,14 +320,14 @@ export default function ETaxFilingHome() {
         </section>
 
         {/* FAQ */}
-        <section className="py-16 bg-white border-t border-gray-100">
-          <div className="max-w-3xl mx-auto px-4">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">Frequently asked questions</h2>
+        <section className="py-14 sm:py-16 bg-white border-t border-slate-100">
+          <div className="max-w-3xl mx-auto px-5">
+            <h2 className="text-2xl font-semibold text-slate-900 mb-8">Frequently asked questions</h2>
             <dl className="space-y-6">
               {faqs.map((faq) => (
-                <div key={faq.q} className="border-b border-gray-200 pb-6">
-                  <dt className="font-semibold text-gray-900 mb-2">{faq.q}</dt>
-                  <dd className="text-gray-600 text-sm leading-relaxed">{faq.a}</dd>
+                <div key={faq.q} className="border-b border-slate-200 pb-6 last:border-0">
+                  <dt className="font-medium text-slate-900 mb-2">{faq.q}</dt>
+                  <dd className="text-slate-600 text-sm leading-relaxed">{faq.a}</dd>
                 </div>
               ))}
             </dl>
@@ -335,34 +335,34 @@ export default function ETaxFilingHome() {
         </section>
 
         {/* Final CTA */}
-        <section className="py-16 bg-[#1e40af]">
-          <div className="max-w-6xl mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold text-white mb-4">Start your e-filing today</h2>
-            <p className="text-blue-100 mb-8 max-w-xl mx-auto">
-              Get your EIN, e-file your return, or amend a prior year—all in one place.
+        <section className="py-14 sm:py-16 bg-slate-900">
+          <div className="max-w-5xl mx-auto px-5 text-center">
+            <h2 className="text-2xl font-semibold text-white mb-3">Start your e-filing today</h2>
+            <p className="text-slate-300 text-sm max-w-md mx-auto mb-8">
+              Get your tax ID, e-file your return, or amend a prior year—all in one place.
             </p>
             <Link
               href="/apply"
-              className="inline-flex items-center gap-2 bg-white text-[#1e40af] font-bold py-3 px-8 rounded-lg hover:bg-blue-50 transition-colors"
+              className="inline-flex items-center gap-2 bg-white text-slate-900 font-semibold text-sm py-3 px-6 rounded-lg hover:bg-slate-50 transition-colors"
             >
-              GET STARTED
-              <ArrowRight className="w-5 h-5" />
+              Get started
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-300 py-8">
-        <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <footer className="bg-slate-950 text-slate-400 py-8">
+        <div className="max-w-5xl mx-auto px-5 flex flex-col sm:flex-row justify-between items-center gap-4">
           <LexoraLogo href="/" variant="light" size="compact" />
           <div className="flex gap-6 text-sm">
-            <Link href="#" className="hover:text-white">Privacy</Link>
-            <Link href="#" className="hover:text-white">Terms of Service</Link>
-            <Link href="#" className="hover:text-white">Contact</Link>
+            <Link href="#" className="hover:text-white transition-colors">Privacy</Link>
+            <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
+            <Link href="#" className="hover:text-white transition-colors">Contact</Link>
           </div>
         </div>
-        <div className="max-w-6xl mx-auto px-4 mt-6 pt-6 border-t border-gray-700 text-center text-xs text-gray-500">
+        <div className="max-w-5xl mx-auto px-5 mt-6 pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
           © {new Date().getFullYear()} EIN Gov. All rights reserved.
         </div>
       </footer>

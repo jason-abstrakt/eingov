@@ -6,5 +6,5 @@ CREATE TABLE IF NOT EXISTS app_settings (
   value TEXT NOT NULL
 );
 
-INSERT INTO app_settings (key, value) VALUES ('home_mode', 'ein')
+INSERT INTO app_settings (key, value) VALUES ('home_mode', 'business')
 ON CONFLICT (key) DO NOTHING;

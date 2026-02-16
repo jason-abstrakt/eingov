@@ -3,10 +3,10 @@ export type HomeMode = 'ein' | 'business';
 const HOME_MODE_KEY = 'site_home_mode';
 
 export function getHomeMode(): HomeMode {
-  if (typeof window === 'undefined') return 'ein';
+  if (typeof window === 'undefined') return 'business';
   const raw = localStorage.getItem(HOME_MODE_KEY);
   if (raw === 'business' || raw === 'ein') return raw;
-  return 'ein';
+  return 'business';
 }
 
 export function setHomeMode(mode: HomeMode): void {

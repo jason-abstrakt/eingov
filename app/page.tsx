@@ -255,7 +255,7 @@ const content = {
 
 export default function Home() {
   const [lang, setLang] = useState<Language>('en');
-  const [homeMode, setHomeMode] = useState<HomeMode>('ein');
+  const [homeMode, setHomeMode] = useState<HomeMode>('business');
   const t = content[lang];
 
   useEffect(() => {

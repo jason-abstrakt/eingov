@@ -2,14 +2,14 @@ import { NextResponse } from 'next/server';
 import type { HomeMode } from '@/lib/homeMode';
 
 // In-memory default; for site-wide persistence add app_settings table and use lib/db
-let serverMode: HomeMode = 'ein';
+let serverMode: HomeMode = 'business';
 
 export async function GET() {
   try {
     const { getSQL } = await import('@/lib/db');
     const sql = getSQL();
     const rows = await sql`SELECT value FROM app_settings WHERE key = 'home_mode' LIMIT 1`;
-    const mode = rows[0]?.value === 'business' ? 'business' : 'ein';
+    const mode = rows[0]?.value === 'ein' ? 'ein' : 'business';
     return NextResponse.json({ mode });
   } catch {
     return NextResponse.json({ mode: serverMode });

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Building2, Search, Home, Building, Heart, MessageSquare, Shield, ChevronDown, ChevronUp, Check } from 'lucide-react';
+import { Building2, Search, Home, Building, Heart, MessageSquare, Shield, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, Check, Star } from 'lucide-react';
 
 const overviewCards = [
   {
@@ -60,18 +60,24 @@ const formationCards = [
 
 const testimonials = [
   {
-    quote: 'AI Business Formation Services made everything 10 times easier for my business. Fast, easy, and very professional.',
-    author: '— Luis C., LLC customer',
+    title: 'The experience of setting up my own LLC...',
+    quote: 'The experience of setting up my own LLC was both quick, easy and simple.',
+    author: 'Brian Pannebecker',
+    date: 'February 12, 2026',
     stars: 5,
   },
   {
-    quote: 'I am a repeat customer and wouldn\'t trust anyone else with my business details.',
-    author: '— Felicia L., LLC customer',
+    title: 'Efficient and professional assistance...',
+    quote: 'Efficient and professional assistance in quickly setting up my LLC. Started an application elsewhere and later learned my expedited fee was only part of the cost. AI Business Formation Services was straightforward and delivered exactly what I needed.',
+    author: 'Jeanne Gamba',
+    date: 'December 30, 2025',
     stars: 5,
   },
   {
-    quote: 'Being nervous and not knowing exactly which entity to choose, the team made it simple and fast.',
-    author: '— New entrepreneur',
+    title: 'Best experience in a long time...',
+    quote: 'Wow! Being nervous and not knowing exactly which direction to take I went online and found AI Business Formation Services. I wasn\'t completely sure about it at first, but the process was clear and the result was exactly what I needed.',
+    author: 'Shirley Hester',
+    date: 'December 25, 2025',
     stars: 5,
   },
 ];
@@ -98,6 +104,66 @@ const faqs = [
     a: 'LLCs and corporations (C and S) provide personal liability protection—business debts and claims generally don\'t reach your personal assets. Sole proprietorships and DBAs do not; you\'re personally on the hook for business obligations.',
   },
 ];
+
+const TEAL_CARD = '#0d5c5c';
+
+function TestimonialCarousel() {
+  const [index, setIndex] = useState(0);
+  const visible = testimonials.slice(index, index + 3);
+  const canGoPrev = index > 0;
+  const canGoNext = index + 3 < testimonials.length;
+  return (
+    <div className="w-full">
+      <div className="relative flex items-stretch justify-center gap-4 overflow-hidden">
+        {canGoPrev && (
+          <button
+            type="button"
+            onClick={() => setIndex((i) => Math.max(0, i - 1))}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-gray-200 shadow-md flex items-center justify-center text-gray-700 hover:bg-gray-50 transition-colors"
+            aria-label="Previous reviews"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+        )}
+        {canGoNext && (
+          <button
+            type="button"
+            onClick={() => setIndex((i) => Math.min(testimonials.length - 3, i + 1))}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-gray-200 shadow-md flex items-center justify-center text-gray-700 hover:bg-gray-50 transition-colors"
+            aria-label="Next reviews"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        )}
+        <div className={`flex gap-4 ${canGoPrev ? 'pl-12' : ''} ${canGoNext ? 'pr-12' : ''} w-full justify-center`} style={{ minHeight: 220 }}>
+          {visible.map((t, i) => (
+            <div
+              key={`${index}-${i}`}
+              className="flex-1 min-w-[260px] max-w-[340px] rounded-xl p-6 text-white flex flex-col shadow-lg"
+              style={{ backgroundColor: TEAL_CARD }}
+            >
+              <p className="font-semibold text-white/95 text-sm mb-2">{t.title}</p>
+              <p className="text-sm text-white/90 leading-relaxed flex-grow">&ldquo;{t.quote}&rdquo;</p>
+              <div className="flex gap-0.5 mt-4 text-green-300" aria-hidden>
+                {Array.from({ length: t.stars }).map((_, j) => (
+                  <Star key={j} className="w-4 h-4 fill-current" />
+                ))}
+              </div>
+              <p className="text-xs text-white/80 mt-2">{t.author}</p>
+              <p className="text-xs text-white/60">{t.date}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="text-center mt-8">
+        <p className="text-gray-600 text-sm">
+          Rated <strong className="text-gray-900">4.6</strong> out of 5 based on <strong className="text-gray-900">27,918+ reviews</strong>
+        </p>
+        <p className="text-gray-500 text-xs mt-1">Showing selected reviews</p>
+      </div>
+    </div>
+  );
+}
 
 function FAQAccordion() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -283,31 +349,19 @@ export default function BusinessFormationHome() {
           </div>
         </section>
 
-        {/* Value prop + stats + testimonials */}
+        {/* Social proof: Start a business that lasts */}
         <section className="bg-white border-t border-gray-200">
           <div className="max-w-6xl mx-auto px-4 py-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 text-center mb-3">
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-gray-900 text-center mb-2">
               Start a business that lasts
             </h2>
-            <p className="text-lg text-gray-600 text-center mb-12">
+            <p className="text-lg font-serif text-gray-500 text-center mb-12">
               Backed by 20+ years of experience and 4M+ formations.
             </p>
 
-            <div className="grid gap-6 sm:grid-cols-3 mb-12">
-              {testimonials.map((t, i) => (
-                <div key={i} className="bg-[#f9f9f9] border border-gray-200 rounded-lg p-6 text-left">
-                  <p className="text-gray-700 text-sm leading-relaxed flex-grow">&ldquo;{t.quote}&rdquo;</p>
-                  <p className="text-xs text-gray-500 mt-4">{t.author}</p>
-                  <div className="flex gap-0.5 mt-2 text-orange-500">
-                    {Array.from({ length: t.stars }).map((_, j) => (
-                      <span key={j} aria-hidden>★</span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <TestimonialCarousel />
 
-            <div className="flex flex-wrap justify-center gap-8 text-center">
+            <div className="flex flex-wrap justify-center gap-10 sm:gap-14 mt-14 text-center">
               <div>
                 <p className="text-3xl font-bold text-gray-900">4M+</p>
                 <p className="text-sm text-gray-600">businesses formed</p>
@@ -316,7 +370,7 @@ export default function BusinessFormationHome() {
                 <p className="text-3xl font-bold text-gray-900">20+</p>
                 <p className="text-sm text-gray-600">years of experience</p>
               </div>
-              <div className="flex items-center gap-2 border border-gray-300 rounded-full px-5 py-2 bg-white">
+              <div className="flex items-center gap-2 border border-gray-300 rounded-full px-5 py-2 bg-white shadow-sm">
                 <Check className="w-5 h-5 text-green-600" />
                 <span className="font-semibold text-gray-900 text-sm">Accurate Filing Guarantee</span>
               </div>

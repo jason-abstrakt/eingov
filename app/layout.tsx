@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Merriweather } from "next/font/google";
+import { Inter, Merriweather, Dancing_Script } from "next/font/google";
 import Script from "next/script";
 
 import "@/app/globals.css";
@@ -10,6 +10,11 @@ const merriweather = Merriweather({
   subsets: ["latin"],
   weight: ["300", "400", "700", "900"],
   variable: "--font-merriweather",
+});
+const dancingScript = Dancing_Script({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-dancing-script",
 });
 
 export const metadata: Metadata = {
@@ -41,7 +46,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className={`${inter.variable} ${merriweather.variable} font-sans antialiased bg-white text-slate-900`}>{children}</body>
+      <body className={`${inter.variable} ${merriweather.variable} ${dancingScript.variable} font-sans antialiased bg-white text-slate-900`}>{children}</body>
     </html>
   );
 }

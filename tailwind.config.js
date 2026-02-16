@@ -17,6 +17,7 @@ module.exports = {
       fontFamily: {
         sans: ['var(--font-inter)', 'sans-serif'],
         serif: ['var(--font-merriweather)', 'serif'],
+        cursive: ['var(--font-dancing-script)', 'cursive'],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

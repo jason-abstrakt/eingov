@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import LexoraLogo from '@/components/ui/LexoraLogo';
 import { Building2, Search, Home, Building, Heart, MessageSquare, Shield, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, Check, Star } from 'lucide-react';
 
 const overviewCards = [
@@ -203,12 +204,7 @@ export default function BusinessFormationHome() {
       {/* Top bar */}
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-          <Link href="/" className="flex flex-col">
-            <span className="font-bold text-lg text-gray-900 tracking-tight leading-tight">
-              AI Business Formation Services
-            </span>
-            <span className="text-xs text-gray-500 mt-0.5">By EINGov</span>
-          </Link>
+          <LexoraLogo href="/" />
           <nav className="hidden md:flex items-center gap-6 text-sm text-gray-600">
             <Link href="#" className="hover:text-gray-900">Business</Link>
             <Link href="#" className="hover:text-gray-900">Personal</Link>

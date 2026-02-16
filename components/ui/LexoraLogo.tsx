@@ -9,6 +9,8 @@ type LexoraLogoProps = {
   className?: string;
   /** Compact for smaller headers */
   size?: 'default' | 'compact';
+  /** Tagline below "Lexora"; default: "Online e-Tax Filing" */
+  tagline?: string;
 };
 
 export default function LexoraLogo({
@@ -16,6 +18,7 @@ export default function LexoraLogo({
   variant = 'default',
   className = '',
   size = 'default',
+  tagline = 'Online e-Tax Filing',
 }: LexoraLogoProps) {
   const isLight = variant === 'light';
   const isCompact = size === 'compact';
@@ -38,7 +41,7 @@ export default function LexoraLogo({
           isCompact ? 'text-[10px] mt-0.5' : 'text-xs sm:text-sm mt-1'
         } tracking-wide`}
       >
-        AI Business Formation Services
+        {tagline}
       </span>
       <span
         className={`font-cursive ${footnoteColor} ${isCompact ? 'text-[10px] mt-0.5' : 'text-xs mt-0.5'}`}

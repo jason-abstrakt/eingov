@@ -163,6 +163,18 @@ export default function AdminDashboardPage() {
             >
               Business formation
             </button>
+            <button
+              type="button"
+              onClick={() => handleHomeModeChange('etax')}
+              disabled={homeModeSaving}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                homeMode === 'etax'
+                  ? 'bg-[#1e40af] text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              E-tax filing
+            </button>
           </div>
           {homeModeSaving && <span className="ml-2 text-xs text-gray-500">Saving…</span>}
         </div>

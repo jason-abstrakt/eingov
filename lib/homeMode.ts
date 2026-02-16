@@ -1,12 +1,12 @@
-export type HomeMode = 'ein' | 'business';
+export type HomeMode = 'ein' | 'business' | 'etax';
 
 const HOME_MODE_KEY = 'site_home_mode';
 
 export function getHomeMode(): HomeMode {
-  if (typeof window === 'undefined') return 'business';
+  if (typeof window === 'undefined') return 'etax';
   const raw = localStorage.getItem(HOME_MODE_KEY);
-  if (raw === 'business' || raw === 'ein') return raw;
-  return 'business';
+  if (raw === 'business' || raw === 'ein' || raw === 'etax') return raw;
+  return 'etax';
 }
 
 export function setHomeMode(mode: HomeMode): void {
@@ -19,7 +19,7 @@ export async function fetchHomeMode(): Promise<HomeMode> {
     const res = await fetch('/api/settings/home-mode');
     if (res.ok) {
       const data = await res.json();
-      if (data.mode === 'business' || data.mode === 'ein') return data.mode;
+      if (data.mode === 'business' || data.mode === 'ein' || data.mode === 'etax') return data.mode;
     }
   } catch {
     // ignore

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { fetchHomeMode, type HomeMode } from "@/lib/homeMode";
 import BusinessFormationHome from "@/components/home/BusinessFormationHome";
+import ETaxFilingHome from "@/components/home/ETaxFilingHome";
 
 type Language = 'en' | 'es';
 
@@ -255,13 +256,16 @@ const content = {
 
 export default function Home() {
   const [lang, setLang] = useState<Language>('en');
-  const [homeMode, setHomeMode] = useState<HomeMode>('business');
+  const [homeMode, setHomeMode] = useState<HomeMode>('etax');
   const t = content[lang];
 
   useEffect(() => {
     fetchHomeMode().then(setHomeMode);
   }, []);
 
+  if (homeMode === 'etax') {
+    return <ETaxFilingHome />;
+  }
   if (homeMode === 'business') {
     return <BusinessFormationHome />;
   }

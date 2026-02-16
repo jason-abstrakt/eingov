@@ -279,6 +279,35 @@ export default function BusinessFormationHome() {
           </div>
         </section>
 
+        {/* Social proof: Start a business that lasts */}
+        <section className="bg-white border-t border-gray-200">
+          <div className="max-w-6xl mx-auto px-4 py-16">
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-gray-900 text-center mb-2">
+              Start a business that lasts
+            </h2>
+            <p className="text-lg font-serif text-gray-500 text-center mb-12">
+              Backed by 20+ years of experience and 4M+ formations.
+            </p>
+
+            <TestimonialCarousel />
+
+            <div className="flex flex-wrap justify-center gap-10 sm:gap-14 mt-14 text-center">
+              <div>
+                <p className="text-3xl font-bold text-gray-900">4M+</p>
+                <p className="text-sm text-gray-600">businesses formed</p>
+              </div>
+              <div>
+                <p className="text-3xl font-bold text-gray-900">20+</p>
+                <p className="text-sm text-gray-600">years of experience</p>
+              </div>
+              <div className="flex items-center gap-2 border border-gray-300 rounded-full px-5 py-2 bg-white shadow-sm">
+                <Check className="w-5 h-5 text-green-600" />
+                <span className="font-semibold text-gray-900 text-sm">Accurate Filing Guarantee</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* All business types at a glance */}
         <section className="max-w-6xl mx-auto px-4 pb-12">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">All business types at a glance</h2>
@@ -344,35 +373,6 @@ export default function BusinessFormationHome() {
                 <Link href="/apply" className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-5 rounded transition-colors">
                   Start an LLC
                 </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Social proof: Start a business that lasts */}
-        <section className="bg-white border-t border-gray-200">
-          <div className="max-w-6xl mx-auto px-4 py-16">
-            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-gray-900 text-center mb-2">
-              Start a business that lasts
-            </h2>
-            <p className="text-lg font-serif text-gray-500 text-center mb-12">
-              Backed by 20+ years of experience and 4M+ formations.
-            </p>
-
-            <TestimonialCarousel />
-
-            <div className="flex flex-wrap justify-center gap-10 sm:gap-14 mt-14 text-center">
-              <div>
-                <p className="text-3xl font-bold text-gray-900">4M+</p>
-                <p className="text-sm text-gray-600">businesses formed</p>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-gray-900">20+</p>
-                <p className="text-sm text-gray-600">years of experience</p>
-              </div>
-              <div className="flex items-center gap-2 border border-gray-300 rounded-full px-5 py-2 bg-white shadow-sm">
-                <Check className="w-5 h-5 text-green-600" />
-                <span className="font-semibold text-gray-900 text-sm">Accurate Filing Guarantee</span>
               </div>
             </div>
           </div>

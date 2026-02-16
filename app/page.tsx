@@ -2,7 +2,9 @@
 
 import { ShieldCheck, ArrowRight, FileText, Lock } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { fetchHomeMode, type HomeMode } from "@/lib/homeMode";
+import BusinessFormationHome from "@/components/home/BusinessFormationHome";
 
 type Language = 'en' | 'es';
 
@@ -253,7 +255,16 @@ const content = {
 
 export default function Home() {
   const [lang, setLang] = useState<Language>('en');
+  const [homeMode, setHomeMode] = useState<HomeMode>('ein');
   const t = content[lang];
+
+  useEffect(() => {
+    fetchHomeMode().then(setHomeMode);
+  }, []);
+
+  if (homeMode === 'business') {
+    return <BusinessFormationHome />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col font-sans">

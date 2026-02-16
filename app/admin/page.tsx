@@ -12,6 +12,7 @@ import {
 import { isAuthenticated, signOut } from '@/lib/auth';
 import { ENTITY_DISPLAY_NAMES } from '@/lib/constants';
 import type { PrimaryEntityType } from '@/lib/types';
+import { fetchHomeMode, saveHomeMode, type HomeMode } from '@/lib/homeMode';
 
 function formatDate(iso: string): string {
   const d = new Date(iso);
@@ -37,6 +38,8 @@ export default function AdminDashboardPage() {
   const [entityFilter, setEntityFilter] = useState<string>('all');
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
+  const [homeMode, setHomeMode] = useState<HomeMode>('ein');
+  const [homeModeSaving, setHomeModeSaving] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -47,14 +50,26 @@ export default function AdminDashboardPage() {
         return;
       }
       const apps = await getApplications();
+      const mode = await fetchHomeMode();
       if (!cancelled) {
         setApplications(apps);
+        setHomeMode(mode);
         setLoading(false);
       }
     }
     init();
     return () => { cancelled = true; };
   }, [router]);
+
+  const handleHomeModeChange = useCallback(async (mode: HomeMode) => {
+    setHomeModeSaving(true);
+    try {
+      await saveHomeMode(mode);
+      setHomeMode(mode);
+    } finally {
+      setHomeModeSaving(false);
+    }
+  }, []);
 
   const entityTypes = useMemo(() => {
     const set = new Set(
@@ -118,6 +133,39 @@ export default function AdminDashboardPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-6">Applications</h1>
+
+        {/* Home page mode */}
+        <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 mb-6">
+          <h2 className="text-sm font-semibold text-gray-700 mb-3">Home page</h2>
+          <p className="text-xs text-gray-500 mb-3">Choose which homepage visitors see. Changes apply after refresh; site-wide mode uses API when configured.</p>
+          <div className="flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={() => handleHomeModeChange('ein')}
+              disabled={homeModeSaving}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                homeMode === 'ein'
+                  ? 'bg-[#234E76] text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              EIN application
+            </button>
+            <button
+              type="button"
+              onClick={() => handleHomeModeChange('business')}
+              disabled={homeModeSaving}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                homeMode === 'business'
+                  ? 'bg-orange-500 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              Business formation
+            </button>
+          </div>
+          {homeModeSaving && <span className="ml-2 text-xs text-gray-500">Saving…</span>}
+        </div>
 
         {/* Filters */}
         <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 mb-6">

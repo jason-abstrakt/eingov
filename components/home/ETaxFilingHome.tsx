@@ -92,45 +92,83 @@ const faqs = [
 
 function HeroIllustration() {
   return (
-    <div className="relative w-full max-w-md mx-auto lg:max-w-none lg:w-[420px] flex-shrink-0">
-      <svg viewBox="0 0 320 240" className="w-full h-auto" aria-hidden>
-        <defs>
-          <linearGradient id="docGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#1e40af" />
-            <stop offset="100%" stopColor="#1e3a8a" />
-          </linearGradient>
-          <linearGradient id="coinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#fbbf24" />
-            <stop offset="100%" stopColor="#f59e0b" />
-          </linearGradient>
-        </defs>
-        {/* Clipboard / document */}
-        <rect x="40" y="20" width="120" height="140" rx="6" fill="url(#docGrad)" opacity="0.95" />
-        <rect x="48" y="28" width="104" height="8" rx="2" fill="white" opacity="0.9" />
-        <rect x="48" y="44" width="80" height="4" rx="1" fill="white" opacity="0.5" />
-        <rect x="48" y="54" width="90" height="4" rx="1" fill="white" opacity="0.5" />
-        <rect x="48" y="64" width="70" height="4" rx="1" fill="white" opacity="0.5" />
-        <text x="95" y="38" fill="white" fontSize="10" fontWeight="bold" textAnchor="middle">TAX</text>
-        {/* Calculator */}
-        <rect x="160" y="80" width="100" height="120" rx="8" fill="#1e40af" />
-        <rect x="170" y="92" width="80" height="40" rx="4" fill="#e5e7eb" />
-        <rect x="170" y="142" width="36" height="24" rx="4" fill="#fbbf24" />
-        <rect x="214" y="142" width="36" height="24" rx="4" fill="#fbbf24" />
-        <rect x="170" y="172" width="36" height="24" rx="4" fill="#fbbf24" />
-        <rect x="214" y="172" width="36" height="24" rx="4" fill="#fbbf24" />
-        {/* Coins */}
-        <circle cx="260" cy="50" r="22" fill="url(#coinGrad)" stroke="#f59e0b" strokeWidth="2" />
-        <circle cx="280" cy="75" r="20" fill="url(#coinGrad)" stroke="#f59e0b" strokeWidth="2" opacity="0.9" />
-        <circle cx="250" cy="85" r="18" fill="url(#coinGrad)" stroke="#f59e0b" strokeWidth="2" opacity="0.85" />
-        {/* Dollar stack */}
-        <rect x="55" y="160" width="90" height="55" rx="4" fill="#1e40af" opacity="0.8" />
-        <rect x="60" y="165" width="80" height="45" rx="2" fill="#dbeafe" />
-        <line x1="70" y1="185" x2="130" y2="185" stroke="#1e40af" strokeWidth="1" opacity="0.6" />
-        <line x1="70" y1="195" x2="120" y2="195" stroke="#1e40af" strokeWidth="1" opacity="0.4" />
-        {/* Magnifying glass accent */}
-        <circle cx="270" cy="160" r="28" fill="none" stroke="#dc2626" strokeWidth="4" opacity="0.8" />
-        <line x1="288" y1="178" x2="310" y2="200" stroke="#dc2626" strokeWidth="5" strokeLinecap="round" opacity="0.8" />
-      </svg>
+    <div className="relative w-full max-w-md mx-auto lg:max-w-none lg:w-[480px] aspect-[4/3] flex-shrink-0 perspective-1000">
+      {/* Abstract background elements */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-blue-50/50 rounded-full blur-3xl -z-10" />
+      
+      {/* Main Card: Dashboard View */}
+      <div className="absolute inset-x-4 inset-y-4 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden transform rotate-y-[-5deg] rotate-x-[5deg] transition-transform hover:rotate-0 duration-700 ease-out">
+        {/* Fake Browser Header */}
+        <div className="bg-slate-50 border-b border-slate-100 px-4 py-3 flex items-center gap-2">
+          <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
+          <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
+          <div className="ml-4 h-2 w-32 bg-slate-200 rounded-full" />
+        </div>
+
+        {/* Dashboard Content */}
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <div className="h-4 w-24 bg-slate-900 rounded mb-2" />
+              <div className="h-2 w-32 bg-slate-200 rounded" />
+            </div>
+            <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+              <Shield className="w-5 h-5" />
+            </div>
+          </div>
+
+          {/* Status Card */}
+          <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 mb-6">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-600">
+                  <CheckCircle2 className="w-5 h-5" />
+                </div>
+                <span className="font-semibold text-slate-700 text-sm">Filing Accepted</span>
+              </div>
+              <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">Completed</span>
+            </div>
+            <div className="space-y-2">
+              <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+                <div className="h-full w-full bg-emerald-500 rounded-full" />
+              </div>
+              <div className="flex justify-between text-xs text-slate-400">
+                <span>Submission</span>
+                <span>IRS Receipt</span>
+                <span>Approval</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Recent Activity List */}
+          <div className="space-y-3">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-slate-100 flex-shrink-0" />
+                <div className="flex-1">
+                  <div className="h-2 w-20 bg-slate-200 rounded mb-1.5" />
+                  <div className="h-1.5 w-12 bg-slate-100 rounded" />
+                </div>
+                <div className="h-2 w-8 bg-slate-200 rounded" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Floating Card: EIN Assigned */}
+      <div className="absolute -right-4 bottom-12 bg-white rounded-xl shadow-xl border border-slate-100 p-4 w-48 animate-float">
+        <div className="flex items-start gap-3">
+          <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-200">
+            <FileText className="w-4 h-4" />
+          </div>
+          <div>
+            <p className="text-xs font-semibold text-slate-500 mb-0.5">EIN Assigned</p>
+            <p className="text-sm font-bold text-slate-900">12-3456789</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
